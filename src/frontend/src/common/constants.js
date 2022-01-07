@@ -29,6 +29,16 @@ export const MAPPING_SIZE = ["", "small", "normal", "big"];
 export const MAPPING_SAUCE = ["", "tomato", "creamy"];
 
 /**
+ * @constant {array} соответствие между классами css и количеством ингредиентов
+ */
+export const MAPPING_FILLING_CLASS = [
+  "",
+  "",
+  "pizza__filling--second",
+  "pizza__filling--third",
+];
+
+/**
  * @constant {number} максимальное количество ингредиентов на пицце
  */
 export const MAX_INGREDIENT_COUNT = 3;

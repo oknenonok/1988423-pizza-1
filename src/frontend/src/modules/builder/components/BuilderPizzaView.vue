@@ -8,16 +8,17 @@
         v-for="ingredient in chosenIngredients"
         :key="ingredient.id"
         class="pizza__filling"
-        :class="`pizza__filling--${ingredient.value}${
-          ingredient.count === 2 ? ' pizza__filling--second' : ''
-        }${ingredient.count === 3 ? ' pizza__filling--third' : ''}`"
+        :class="fillingClass(ingredient)"
       ></div>
     </AppDrop>
   </div>
 </template>
 
 <script>
-import { MAX_INGREDIENT_COUNT } from "@/common/constants";
+import {
+  MAX_INGREDIENT_COUNT,
+  MAPPING_FILLING_CLASS,
+} from "@/common/constants";
 import AppDrop from "@/common/components/AppDrop";
 
 export default {
@@ -38,11 +39,9 @@ export default {
       type: Object,
       required: true,
     },
-  },
-
-  computed: {
-    chosenIngredients() {
-      return this.ingredients.filter((ingredient) => ingredient.count);
+    chosenIngredients: {
+      type: Array,
+      required: true,
     },
   },
 
@@ -58,6 +57,18 @@ export default {
       if (ingredient && ingredient.count < MAX_INGREDIENT_COUNT) {
         this.$emit("dropIngredient", ingredient, ingredient.count + 1);
       }
+    },
+
+    /**
+     * css-класс для отображения ингредиента
+     * @param {object} ingredient
+     * @returns {string}
+     */
+    fillingClass(ingredient) {
+      return (
+        `pizza__filling--${ingredient.value} ` +
+        MAPPING_FILLING_CLASS[ingredient.count]
+      );
     },
   },
 };

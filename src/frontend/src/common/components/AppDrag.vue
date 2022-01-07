@@ -1,6 +1,7 @@
 <template>
   <div
-    :draggable="true"
+    class="draggable"
+    :draggable="draggable"
     @dragstart.self="onDrag"
     @dragover.prevent
     @dragenter.prevent
@@ -19,7 +20,12 @@ export default {
       type: [Number, String, Object],
       required: true,
     },
+    draggable: {
+      type: Boolean,
+      default: true,
+    },
   },
+
   methods: {
     onDrag({ dataTransfer }) {
       dataTransfer.effectAllowed = EFFECT_LINK;
@@ -34,7 +40,7 @@ export default {
 </script>
 
 <style scoped>
-div {
+.draggable {
   user-select: none;
 }
 </style>

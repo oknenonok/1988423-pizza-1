@@ -39,8 +39,9 @@
           <div class="content__constructor">
             <BuilderPizzaView
               :ingredients="ingredients"
-              :chosenDough="dough.find((dough) => dough.id === chosenDoughId)"
-              :chosenSauce="sauces.find((sauce) => sauce.id === chosenSauceId)"
+              :chosenDough="chosenDough"
+              :chosenSauce="chosenSauce"
+              :chosenIngredients="chosenIngredients"
               @dropIngredient="changeIngredient"
             />
           </div>
@@ -129,18 +130,58 @@ export default {
 
   computed: {
     /**
+     * Объект - выбранное тесто
+     * @returns {object}
+     */
+    chosenDough() {
+      return this.dough.find((dough) => dough.id === this.chosenDoughId);
+    },
+
+    /**
+     * Объект - выбранный соус
+     * @returns {object}
+     */
+    chosenSauce() {
+      return this.sauces.find((sauce) => sauce.id === this.chosenSauceId);
+    },
+
+    /**
+     * Объект - выбранный размер
+     * @returns {object}
+     */
+    chosenSize() {
+      return this.sizes.find((size) => size.id === this.chosenSizeId);
+    },
+
+    /**
+     * Массив объектов с выбранными ингредиентами
+     * @returns {array}
+     */
+    chosenIngredients() {
+      return this.ingredients.filter((ingredient) => ingredient.count);
+    },
+
+    /**
+     * Стоимость всех ингредиентов на пицце
+     * @returns {number}
+     */
+    chosenIngredientsPrice() {
+      return this.chosenIngredients.reduce(
+        (total, ingredient) => total + ingredient.price * ingredient.count,
+        0
+      );
+    },
+
+    /**
      * Итоговая цена пиццы
      * @returns {number}
      */
     price() {
       return (
-        (this.dough.find((dough) => dough.id === this.chosenDoughId).price +
-          this.sauces.find((sauce) => sauce.id === this.chosenSauceId).price +
-          this.ingredients.reduce(
-            (total, ingredient) => total + ingredient.price * ingredient.count,
-            0
-          )) *
-        this.sizes.find((size) => size.id === this.chosenSizeId).multiplier
+        (this.chosenDough.price +
+          this.chosenSauce.price +
+          this.chosenIngredientsPrice) *
+        this.chosenSize.multiplier
       );
     },
 
@@ -149,10 +190,7 @@ export default {
      * @returns {boolean}
      */
     canCook() {
-      return (
-        this.pizzaName !== "" &&
-        this.ingredients.filter((ingredient) => ingredient.count).length > 0
-      );
+      return this.pizzaName !== "" && this.chosenIngredients.length > 0;
     },
   },
 
