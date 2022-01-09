@@ -4,9 +4,9 @@
     <input
       type="text"
       name="pizza_name"
-      :value="name"
+      :value="value"
       placeholder="Введите название пиццы"
-      @input="$emit('changeName', $event.target.value)"
+      @input="$emit('input', $event.target.value)"
     />
   </label>
 </template>
@@ -16,7 +16,7 @@ export default {
   name: "BuilderPizzaName",
 
   props: {
-    name: {
+    value: {
       type: String,
       required: true,
     },

@@ -1,5 +1,7 @@
 import Vue from "vue";
-import App from "./App.vue";
+import App from "@/App";
+import "@/plugins/ui";
+import "@/plugins/priceFormat";
 
 Vue.config.productionTip = false;
 

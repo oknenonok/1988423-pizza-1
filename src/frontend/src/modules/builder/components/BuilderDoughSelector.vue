@@ -22,20 +22,15 @@
 </template>
 
 <script>
-import RadioButton from "@/common/components/RadioButton";
-
 export default {
   name: "BuilderDoughSelector",
-
-  components: {
-    RadioButton,
-  },
 
   props: {
     dough: {
       type: Array,
       required: true,
     },
+
     chosenDoughId: {
       type: Number,
       required: true,

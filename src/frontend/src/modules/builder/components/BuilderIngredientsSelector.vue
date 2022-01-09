@@ -52,16 +52,12 @@
 
 <script>
 import { MAX_INGREDIENT_COUNT } from "@/common/constants";
-import RadioButton from "@/common/components/RadioButton";
-import ItemCounter from "@/common/components/ItemCounter";
 import AppDrag from "@/common/components/AppDrag";
 
 export default {
   name: "BuilderIngredientsSelector",
 
   components: {
-    RadioButton,
-    ItemCounter,
     AppDrag,
   },
 
@@ -76,10 +72,12 @@ export default {
       type: Array,
       required: true,
     },
+
     sauces: {
       type: Array,
       required: true,
     },
+
     chosenSauceId: {
       type: Number,
       required: true,

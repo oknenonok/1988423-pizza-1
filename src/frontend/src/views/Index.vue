@@ -31,10 +31,7 @@
         </div>
 
         <div class="content__pizza">
-          <BuilderPizzaName
-            :name="pizzaName"
-            @changeName="pizzaName = $event"
-          />
+          <BuilderPizzaName v-model="pizzaName" />
 
           <div class="content__constructor">
             <BuilderPizzaView
@@ -96,6 +93,7 @@ export default {
           dough
         )
       ),
+
       ingredients: ingredients.map((ingredient) =>
         Object.assign(
           {
@@ -105,6 +103,7 @@ export default {
           ingredient
         )
       ),
+
       sauces: sauces.map((sauce) =>
         Object.assign(
           {
@@ -113,6 +112,7 @@ export default {
           sauce
         )
       ),
+
       sizes: sizes.map((size) =>
         Object.assign(
           {
@@ -121,6 +121,7 @@ export default {
           size
         )
       ),
+
       chosenDoughId: DEFAULT_DOUGH,
       chosenSizeId: DEFAULT_SIZE,
       chosenSauceId: DEFAULT_SAUCE,
