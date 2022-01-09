@@ -31,7 +31,14 @@
         </div>
 
         <div class="content__pizza">
-          <BuilderPizzaName v-model="pizzaName" />
+          <AppInput
+            type="text"
+            name="pizza_name"
+            v-model="pizzaName"
+            placeholder="Введите название пиццы"
+            caption="Название пиццы"
+            hideCaption
+          />
 
           <div class="content__constructor">
             <BuilderPizzaView
@@ -69,7 +76,6 @@ import BuilderSizeSelector from "@/modules/builder/components/BuilderSizeSelecto
 import BuilderIngredientsSelector from "@/modules/builder/components/BuilderIngredientsSelector";
 import BuilderPizzaView from "@/modules/builder/components/BuilderPizzaView";
 import BuilderPriceCounter from "@/modules/builder/components/BuilderPriceCounter";
-import BuilderPizzaName from "@/modules/builder/components/BuilderPizzaName";
 
 export default {
   name: "Index",
@@ -80,7 +86,6 @@ export default {
     BuilderIngredientsSelector,
     BuilderPizzaView,
     BuilderPriceCounter,
-    BuilderPizzaName,
   },
 
   data() {

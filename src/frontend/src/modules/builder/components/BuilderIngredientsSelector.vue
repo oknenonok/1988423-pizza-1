@@ -6,7 +6,7 @@
       <div class="ingredients__sauce">
         <p>Основной соус:</p>
 
-        <RadioButton
+        <AppRadioButton
           v-for="sauce in sauces"
           :key="sauce.id"
           class="radio ingredients__input"
@@ -16,7 +16,7 @@
           @select="$emit('selectSauce', +$event)"
         >
           <span>{{ sauce.name }}</span>
-        </RadioButton>
+        </AppRadioButton>
       </div>
 
       <div class="ingredients__filling">
@@ -37,7 +37,7 @@
               {{ ingredient.name }}
             </AppDrag>
 
-            <ItemCounter
+            <AppItemCounter
               class="counter--orange ingredients__counter"
               :value="ingredient.count"
               :maxValue="maxCount"

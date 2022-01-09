@@ -3,7 +3,7 @@
     <h2 class="title title--small sheet__title">Выберите тесто</h2>
 
     <div class="sheet__content dough">
-      <RadioButton
+      <AppRadioButton
         v-for="doughItem in dough"
         :key="doughItem.id"
         class="dough__input"
@@ -16,7 +16,7 @@
       >
         <b>{{ doughItem.name }}</b>
         <span>{{ doughItem.description }}</span>
-      </RadioButton>
+      </AppRadioButton>
     </div>
   </div>
 </template>

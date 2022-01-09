@@ -31,7 +31,7 @@
 
 <script>
 export default {
-  name: "ItemCounter",
+  name: "AppItemCounter",
   props: {
     minValue: {
       type: Number,

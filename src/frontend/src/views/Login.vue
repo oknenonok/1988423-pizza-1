@@ -13,22 +13,22 @@
     </div>
     <form action="#" method="post" @submit.prevent="tryLogin">
       <div class="sign-form__input">
-        <label class="input">
-          <span>E-mail</span>
-          <input
-            type="email"
-            name="email"
-            placeholder="example@mail.ru"
-            ref="inputLogin"
-          />
-        </label>
+        <AppInput
+          type="email"
+          name="email"
+          placeholder="example@mail.ru"
+          caption="E-mail"
+          ref="inputLogin"
+        />
       </div>
 
       <div class="sign-form__input">
-        <label class="input">
-          <span>Пароль</span>
-          <input type="password" name="pass" placeholder="***********" />
-        </label>
+        <AppInput
+          type="password"
+          name="pass"
+          placeholder="***********"
+          caption="Пароль"
+        />
       </div>
       <button type="submit" class="button">Авторизоваться</button>
     </form>
@@ -65,7 +65,7 @@ export default {
 
   mounted() {
     this.$nextTick().then(() => {
-      this.$refs.inputLogin.focus();
+      this.$refs.inputLogin.$el.querySelector("input").focus();
     });
   },
 };

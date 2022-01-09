@@ -1,6 +1,8 @@
 import Vue from "vue";
-import RadioButton from "@/common/components/RadioButton";
-import ItemCounter from "@/common/components/ItemCounter";
+import AppRadioButton from "@/common/components/AppRadioButton";
+import AppItemCounter from "@/common/components/AppItemCounter";
+import AppInput from "@/common/components/AppInput";
 
-Vue.component("RadioButton", RadioButton);
-Vue.component("ItemCounter", ItemCounter);
+Vue.component("AppRadioButton", AppRadioButton);
+Vue.component("AppItemCounter", AppItemCounter);
+Vue.component("AppInput", AppInput);
