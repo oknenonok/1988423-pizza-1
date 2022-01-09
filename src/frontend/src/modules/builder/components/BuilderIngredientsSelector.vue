@@ -6,7 +6,7 @@
       <div class="ingredients__sauce">
         <p>Основной соус:</p>
 
-        <RadioButton
+        <AppRadioButton
           v-for="sauce in sauces"
           :key="sauce.id"
           class="radio ingredients__input"
@@ -16,7 +16,7 @@
           @select="$emit('selectSauce', +$event)"
         >
           <span>{{ sauce.name }}</span>
-        </RadioButton>
+        </AppRadioButton>
       </div>
 
       <div class="ingredients__filling">
@@ -37,10 +37,10 @@
               {{ ingredient.name }}
             </AppDrag>
 
-            <ItemCounter
+            <AppItemCounter
               class="counter--orange ingredients__counter"
               :value="ingredient.count"
-              :maxValue="maxCount"
+              :max-value="maxCount"
               @change="$emit('changeIngredient', ingredient, $event)"
             />
           </li>
@@ -52,16 +52,12 @@
 
 <script>
 import { MAX_INGREDIENT_COUNT } from "@/common/constants";
-import RadioButton from "@/common/components/RadioButton";
-import ItemCounter from "@/common/components/ItemCounter";
 import AppDrag from "@/common/components/AppDrag";
 
 export default {
   name: "BuilderIngredientsSelector",
 
   components: {
-    RadioButton,
-    ItemCounter,
     AppDrag,
   },
 
@@ -76,10 +72,12 @@ export default {
       type: Array,
       required: true,
     },
+
     sauces: {
       type: Array,
       required: true,
     },
+
     chosenSauceId: {
       type: Number,
       required: true,

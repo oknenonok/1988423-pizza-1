@@ -31,14 +31,17 @@ export default {
       type: Array,
       required: true,
     },
+
     chosenDough: {
       type: Object,
       required: true,
     },
+
     chosenSauce: {
       type: Object,
       required: true,
     },
+
     chosenIngredients: {
       type: Array,
       required: true,

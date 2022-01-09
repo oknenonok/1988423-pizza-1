@@ -7,7 +7,7 @@
         <div class="content__dough">
           <BuilderDoughSelector
             :dough="dough"
-            :chosenDoughId="chosenDoughId"
+            :chosen-dough-id="chosenDoughId"
             @select="selectDough"
           />
         </div>
@@ -15,7 +15,7 @@
         <div class="content__diameter">
           <BuilderSizeSelector
             :sizes="sizes"
-            :chosenSizeId="chosenSizeId"
+            :chosen-size-id="chosenSizeId"
             @select="selectSize"
           />
         </div>
@@ -24,24 +24,28 @@
           <BuilderIngredientsSelector
             :ingredients="ingredients"
             :sauces="sauces"
-            :chosenSauceId="chosenSauceId"
+            :chosen-sauce-id="chosenSauceId"
             @selectSauce="selectSauce"
             @changeIngredient="changeIngredient"
           />
         </div>
 
         <div class="content__pizza">
-          <BuilderPizzaName
-            :name="pizzaName"
-            @changeName="pizzaName = $event"
+          <AppInput
+            type="text"
+            name="pizza_name"
+            v-model="pizzaName"
+            placeholder="Введите название пиццы"
+            caption="Название пиццы"
+            hide-caption
           />
 
           <div class="content__constructor">
             <BuilderPizzaView
               :ingredients="ingredients"
-              :chosenDough="chosenDough"
-              :chosenSauce="chosenSauce"
-              :chosenIngredients="chosenIngredients"
+              :chosen-dough="chosenDough"
+              :chosen-sauce="chosenSauce"
+              :chosen-ingredients="chosenIngredients"
               @dropIngredient="changeIngredient"
             />
           </div>
@@ -49,7 +53,7 @@
           <BuilderPriceCounter
             class="content__result"
             :price="price"
-            :canCook="canCook"
+            :can-cook="canCook"
           />
         </div>
       </div>
@@ -72,7 +76,6 @@ import BuilderSizeSelector from "@/modules/builder/components/BuilderSizeSelecto
 import BuilderIngredientsSelector from "@/modules/builder/components/BuilderIngredientsSelector";
 import BuilderPizzaView from "@/modules/builder/components/BuilderPizzaView";
 import BuilderPriceCounter from "@/modules/builder/components/BuilderPriceCounter";
-import BuilderPizzaName from "@/modules/builder/components/BuilderPizzaName";
 
 export default {
   name: "Index",
@@ -83,7 +86,6 @@ export default {
     BuilderIngredientsSelector,
     BuilderPizzaView,
     BuilderPriceCounter,
-    BuilderPizzaName,
   },
 
   data() {
@@ -96,6 +98,7 @@ export default {
           dough
         )
       ),
+
       ingredients: ingredients.map((ingredient) =>
         Object.assign(
           {
@@ -105,6 +108,7 @@ export default {
           ingredient
         )
       ),
+
       sauces: sauces.map((sauce) =>
         Object.assign(
           {
@@ -113,6 +117,7 @@ export default {
           sauce
         )
       ),
+
       sizes: sizes.map((size) =>
         Object.assign(
           {
@@ -121,6 +126,7 @@ export default {
           size
         )
       ),
+
       chosenDoughId: DEFAULT_DOUGH,
       chosenSizeId: DEFAULT_SIZE,
       chosenSauceId: DEFAULT_SAUCE,

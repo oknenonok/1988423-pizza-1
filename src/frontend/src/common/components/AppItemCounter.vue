@@ -31,16 +31,18 @@
 
 <script>
 export default {
-  name: "ItemCounter",
+  name: "AppItemCounter",
   props: {
     minValue: {
       type: Number,
       default: 0,
     },
+
     maxValue: {
       type: Number,
       default: Number.MAX_SAFE_INTEGER,
     },
+
     value: {
       type: Number,
       required: true,

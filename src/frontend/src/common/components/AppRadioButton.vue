@@ -14,20 +14,23 @@
 
 <script>
 export default {
-  name: "RadioButton",
+  name: "AppRadioButton",
   props: {
     name: {
       type: String,
       required: true,
     },
+
     value: {
       type: [Number, String],
       required: true,
     },
+
     checked: {
       type: Boolean,
       default: false,
     },
+
     inputClass: {
       type: String,
       default: "",

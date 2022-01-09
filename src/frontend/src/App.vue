@@ -1,20 +1,18 @@
 <template>
   <div id="app">
     <AppLayout>
-      <Index />
+      <router-view />
     </AppLayout>
   </div>
 </template>
 
 <script>
 import AppLayout from "@/layouts/AppLayout";
-import Index from "@/views/Index";
 
 export default {
   name: "App",
   components: {
     AppLayout,
-    Index,
   },
 };
 </script>

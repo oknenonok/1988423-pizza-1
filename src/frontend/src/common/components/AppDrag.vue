@@ -20,6 +20,7 @@ export default {
       type: [Number, String, Object],
       required: true,
     },
+
     draggable: {
       type: Boolean,
       default: true,
