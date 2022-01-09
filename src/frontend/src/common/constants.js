@@ -52,3 +52,8 @@ export const EFFECT_LINK = "link";
  * @constant {string} тип данных при перетаскивании
  */
 export const DATA_TRANSFER_PAYLOAD = "text/plain";
+
+/**
+ * @constant {string} шаблон по умолчанию
+ */
+export const APP_DEFAULT_LAYOUT = "AppLayoutDefault";
