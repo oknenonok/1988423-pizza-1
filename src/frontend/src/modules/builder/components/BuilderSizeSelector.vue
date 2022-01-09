@@ -11,7 +11,7 @@
         name="diameter"
         :value="size.id"
         :checked="chosenSizeId === size.id"
-        inputClass="visually-hidden"
+        input-class="visually-hidden"
         @select="$emit('select', +$event)"
       >
         <span>{{ size.name }}</span>

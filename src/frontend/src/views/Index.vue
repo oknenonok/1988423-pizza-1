@@ -7,7 +7,7 @@
         <div class="content__dough">
           <BuilderDoughSelector
             :dough="dough"
-            :chosenDoughId="chosenDoughId"
+            :chosen-dough-id="chosenDoughId"
             @select="selectDough"
           />
         </div>
@@ -15,7 +15,7 @@
         <div class="content__diameter">
           <BuilderSizeSelector
             :sizes="sizes"
-            :chosenSizeId="chosenSizeId"
+            :chosen-size-id="chosenSizeId"
             @select="selectSize"
           />
         </div>
@@ -24,7 +24,7 @@
           <BuilderIngredientsSelector
             :ingredients="ingredients"
             :sauces="sauces"
-            :chosenSauceId="chosenSauceId"
+            :chosen-sauce-id="chosenSauceId"
             @selectSauce="selectSauce"
             @changeIngredient="changeIngredient"
           />
@@ -37,15 +37,15 @@
             v-model="pizzaName"
             placeholder="Введите название пиццы"
             caption="Название пиццы"
-            hideCaption
+            hide-caption
           />
 
           <div class="content__constructor">
             <BuilderPizzaView
               :ingredients="ingredients"
-              :chosenDough="chosenDough"
-              :chosenSauce="chosenSauce"
-              :chosenIngredients="chosenIngredients"
+              :chosen-dough="chosenDough"
+              :chosen-sauce="chosenSauce"
+              :chosen-ingredients="chosenIngredients"
               @dropIngredient="changeIngredient"
             />
           </div>
@@ -53,7 +53,7 @@
           <BuilderPriceCounter
             class="content__result"
             :price="price"
-            :canCook="canCook"
+            :can-cook="canCook"
           />
         </div>
       </div>

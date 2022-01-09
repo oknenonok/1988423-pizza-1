@@ -23,7 +23,7 @@
       </a>
     </div>
 
-    <Login v-if="isLoginFormOpened" isPopup @close="hideLoginForm" />
+    <Login v-if="isLoginFormOpened" is-popup @close="hideLoginForm" />
   </header>
 </template>
 

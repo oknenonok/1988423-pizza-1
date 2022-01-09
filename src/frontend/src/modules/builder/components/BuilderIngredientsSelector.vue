@@ -40,7 +40,7 @@
             <AppItemCounter
               class="counter--orange ingredients__counter"
               :value="ingredient.count"
-              :maxValue="maxCount"
+              :max-value="maxCount"
               @change="$emit('changeIngredient', ingredient, $event)"
             />
           </li>

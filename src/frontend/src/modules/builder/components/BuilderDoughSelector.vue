@@ -10,7 +10,7 @@
         :class="`dough__input--${doughItem.value}`"
         name="dought"
         :value="doughItem.id"
-        inputClass="visually-hidden"
+        input-class="visually-hidden"
         :checked="chosenDoughId === doughItem.id"
         @select="$emit('select', +$event)"
       >
