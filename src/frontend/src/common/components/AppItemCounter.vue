@@ -17,7 +17,7 @@
       :max="maxValue"
       :value="value"
       @input="valueChanged"
-    />
+    >
     <button
       type="button"
       class="counter__button counter__button--plus"

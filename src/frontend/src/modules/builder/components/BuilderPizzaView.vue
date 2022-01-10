@@ -3,13 +3,16 @@
     class="pizza"
     :class="`pizza--foundation--${chosenDough.value}-${chosenSauce.value}`"
   >
-    <AppDrop class="pizza__wrapper" @drop="addIngredient">
+    <AppDrop
+      class="pizza__wrapper"
+      @drop="addIngredient"
+    >
       <div
         v-for="ingredient in chosenIngredients"
         :key="ingredient.id"
         class="pizza__filling"
         :class="fillingClass(ingredient)"
-      ></div>
+      />
     </AppDrop>
   </div>
 </template>

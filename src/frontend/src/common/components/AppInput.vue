@@ -1,12 +1,15 @@
 <template>
   <label class="input">
-    <span v-if="caption" :class="{ 'visually-hidden': hideCaption }">
+    <span
+      v-if="caption"
+      :class="{ 'visually-hidden': hideCaption }"
+    >
       {{ caption }}
     </span>
     <input
       v-bind="{ value, type, name, placeholder, required }"
       @input="$emit('input', $event.target.value)"
-    />
+    >
   </label>
 </template>
 

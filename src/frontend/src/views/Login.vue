@@ -1,24 +1,34 @@
 <template>
   <div
+    v-click-outside="sendClose"
     class="sign-form"
     tabindex="0"
-    v-click-outside="sendClose"
     @keydown.esc="sendClose"
   >
-    <a v-if="isPopup" class="close close--white" @click="sendClose">
+    <a
+      v-if="isPopup"
+      class="close close--white"
+      @click="sendClose"
+    >
       <span class="visually-hidden">Закрыть форму авторизации</span>
     </a>
     <div class="sign-form__title">
-      <h1 class="title title--small">Авторизуйтесь на сайте</h1>
+      <h1 class="title title--small">
+        Авторизуйтесь на сайте
+      </h1>
     </div>
-    <form action="#" method="post" @submit.prevent="tryLogin">
+    <form
+      action="#"
+      method="post"
+      @submit.prevent="tryLogin"
+    >
       <div class="sign-form__input">
         <AppInput
+          v-autofocus
           type="email"
           name="email"
           placeholder="example@mail.ru"
           caption="E-mail"
-          ref="inputLogin"
         />
       </div>
 
@@ -30,7 +40,12 @@
           caption="Пароль"
         />
       </div>
-      <button type="submit" class="button">Авторизоваться</button>
+      <button
+        type="submit"
+        class="button"
+      >
+        Авторизоваться
+      </button>
     </form>
   </div>
 </template>
@@ -61,12 +76,6 @@ export default {
         this.$emit("close");
       }
     },
-  },
-
-  mounted() {
-    this.$nextTick().then(() => {
-      this.$refs.inputLogin.$el.querySelector("input").focus();
-    });
   },
 };
 </script>

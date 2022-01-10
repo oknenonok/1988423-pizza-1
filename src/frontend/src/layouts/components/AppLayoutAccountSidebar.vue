@@ -1,43 +1,36 @@
 <template>
   <div class="layout__sidebar sidebar">
-    <router-link to="/" class="logo layout__logo">
-      <img
-        src="@/assets/img/logo.svg"
-        alt="V!U!E! Pizza logo"
-        width="90"
-        height="40"
-      />
-    </router-link>
+    <AppLogo class="layout__logo" />
 
     <router-link
-      v-for="menuItem in menu"
-      :key="menuItem.link"
-      :to="menuItem.link"
+      v-for="{ link, title } in $options.menu"
+      :key="link"
+      :to="link"
       class="layout__link"
       active-class="layout__link--active"
     >
-      {{ menuItem.title }}
+      {{ title }}
     </router-link>
   </div>
 </template>
 
 <script>
+import AppLogo from "@/common/components/AppLogo";
+
 export default {
   name: "AppLayoutAccountSidebar",
 
-  data() {
-    return {
-      menu: [
-        {
-          link: "/orders",
-          title: "История заказов",
-        },
-        {
-          link: "/profile",
-          title: "Мои данные",
-        },
-      ],
-    };
-  },
+  components: { AppLogo },
+
+  menu: [
+    {
+      link: "/orders",
+      title: "История заказов",
+    },
+    {
+      link: "/profile",
+      title: "Мои данные",
+    },
+  ],
 };
 </script>

@@ -1,17 +1,12 @@
 <template>
   <header class="header">
     <div class="header__logo">
-      <router-link to="/" class="logo">
-        <img
-          src="@/assets/img/logo.svg"
-          alt="V!U!E! Pizza logo"
-          width="90"
-          height="40"
-        />
-      </router-link>
+      <AppLogo />
     </div>
     <div class="header__cart">
-      <router-link to="/cart">0 ₽</router-link>
+      <router-link to="/cart">
+        0 ₽
+      </router-link>
     </div>
     <div class="header__user">
       <a
@@ -23,15 +18,25 @@
       </a>
     </div>
 
-    <Login v-if="isLoginFormOpened" is-popup @close="hideLoginForm" />
+    <Login
+      v-if="isLoginFormOpened"
+      is-popup
+      @close="hideLoginForm"
+    />
   </header>
 </template>
 
 <script>
+import { getView } from "@/common/helpers";
+import AppLogo from "@/common/components/AppLogo";
+
 export default {
   name: "AppLayoutHeader",
 
-  components: { Login: () => import("@/views/Login.vue") },
+  components: {
+    AppLogo,
+    Login: getView("Login"),
+  },
 
   data() {
     return {

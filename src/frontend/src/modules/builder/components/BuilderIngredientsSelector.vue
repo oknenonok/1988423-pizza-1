@@ -1,6 +1,8 @@
 <template>
   <div class="sheet">
-    <h2 class="title title--small sheet__title">Выберите ингредиенты</h2>
+    <h2 class="title title--small sheet__title">
+      Выберите ингредиенты
+    </h2>
 
     <div class="sheet__content ingredients">
       <div class="ingredients__sauce">
@@ -61,12 +63,6 @@ export default {
     AppDrag,
   },
 
-  data() {
-    return {
-      maxCount: MAX_INGREDIENT_COUNT,
-    };
-  },
-
   props: {
     ingredients: {
       type: Array,
@@ -82,6 +78,12 @@ export default {
       type: Number,
       required: true,
     },
+  },
+
+  data() {
+    return {
+      maxCount: MAX_INGREDIENT_COUNT,
+    };
   },
 };
 </script>

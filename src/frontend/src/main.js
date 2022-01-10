@@ -2,6 +2,7 @@ import Vue from "vue";
 import App from "@/App";
 import router from "@/router";
 import "@/common/directives/clickOutside";
+import "@/common/directives/autofocus";
 import "@/plugins/ui";
 import "@/plugins/priceFormat";
 

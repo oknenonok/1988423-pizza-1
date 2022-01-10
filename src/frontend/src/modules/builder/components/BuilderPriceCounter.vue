@@ -4,7 +4,13 @@
       Итого:
       {{ $priceFormat(price) }}
     </p>
-    <button type="submit" class="button" :disabled="!canCook">Готовьте!</button>
+    <button
+      type="submit"
+      class="button"
+      :disabled="!canCook"
+    >
+      Готовьте!
+    </button>
   </div>
 </template>
 

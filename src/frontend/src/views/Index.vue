@@ -1,8 +1,14 @@
 <template>
   <main class="content">
-    <form action="#" method="post" @submit.prevent="addToCart">
+    <form
+      action="#"
+      method="post"
+      @submit.prevent="addToCart"
+    >
       <div class="content__wrapper">
-        <h1 class="title title--big">Конструктор пиццы</h1>
+        <h1 class="title title--big">
+          Конструктор пиццы
+        </h1>
 
         <div class="content__dough">
           <BuilderDoughSelector
@@ -32,9 +38,9 @@
 
         <div class="content__pizza">
           <AppInput
+            v-model="pizzaName"
             type="text"
             name="pizza_name"
-            v-model="pizzaName"
             placeholder="Введите название пиццы"
             caption="Название пиццы"
             hide-caption
