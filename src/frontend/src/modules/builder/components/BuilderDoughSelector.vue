@@ -14,7 +14,7 @@
         :value="doughItem.id"
         input-class="visually-hidden"
         :checked="chosenDoughId === doughItem.id"
-        @select="$emit('select', +$event)"
+        @select="setDough($event)"
       >
         <b>{{ doughItem.name }}</b>
         <span>{{ doughItem.description }}</span>
@@ -24,19 +24,25 @@
 </template>
 
 <script>
+import {
+  mapState,
+  mapGetters,
+  mapMutations
+} from "vuex";
+import { SET_DOUGH } from "@/store/mutations-types";
+
 export default {
   name: "BuilderDoughSelector",
 
-  props: {
-    dough: {
-      type: Array,
-      required: true,
-    },
+  computed: {
+    ...mapState("Builder", ["chosenDoughId"]),
+    ...mapGetters(["dough"]),
+  },
 
-    chosenDoughId: {
-      type: Number,
-      required: true,
-    },
+  methods: {
+    ...mapMutations("Builder", {
+      setDough: SET_DOUGH,
+    }),
   },
 };
 </script>

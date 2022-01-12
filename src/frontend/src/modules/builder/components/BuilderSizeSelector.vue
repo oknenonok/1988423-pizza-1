@@ -14,7 +14,7 @@
         :value="size.id"
         :checked="chosenSizeId === size.id"
         input-class="visually-hidden"
-        @select="$emit('select', +$event)"
+        @select="setSize($event)"
       >
         <span>{{ size.name }}</span>
       </AppRadioButton>
@@ -23,19 +23,25 @@
 </template>
 
 <script>
+import {
+  mapState,
+  mapGetters,
+  mapMutations
+} from "vuex";
+import { SET_SIZE } from "@/store/mutations-types";
+
 export default {
   name: "BuilderSizeSelector",
 
-  props: {
-    sizes: {
-      type: Array,
-      required: true,
-    },
+  computed: {
+    ...mapState("Builder", ["chosenSizeId"]),
+    ...mapGetters(["sizes"]),
+  },
 
-    chosenSizeId: {
-      type: Number,
-      required: true,
-    },
+  methods: {
+    ...mapMutations("Builder", {
+      setSize: SET_SIZE,
+    }),
   },
 };
 </script>

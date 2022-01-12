@@ -22,6 +22,11 @@ import {
   MAX_INGREDIENT_COUNT,
   MAPPING_FILLING_CLASS,
 } from "@/common/constants";
+import {
+  mapGetters,
+  mapMutations,
+} from "vuex";
+import { SET_INGREDIENT_COUNT } from "@/store/mutations-types";
 import AppDrop from "@/common/components/AppDrop";
 
 export default {
@@ -29,39 +34,23 @@ export default {
 
   components: { AppDrop },
 
-  props: {
-    ingredients: {
-      type: Array,
-      required: true,
-    },
-
-    chosenDough: {
-      type: Object,
-      required: true,
-    },
-
-    chosenSauce: {
-      type: Object,
-      required: true,
-    },
-
-    chosenIngredients: {
-      type: Array,
-      required: true,
-    },
+  computed: {
+    ...mapGetters("Builder", ["chosenDough", "chosenSauce", "getIngredientCount", "chosenIngredients"])
   },
 
   methods: {
+    ...mapMutations("Builder", {
+      setIngredientCount: SET_INGREDIENT_COUNT,
+    }),
+
     /**
      * Добавить 1 единицу ингредиента
      * @param {number} id ингредиента
      */
     addIngredient(ingredientId) {
-      let ingredient = this.ingredients.find(
-        (ingredient) => ingredient.id === ingredientId
-      );
-      if (ingredient && ingredient.count < MAX_INGREDIENT_COUNT) {
-        this.$emit("dropIngredient", ingredient, ingredient.count + 1);
+      let count = this.getIngredientCount(ingredientId)
+      if (ingredientId && count < MAX_INGREDIENT_COUNT) {
+        this.setIngredientCount({ingredientId, count: count + 1});
       }
     },
 
@@ -73,7 +62,7 @@ export default {
     fillingClass(ingredient) {
       return (
         `pizza__filling--${ingredient.value} ` +
-        MAPPING_FILLING_CLASS[ingredient.count]
+        MAPPING_FILLING_CLASS[this.getIngredientCount(ingredient.id)]
       );
     },
   },

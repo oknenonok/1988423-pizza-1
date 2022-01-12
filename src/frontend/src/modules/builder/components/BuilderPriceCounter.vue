@@ -15,18 +15,24 @@
 </template>
 
 <script>
+import {
+  mapState,
+  mapGetters,
+} from "vuex";
+
 export default {
   name: "BuilderPriceCounter",
 
-  props: {
-    price: {
-      type: Number,
-      required: true,
-    },
+  computed: {
+    ...mapState("Builder", ["pizzaName"]),
+    ...mapGetters("Builder", ["chosenDough", "chosenSize", "chosenSauce", "chosenIngredients", "getIngredientCount", "chosenIngredientsPrice", "price"]),
 
-    canCook: {
-      type: Boolean,
-      required: true,
+    /**
+     * Можно отправлять в готовку
+     * @returns {boolean}
+     */
+    canCook() {
+      return this.pizzaName !== "" && this.chosenIngredients.length > 0;
     },
   },
 };

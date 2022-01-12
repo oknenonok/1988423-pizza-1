@@ -15,7 +15,7 @@
           name="sauce"
           :value="sauce.id"
           :checked="chosenSauceId === sauce.id"
-          @select="$emit('selectSauce', +$event)"
+          @select="setSauce($event)"
         >
           <span>{{ sauce.name }}</span>
         </AppRadioButton>
@@ -32,7 +32,7 @@
           >
             <AppDrag
               :transfer-data="ingredient.id"
-              :draggable="ingredient.count < maxCount"
+              :draggable="getIngredientCount(ingredient.id) < maxCount"
               class="filling"
               :class="`filling--${ingredient.value}`"
             >
@@ -41,9 +41,9 @@
 
             <AppItemCounter
               class="counter--orange ingredients__counter"
-              :value="ingredient.count"
+              :value="getIngredientCount(ingredient.id)"
               :max-value="maxCount"
-              @change="$emit('changeIngredient', ingredient, $event)"
+              @change="setIngredientCount({ingredientId: ingredient.id, count: $event})"
             />
           </li>
         </ul>
@@ -53,7 +53,16 @@
 </template>
 
 <script>
+import {
+  mapState,
+  mapGetters,
+  mapMutations,
+} from "vuex";
 import { MAX_INGREDIENT_COUNT } from "@/common/constants";
+import {
+  SET_INGREDIENT_COUNT,
+  SET_SAUCE,
+} from "@/store/mutations-types";
 import AppDrag from "@/common/components/AppDrag";
 
 export default {
@@ -63,27 +72,23 @@ export default {
     AppDrag,
   },
 
-  props: {
-    ingredients: {
-      type: Array,
-      required: true,
-    },
-
-    sauces: {
-      type: Array,
-      required: true,
-    },
-
-    chosenSauceId: {
-      type: Number,
-      required: true,
-    },
-  },
-
   data() {
     return {
       maxCount: MAX_INGREDIENT_COUNT,
     };
+  },
+
+  computed: {
+    ...mapState("Builder", ["chosenSauceId"]),
+    ...mapGetters(["ingredients", "sauces"]),
+    ...mapGetters("Builder", ["getIngredientCount"])
+  },
+
+  methods: {
+    ...mapMutations("Builder", {
+      setSauce: SET_SAUCE,
+      setIngredientCount: SET_INGREDIENT_COUNT,
+    }),
   },
 };
 </script>
