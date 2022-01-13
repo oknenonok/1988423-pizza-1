@@ -21,6 +21,7 @@
     <button
       type="button"
       class="counter__button counter__button--plus"
+      :class="counterButtonClass"
       :disabled="value >= maxValue"
       @click="addValue(1)"
     >
@@ -47,6 +48,11 @@ export default {
       type: Number,
       required: true,
       validator: (v) => Number.isInteger(v),
+    },
+
+    counterButtonClass: {
+      type: String,
+      default: "",
     },
   },
 

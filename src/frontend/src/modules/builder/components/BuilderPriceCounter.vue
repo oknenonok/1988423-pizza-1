@@ -25,7 +25,7 @@ export default {
 
   computed: {
     ...mapState("Builder", ["pizzaName"]),
-    ...mapGetters("Builder", ["chosenDough", "chosenSize", "chosenSauce", "chosenIngredients", "getIngredientQuantity", "chosenIngredientsPrice", "price"]),
+    ...mapGetters("Builder", ["chosenIngredients", "price"]),
 
     /**
      * Можно отправлять в готовку

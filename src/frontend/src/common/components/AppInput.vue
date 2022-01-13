@@ -7,6 +7,7 @@
       {{ caption }}
     </span>
     <input
+      v-mask="inputMask"
       v-bind="{ value, type, name, placeholder, required }"
       @input="$emit('input', $event.target.value)"
     >
@@ -45,6 +46,10 @@ export default {
     hideCaption: {
       type: Boolean,
       default: false,
+    },
+    inputMask: {
+      type: String,
+      default: undefined,
     },
   },
 };

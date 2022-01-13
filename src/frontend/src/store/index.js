@@ -1,16 +1,25 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import VuexPersistence from "vuex-persist";
 import modules from "@/store/modules";
 import {
   SET_ENTITY,
+  UPDATE_ENTITY,
+  DELETE_ENTITY,
 } from "@/store/mutations-types";
 import {
   MAPPING_DOUGH,
+  MAPPING_DOUGH_CAPTIONS,
   MAPPING_SIZE,
   MAPPING_SAUCE,
 } from "@/common/constants";
 
 Vue.use(Vuex);
+
+const vuexLocal = new VuexPersistence({
+  storage: window.localStorage,
+  modules: ["Cart", "Builder"],
+})
 
 export default new Vuex.Store({
   strict: process.env.NODE_ENV !== "production",
@@ -20,7 +29,7 @@ export default new Vuex.Store({
     rawIngredients: [],
     rawSauces: [],
     rawSizes: [],
-    allLoaded: false,
+    rawMisc: [],
   },
 
   getters: {
@@ -34,6 +43,7 @@ export default new Vuex.Store({
         return {
           ...dough,
           value: MAPPING_DOUGH[dough.id],
+          caption: MAPPING_DOUGH_CAPTIONS[dough.id],
         }
       });
     },
@@ -79,39 +89,69 @@ export default new Vuex.Store({
         }
       });
     },
+
+    /**
+     * Дополнительные товары
+     * @param {object} state
+     * @returns {array}
+     */
+     misc(state) {
+      return state.rawMisc;
+    },
   },
 
   mutations: {
     /**
      * Универсальная мутация для обновления сущности
      * @param {object} state
-     * @param {object} param1
+     * @param {object} payload
      */
     [SET_ENTITY](state, { module, entity, value }) {
       let objToChange = module ? state[module] : state;
       objToChange[entity] = value;
+    },
+
+    /**
+     * Универсальная мутация для обновления элемента массива
+     * @param {object} state
+     * @param {object} payload
+     */
+    [UPDATE_ENTITY](state, { module, entity, value }) {
+      let objToChange = module ? state[module] : state;
+      const index = objToChange[entity]
+        .findIndex(({ id }) => id === value.id);
+      if (~index) {
+        objToChange[entity].splice(index, 1, value);
+      }
+    },
+
+    /**
+     * Универсальная мутация для удаления элемента массива
+     * @param {object} state
+     * @param {object} payload
+     */
+    [DELETE_ENTITY](state, { module, entity, id }) {
+      let objToChange = module ? state[module] : state;
+      objToChange[entity] = objToChange[entity].filter(e => +e.id !== +id);
     },
   },
 
   actions: {
     /**
      * Подгрузить все необходимые для работы приложения данные
-     * @param {object} param0
+     * @param {object} context
      */
-    async init({ commit, dispatch }) {
+    async init({ dispatch }) {
       await dispatch("loadDough");
       await dispatch("loadIngredients");
       await dispatch("loadSauces");
       await dispatch("loadSizes");
-      commit(SET_ENTITY, {
-        entity: "allLoaded",
-        value: true,
-      });
+      await dispatch("loadMisc");
     },
 
     /**
      * Подгрузить виды теста
-     * @param {object} param0
+     * @param {object} context
      */
     async loadDough({ commit }) {
       //TODO: сделать получение из апи
@@ -124,7 +164,7 @@ export default new Vuex.Store({
 
     /**
      * Подгрузить ингредиенты
-     * @param {object} param0
+     * @param {object} context
      */
     async loadIngredients({ commit }) {
       //TODO: сделать получение из апи
@@ -137,7 +177,7 @@ export default new Vuex.Store({
 
     /**
      * Подгрузить соусы
-     * @param {object} param0
+     * @param {object} context
      */
     async loadSauces({ commit }) {
       //TODO: сделать получение из апи
@@ -150,7 +190,7 @@ export default new Vuex.Store({
 
     /**
      * Подгрузить размеры
-     * @param {object} param0
+     * @param {object} context
      */
     async loadSizes({ commit }) {
       //TODO: сделать получение из апи
@@ -160,7 +200,22 @@ export default new Vuex.Store({
         value: sizes,
       });
     },
+
+    /**
+     * Подгрузить размеры
+     * @param {object} context
+     */
+    async loadMisc({ commit }) {
+      //TODO: сделать получение из апи
+      let misc = require("@/static/misc.json");
+      commit(SET_ENTITY, {
+        entity: "rawMisc",
+        value: misc,
+      });
+    },
   },
 
   modules,
+
+  plugins: [vuexLocal.plugin],
 });

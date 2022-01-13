@@ -5,6 +5,8 @@ import {
   DEFAULT_SAUCE,
 } from "@/common/constants";
 import {
+  RESET_STATE,
+  RESET_STATE_TO_CART_ITEM,
   SET_INGREDIENT_QUANTITY,
   SET_DOUGH,
   SET_SIZE,
@@ -12,18 +14,28 @@ import {
   SET_PIZZA_NAME,
 } from "@/store/mutations-types";
 
+const setupState = () => ({
+  chosenDoughId: DEFAULT_DOUGH,
+  chosenSizeId: DEFAULT_SIZE,
+  chosenSauceId: DEFAULT_SAUCE,
+  chosenIngredientsById: {},
+  pizzaName: "",
+  editCartItemId: null,
+});
+
 export default {
   namespaced: true,
 
-  state: {
-    chosenDoughId: DEFAULT_DOUGH,
-    chosenSizeId: DEFAULT_SIZE,
-    chosenSauceId: DEFAULT_SAUCE,
-    chosenIngredientsById: {},
-    pizzaName: "",
-  },
+  state: setupState(),
 
   getters: {
+    dataReady(state, getters, rootState) {
+      return rootState.rawDough.length
+        && rootState.rawIngredients.length
+        && rootState.rawSauces.length
+        && rootState.rawSizes.length;
+    },
+
     /**
      * Объект - выбранное тесто
      * @returns {object}
@@ -53,7 +65,15 @@ export default {
      * @returns {array}
      */
     chosenIngredients(state, getters, rootState, rootGetters) {
-      return rootGetters.ingredients.filter((ingredient) => state.chosenIngredientsById[ingredient.id]);
+      return rootGetters.ingredients
+        .filter((ingredient) => state.chosenIngredientsById[ingredient.id])
+        .map((ingredient) => {
+          return {
+            ...ingredient,
+            quantity: getters.getIngredientQuantity(ingredient.id),
+          }
+        }
+      );
     },
 
     /**
@@ -72,10 +92,7 @@ export default {
      * @returns {number}
      */
     chosenIngredientsPrice(state, getters) {
-      return getters.chosenIngredients.reduce(
-        (total, ingredient) => total + ingredient.price * getters.getIngredientQuantity(ingredient.id),
-        0
-      );
+      return getters.calculateIngredientsPrice(getters.chosenIngredients);
     },
 
     /**
@@ -83,12 +100,32 @@ export default {
      * @returns {number}
      */
     price(state, getters) {
-      return (
-        (getters.chosenDough.price +
-          getters.chosenSauce.price +
-          getters.chosenIngredientsPrice
-        ) * getters.chosenSize.multiplier
-      );
+      return getters.calculatePrice({
+        dough: getters.chosenDough,
+        sauce: getters.chosenSauce,
+        size: getters.chosenSize,
+        ingredientsPrice: getters.chosenIngredientsPrice,
+      });
+    },
+
+    calculatePrice() {
+      return ({dough, size, sauce, ingredientsPrice}) => {
+        return (
+          (dough.price +
+            sauce.price +
+            ingredientsPrice
+          ) * size.multiplier
+        );
+      };
+    },
+
+    calculateIngredientsPrice() {
+      return (ingredients) => {
+        return ingredients.reduce(
+          (total, ingredient) => total + ingredient.price * ingredient.quantity,
+          0
+        );
+      };
     },
   },
 
@@ -96,7 +133,7 @@ export default {
     /**
      * Обновить количество ингредиента на пицце
      * @param {object} state
-     * @param {object} param1
+     * @param {object} payload
      */
     [SET_INGREDIENT_QUANTITY](state, {ingredientId, quantity}) {
       if (quantity > 0) {
@@ -104,6 +141,7 @@ export default {
       } else {
         Vue.delete(state.chosenIngredientsById, ingredientId);
       }
+      this.dispatch("Builder/updateCart");
     },
 
     /**
@@ -113,6 +151,7 @@ export default {
      */
     [SET_DOUGH](state, doughId) {
       state.chosenDoughId = +doughId;
+      this.dispatch("Builder/updateCart");
     },
 
     /**
@@ -122,6 +161,7 @@ export default {
      */
     [SET_SIZE](state, sizeId) {
       state.chosenSizeId = +sizeId;
+      this.dispatch("Builder/updateCart");
     },
 
     /**
@@ -131,6 +171,7 @@ export default {
      */
     [SET_SAUCE](state, sauceId) {
       state.chosenSauceId = +sauceId;
+      this.dispatch("Builder/updateCart");
     },
 
     /**
@@ -140,6 +181,55 @@ export default {
      */
     [SET_PIZZA_NAME](state, name) {
       state.pizzaName = name;
+      this.dispatch("Builder/updateCart");
+    },
+
+    /**
+     * Сбросить состояние
+     * @param {object} state
+     */
+    [RESET_STATE](state) {
+      Object.assign(state, setupState())
+    },
+
+    /**
+     * Установить состояние из строки корзины
+     * @param {object} state
+     * @param {object} cartItem
+     */
+    [RESET_STATE_TO_CART_ITEM](state, cartItem) {
+      Object.assign(state, {
+        chosenDoughId: cartItem.dough.id,
+        chosenSizeId: cartItem.size.id,
+        chosenSauceId: cartItem.sauce.id,
+        chosenIngredientsById: cartItem.ingredients.reduce((result, item) => ({
+          ...result,
+          [item.id]: item.quantity,
+        }), {}),
+        pizzaName: cartItem.name,
+        editCartItemId: cartItem.id,
+      });
     },
   },
+
+  actions: {
+    /**
+     * Обновить редактируемую строку корзины
+     * @param {object} context
+     */
+    updateCart({dispatch, getters, state, rootState}) {
+      if (state.editCartItemId !== null) {
+        let cartItem = rootState.Cart.cartItems.find((item) => item.id === state.editCartItemId);
+        dispatch("Cart/addToCart", {
+          ...cartItem,
+          id: state.editCartItemId,
+          name: state.pizzaName,
+          sauce: getters.chosenSauce,
+          dough: getters.chosenDough,
+          size: getters.chosenSize,
+          ingredients: getters.chosenIngredients,
+        }, { root: true });
+      }
+    }
+  }
 };

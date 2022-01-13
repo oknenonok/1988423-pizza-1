@@ -5,7 +5,7 @@
     </div>
     <div class="header__cart">
       <router-link to="/cart">
-        0 ₽
+        {{ $priceFormat(price) }}
       </router-link>
     </div>
     <div class="header__user">
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import { getView } from "@/common/helpers";
 import AppLogo from "@/common/components/AppLogo";
 
@@ -42,6 +43,10 @@ export default {
     return {
       isLoginFormOpened: false,
     };
+  },
+
+  computed: {
+    ...mapGetters("Cart", ["price"]),
   },
 
   methods: {
