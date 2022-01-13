@@ -5,7 +5,7 @@ import {
   DEFAULT_SAUCE,
 } from "@/common/constants";
 import {
-  SET_INGREDIENT_COUNT,
+  SET_INGREDIENT_QUANTITY,
   SET_DOUGH,
   SET_SIZE,
   SET_SAUCE,
@@ -61,7 +61,7 @@ export default {
      * @param {object} state
      * @returns {function}
      */
-     getIngredientCount(state) {
+    getIngredientQuantity(state) {
       return ingredientId => {
         return state.chosenIngredientsById[ingredientId] ?? 0;
       };
@@ -73,7 +73,7 @@ export default {
      */
     chosenIngredientsPrice(state, getters) {
       return getters.chosenIngredients.reduce(
-        (total, ingredient) => total + ingredient.price * getters.getIngredientCount(ingredient.id),
+        (total, ingredient) => total + ingredient.price * getters.getIngredientQuantity(ingredient.id),
         0
       );
     },
@@ -98,9 +98,9 @@ export default {
      * @param {object} state
      * @param {object} param1
      */
-    [SET_INGREDIENT_COUNT](state, {ingredientId, count}) {
-      if (count > 0) {
-        Vue.set(state.chosenIngredientsById, ingredientId, +count);
+    [SET_INGREDIENT_QUANTITY](state, {ingredientId, quantity}) {
+      if (quantity > 0) {
+        Vue.set(state.chosenIngredientsById, ingredientId, +quantity);
       } else {
         Vue.delete(state.chosenIngredientsById, ingredientId);
       }

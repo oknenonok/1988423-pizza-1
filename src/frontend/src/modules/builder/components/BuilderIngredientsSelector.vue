@@ -32,7 +32,7 @@
           >
             <AppDrag
               :transfer-data="ingredient.id"
-              :draggable="getIngredientCount(ingredient.id) < maxCount"
+              :draggable="getIngredientQuantity(ingredient.id) < maxQuantity"
               class="filling"
               :class="`filling--${ingredient.value}`"
             >
@@ -41,9 +41,9 @@
 
             <AppItemCounter
               class="counter--orange ingredients__counter"
-              :value="getIngredientCount(ingredient.id)"
-              :max-value="maxCount"
-              @change="setIngredientCount({ingredientId: ingredient.id, count: $event})"
+              :value="getIngredientQuantity(ingredient.id)"
+              :max-value="maxQuantity"
+              @change="setIngredientQuantity({ingredientId: ingredient.id, quantity: $event})"
             />
           </li>
         </ul>
@@ -58,9 +58,9 @@ import {
   mapGetters,
   mapMutations,
 } from "vuex";
-import { MAX_INGREDIENT_COUNT } from "@/common/constants";
+import { MAX_INGREDIENT_QUANTITY } from "@/common/constants";
 import {
-  SET_INGREDIENT_COUNT,
+  SET_INGREDIENT_QUANTITY,
   SET_SAUCE,
 } from "@/store/mutations-types";
 import AppDrag from "@/common/components/AppDrag";
@@ -74,20 +74,20 @@ export default {
 
   data() {
     return {
-      maxCount: MAX_INGREDIENT_COUNT,
+      maxQuantity: MAX_INGREDIENT_QUANTITY,
     };
   },
 
   computed: {
     ...mapState("Builder", ["chosenSauceId"]),
     ...mapGetters(["ingredients", "sauces"]),
-    ...mapGetters("Builder", ["getIngredientCount"])
+    ...mapGetters("Builder", ["getIngredientQuantity"])
   },
 
   methods: {
     ...mapMutations("Builder", {
       setSauce: SET_SAUCE,
-      setIngredientCount: SET_INGREDIENT_COUNT,
+      setIngredientQuantity: SET_INGREDIENT_QUANTITY,
     }),
   },
 };

@@ -41,7 +41,7 @@ export const MAPPING_FILLING_CLASS = [
 /**
  * @constant {number} максимальное количество ингредиентов на пицце
  */
-export const MAX_INGREDIENT_COUNT = 3;
+export const MAX_INGREDIENT_QUANTITY = 3;
 
 /**
  * @constant {string} эффект при перетаскивании

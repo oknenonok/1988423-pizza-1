@@ -21,12 +21,12 @@ export default [
     path: "/profile",
     name: "Profile",
     component: getView("Profile"),
-    meta: { layout: "AppLayoutAccount" },
+    meta: { layout: "AppLayoutAcquantity" },
   },
   {
     path: "/orders",
     name: "Orders",
     component: getView("Orders"),
-    meta: { layout: "AppLayoutAccount" },
+    meta: { layout: "AppLayoutAcquantity" },
   },
 ];
