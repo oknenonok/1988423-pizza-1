@@ -1,19 +1,41 @@
 <template>
   <header class="header">
     <div class="header__logo">
-      <router-link to="/" class="logo">
-        <img
-          src="@/assets/img/logo.svg"
-          alt="V!U!E! Pizza logo"
-          width="90"
-          height="40"
-        />
-      </router-link>
+      <AppLogo />
     </div>
     <div class="header__cart">
-      <router-link to="/cart">0 ₽</router-link>
+      <router-link to="/cart">
+        {{ $priceFormat(price) }}
+      </router-link>
     </div>
-    <div class="header__user">
+
+    <div
+      v-if="user"
+      class="header__user"
+    >
+      <router-link to="/profile">
+        <picture>
+          <img
+            :src="user.avatar"
+            :alt="user.name"
+            width="32"
+            height="32"
+          >
+        </picture>
+        <span>{{ user.name }}</span>
+      </router-link>
+      <a
+        href="#"
+        class="header__logout"
+        @click.prevent="logoutUser"
+      >
+        <span>Выйти</span>
+      </a>
+    </div>
+    <div
+      v-else
+      class="header__user"
+    >
       <a
         :href="`/login?back=${$route.path}`"
         class="header__login"
@@ -23,15 +45,30 @@
       </a>
     </div>
 
-    <Login v-if="isLoginFormOpened" is-popup @close="hideLoginForm" />
+    <Login
+      v-if="isLoginFormOpened"
+      is-popup
+      @close="hideLoginForm"
+    />
   </header>
 </template>
 
 <script>
+import {
+  mapState,
+  mapGetters,
+  mapActions,
+} from "vuex";
+import { getView } from "@/common/helpers";
+import AppLogo from "@/common/components/AppLogo";
+
 export default {
   name: "AppLayoutHeader",
 
-  components: { Login: () => import("@/views/Login.vue") },
+  components: {
+    AppLogo,
+    Login: getView("Login"),
+  },
 
   data() {
     return {
@@ -39,7 +76,14 @@ export default {
     };
   },
 
+  computed: {
+    ...mapState("Auth", ["user"]),
+    ...mapGetters("Cart", ["price"]),
+  },
+
   methods: {
+    ...mapActions("Auth", ["logoutUser"]),
+
     showLoginForm() {
       this.isLoginFormOpened = true;
     },

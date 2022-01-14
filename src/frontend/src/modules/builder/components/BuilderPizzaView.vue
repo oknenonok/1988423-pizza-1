@@ -3,22 +3,30 @@
     class="pizza"
     :class="`pizza--foundation--${chosenDough.value}-${chosenSauce.value}`"
   >
-    <AppDrop class="pizza__wrapper" @drop="addIngredient">
+    <AppDrop
+      class="pizza__wrapper"
+      @drop="addIngredient"
+    >
       <div
         v-for="ingredient in chosenIngredients"
         :key="ingredient.id"
         class="pizza__filling"
         :class="fillingClass(ingredient)"
-      ></div>
+      />
     </AppDrop>
   </div>
 </template>
 
 <script>
 import {
-  MAX_INGREDIENT_COUNT,
+  MAX_INGREDIENT_QUANTITY,
   MAPPING_FILLING_CLASS,
 } from "@/common/constants";
+import {
+  mapGetters,
+  mapMutations,
+} from "vuex";
+import { SET_INGREDIENT_QUANTITY } from "@/store/mutations-types";
 import AppDrop from "@/common/components/AppDrop";
 
 export default {
@@ -26,39 +34,23 @@ export default {
 
   components: { AppDrop },
 
-  props: {
-    ingredients: {
-      type: Array,
-      required: true,
-    },
-
-    chosenDough: {
-      type: Object,
-      required: true,
-    },
-
-    chosenSauce: {
-      type: Object,
-      required: true,
-    },
-
-    chosenIngredients: {
-      type: Array,
-      required: true,
-    },
+  computed: {
+    ...mapGetters("Builder", ["chosenDough", "chosenSauce", "getIngredientQuantity", "chosenIngredients"])
   },
 
   methods: {
+    ...mapMutations("Builder", {
+      setIngredientQuantity: SET_INGREDIENT_QUANTITY,
+    }),
+
     /**
      * Добавить 1 единицу ингредиента
      * @param {number} id ингредиента
      */
     addIngredient(ingredientId) {
-      let ingredient = this.ingredients.find(
-        (ingredient) => ingredient.id === ingredientId
-      );
-      if (ingredient && ingredient.count < MAX_INGREDIENT_COUNT) {
-        this.$emit("dropIngredient", ingredient, ingredient.count + 1);
+      let quantity = this.getIngredientQuantity(ingredientId)
+      if (ingredientId && quantity < MAX_INGREDIENT_QUANTITY) {
+        this.setIngredientQuantity({ingredientId, quantity: quantity + 1});
       }
     },
 
@@ -70,7 +62,7 @@ export default {
     fillingClass(ingredient) {
       return (
         `pizza__filling--${ingredient.value} ` +
-        MAPPING_FILLING_CLASS[ingredient.count]
+        MAPPING_FILLING_CLASS[this.getIngredientQuantity(ingredient.id)]
       );
     },
   },

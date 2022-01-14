@@ -1,6 +1,8 @@
 <template>
   <div class="sheet">
-    <h2 class="title title--small sheet__title">Выберите ингредиенты</h2>
+    <h2 class="title title--small sheet__title">
+      Выберите ингредиенты
+    </h2>
 
     <div class="sheet__content ingredients">
       <div class="ingredients__sauce">
@@ -13,7 +15,7 @@
           name="sauce"
           :value="sauce.id"
           :checked="chosenSauceId === sauce.id"
-          @select="$emit('selectSauce', +$event)"
+          @select="setSauce"
         >
           <span>{{ sauce.name }}</span>
         </AppRadioButton>
@@ -30,7 +32,7 @@
           >
             <AppDrag
               :transfer-data="ingredient.id"
-              :draggable="ingredient.count < maxCount"
+              :draggable="getIngredientQuantity(ingredient.id) < maxQuantity"
               class="filling"
               :class="`filling--${ingredient.value}`"
             >
@@ -39,9 +41,9 @@
 
             <AppItemCounter
               class="counter--orange ingredients__counter"
-              :value="ingredient.count"
-              :max-value="maxCount"
-              @change="$emit('changeIngredient', ingredient, $event)"
+              :value="getIngredientQuantity(ingredient.id)"
+              :max-value="maxQuantity"
+              @change="setIngredientQuantity({ingredientId: ingredient.id, quantity: $event})"
             />
           </li>
         </ul>
@@ -51,7 +53,16 @@
 </template>
 
 <script>
-import { MAX_INGREDIENT_COUNT } from "@/common/constants";
+import {
+  mapState,
+  mapGetters,
+  mapMutations,
+} from "vuex";
+import { MAX_INGREDIENT_QUANTITY } from "@/common/constants";
+import {
+  SET_INGREDIENT_QUANTITY,
+  SET_SAUCE,
+} from "@/store/mutations-types";
 import AppDrag from "@/common/components/AppDrag";
 
 export default {
@@ -63,25 +74,21 @@ export default {
 
   data() {
     return {
-      maxCount: MAX_INGREDIENT_COUNT,
+      maxQuantity: MAX_INGREDIENT_QUANTITY,
     };
   },
 
-  props: {
-    ingredients: {
-      type: Array,
-      required: true,
-    },
+  computed: {
+    ...mapState("Builder", ["chosenSauceId"]),
+    ...mapGetters(["ingredients", "sauces"]),
+    ...mapGetters("Builder", ["getIngredientQuantity"])
+  },
 
-    sauces: {
-      type: Array,
-      required: true,
-    },
-
-    chosenSauceId: {
-      type: Number,
-      required: true,
-    },
+  methods: {
+    ...mapMutations("Builder", {
+      setSauce: SET_SAUCE,
+      setIngredientQuantity: SET_INGREDIENT_QUANTITY,
+    }),
   },
 };
 </script>

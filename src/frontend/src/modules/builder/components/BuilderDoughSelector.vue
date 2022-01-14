@@ -1,6 +1,8 @@
 <template>
   <div class="sheet">
-    <h2 class="title title--small sheet__title">Выберите тесто</h2>
+    <h2 class="title title--small sheet__title">
+      Выберите тесто
+    </h2>
 
     <div class="sheet__content dough">
       <AppRadioButton
@@ -12,7 +14,7 @@
         :value="doughItem.id"
         input-class="visually-hidden"
         :checked="chosenDoughId === doughItem.id"
-        @select="$emit('select', +$event)"
+        @select="setDough"
       >
         <b>{{ doughItem.name }}</b>
         <span>{{ doughItem.description }}</span>
@@ -22,19 +24,25 @@
 </template>
 
 <script>
+import {
+  mapState,
+  mapGetters,
+  mapMutations
+} from "vuex";
+import { SET_DOUGH } from "@/store/mutations-types";
+
 export default {
   name: "BuilderDoughSelector",
 
-  props: {
-    dough: {
-      type: Array,
-      required: true,
-    },
+  computed: {
+    ...mapState("Builder", ["chosenDoughId"]),
+    ...mapGetters(["dough"]),
+  },
 
-    chosenDoughId: {
-      type: Number,
-      required: true,
-    },
+  methods: {
+    ...mapMutations("Builder", {
+      setDough: SET_DOUGH,
+    }),
   },
 };
 </script>

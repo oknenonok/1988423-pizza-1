@@ -1,12 +1,22 @@
 <template>
   <label class="input">
-    <span v-if="caption" :class="{ 'visually-hidden': hideCaption }">
+    <span
+      v-if="caption"
+      :class="{ 'visually-hidden': hideCaption }"
+    >
       {{ caption }}
     </span>
     <input
+      v-if="inputMask"
+      v-mask="inputMask"
       v-bind="{ value, type, name, placeholder, required }"
       @input="$emit('input', $event.target.value)"
-    />
+    >
+    <input
+      v-else
+      v-bind="{ value, type, name, placeholder, required }"
+      @input="$emit('input', $event.target.value)"
+    >
   </label>
 </template>
 
@@ -42,6 +52,10 @@ export default {
     hideCaption: {
       type: Boolean,
       default: false,
+    },
+    inputMask: {
+      type: String,
+      default: null,
     },
   },
 };

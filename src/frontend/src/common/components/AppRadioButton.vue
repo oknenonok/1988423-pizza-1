@@ -7,7 +7,7 @@
       :checked="checked"
       :class="inputClass"
       @change="$emit('select', $event.target.value)"
-    />
+    >
     <slot />
   </label>
 </template>

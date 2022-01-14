@@ -1,60 +1,36 @@
 <template>
   <main class="content">
-    <form action="#" method="post" @submit.prevent="addToCart">
+    <form
+      v-if="dataReady"
+      action="#"
+      method="post"
+      @submit.prevent="submit"
+    >
       <div class="content__wrapper">
-        <h1 class="title title--big">Конструктор пиццы</h1>
+        <h1 class="title title--big">
+          Конструктор пиццы
+        </h1>
 
         <div class="content__dough">
-          <BuilderDoughSelector
-            :dough="dough"
-            :chosen-dough-id="chosenDoughId"
-            @select="selectDough"
-          />
+          <BuilderDoughSelector />
         </div>
 
         <div class="content__diameter">
-          <BuilderSizeSelector
-            :sizes="sizes"
-            :chosen-size-id="chosenSizeId"
-            @select="selectSize"
-          />
+          <BuilderSizeSelector />
         </div>
 
         <div class="content__ingredients">
-          <BuilderIngredientsSelector
-            :ingredients="ingredients"
-            :sauces="sauces"
-            :chosen-sauce-id="chosenSauceId"
-            @selectSauce="selectSauce"
-            @changeIngredient="changeIngredient"
-          />
+          <BuilderIngredientsSelector />
         </div>
 
         <div class="content__pizza">
-          <AppInput
-            type="text"
-            name="pizza_name"
-            v-model="pizzaName"
-            placeholder="Введите название пиццы"
-            caption="Название пиццы"
-            hide-caption
-          />
+          <BuilderPizzaName />
 
           <div class="content__constructor">
-            <BuilderPizzaView
-              :ingredients="ingredients"
-              :chosen-dough="chosenDough"
-              :chosen-sauce="chosenSauce"
-              :chosen-ingredients="chosenIngredients"
-              @dropIngredient="changeIngredient"
-            />
+            <BuilderPizzaView />
           </div>
 
-          <BuilderPriceCounter
-            class="content__result"
-            :price="price"
-            :can-cook="canCook"
-          />
+          <BuilderPriceCounter class="content__result" />
         </div>
       </div>
     </form>
@@ -62,20 +38,22 @@
 </template>
 
 <script>
-import { dough, ingredients, sauces, sizes } from "@/static/pizza.json";
 import {
-  DEFAULT_DOUGH,
-  DEFAULT_SIZE,
-  DEFAULT_SAUCE,
-  MAPPING_DOUGH,
-  MAPPING_SIZE,
-  MAPPING_SAUCE,
-} from "@/common/constants";
+  mapState,
+  mapGetters,
+  mapMutations,
+  mapActions,
+} from "vuex";
+import {
+  RESET_STATE,
+  RESET_STATE_TO_CART_ITEM,
+} from "@/store/mutations-types";
 import BuilderDoughSelector from "@/modules/builder/components/BuilderDoughSelector";
 import BuilderSizeSelector from "@/modules/builder/components/BuilderSizeSelector";
 import BuilderIngredientsSelector from "@/modules/builder/components/BuilderIngredientsSelector";
 import BuilderPizzaView from "@/modules/builder/components/BuilderPizzaView";
 import BuilderPriceCounter from "@/modules/builder/components/BuilderPriceCounter";
+import BuilderPizzaName from "@/modules/builder/components/BuilderPizzaName";
 
 export default {
   name: "Index",
@@ -86,139 +64,48 @@ export default {
     BuilderIngredientsSelector,
     BuilderPizzaView,
     BuilderPriceCounter,
-  },
-
-  data() {
-    return {
-      dough: dough.map((dough) =>
-        Object.assign(
-          {
-            value: MAPPING_DOUGH[dough.id],
-          },
-          dough
-        )
-      ),
-
-      ingredients: ingredients.map((ingredient) =>
-        Object.assign(
-          {
-            value: ingredient.image.replace(/^.*\//, "").replace(".svg", ""),
-            count: 0,
-          },
-          ingredient
-        )
-      ),
-
-      sauces: sauces.map((sauce) =>
-        Object.assign(
-          {
-            value: MAPPING_SAUCE[sauce.id],
-          },
-          sauce
-        )
-      ),
-
-      sizes: sizes.map((size) =>
-        Object.assign(
-          {
-            value: MAPPING_SIZE[size.id],
-          },
-          size
-        )
-      ),
-
-      chosenDoughId: DEFAULT_DOUGH,
-      chosenSizeId: DEFAULT_SIZE,
-      chosenSauceId: DEFAULT_SAUCE,
-      pizzaName: "",
-    };
+    BuilderPizzaName,
   },
 
   computed: {
-    /**
-     * Объект - выбранное тесто
-     * @returns {object}
-     */
-    chosenDough() {
-      return this.dough.find((dough) => dough.id === this.chosenDoughId);
-    },
+    ...mapState("Builder", ["pizzaName", "editCartItemId"]),
+    ...mapGetters("Builder", ["dataReady", "chosenDough", "chosenSize", "chosenSauce", "chosenIngredients"]),
+  },
 
-    /**
-     * Объект - выбранный соус
-     * @returns {object}
-     */
-    chosenSauce() {
-      return this.sauces.find((sauce) => sauce.id === this.chosenSauceId);
-    },
+  created() {
+    this.$store.dispatch("Builder/init");
+    let cartItemId = this.$route.query.edit;
+    if (cartItemId) {
+      let cartItem = this.$store.state.Cart.cartItems.find(item => item.id === cartItemId);
+      this.$store.commit(`Builder/${RESET_STATE_TO_CART_ITEM}`, cartItem);
+    }
+  },
 
-    /**
-     * Объект - выбранный размер
-     * @returns {object}
-     */
-    chosenSize() {
-      return this.sizes.find((size) => size.id === this.chosenSizeId);
-    },
-
-    /**
-     * Массив объектов с выбранными ингредиентами
-     * @returns {array}
-     */
-    chosenIngredients() {
-      return this.ingredients.filter((ingredient) => ingredient.count);
-    },
-
-    /**
-     * Стоимость всех ингредиентов на пицце
-     * @returns {number}
-     */
-    chosenIngredientsPrice() {
-      return this.chosenIngredients.reduce(
-        (total, ingredient) => total + ingredient.price * ingredient.count,
-        0
-      );
-    },
-
-    /**
-     * Итоговая цена пиццы
-     * @returns {number}
-     */
-    price() {
-      return (
-        (this.chosenDough.price +
-          this.chosenSauce.price +
-          this.chosenIngredientsPrice) *
-        this.chosenSize.multiplier
-      );
-    },
-
-    /**
-     * Можно отправлять в готовку
-     * @returns {boolean}
-     */
-    canCook() {
-      return this.pizzaName !== "" && this.chosenIngredients.length > 0;
-    },
+  beforeDestroy() {
+    if (this.editCartItemId) {
+      this.resetBuilder();
+    }
   },
 
   methods: {
-    selectDough(doughId) {
-      this.chosenDoughId = doughId;
-    },
+    ...mapMutations("Builder", {
+      resetBuilder: RESET_STATE,
+    }),
+    ...mapActions("Cart", ["addToCart"]),
 
-    selectSize(sizeId) {
-      this.chosenSizeId = sizeId;
-    },
-
-    selectSauce(sauceId) {
-      this.chosenSauceId = sauceId;
-    },
-
-    changeIngredient(ingredient, newCount) {
-      ingredient.count = newCount;
-    },
-
-    addToCart() {
-      console.log("submit");
+    submit() {
+      if (this.editCartItemId) {
+        this.$router.push("/cart");
+      } else {
+        this.addToCart({
+          name: this.pizzaName,
+          sauce: this.chosenSauce,
+          dough: this.chosenDough,
+          size: this.chosenSize,
+          ingredients: this.chosenIngredients,
+        });
+        this.resetBuilder();
+      }
     },
   },
 };

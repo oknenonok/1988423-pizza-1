@@ -1,41 +1,63 @@
 <template>
   <div
+    v-click-outside="sendClose"
     class="sign-form"
     tabindex="0"
-    v-click-outside="sendClose"
     @keydown.esc="sendClose"
   >
-    <a v-if="isPopup" class="close close--white" @click="sendClose">
+    <a
+      v-if="isPopup"
+      class="close close--white"
+      @click="sendClose"
+    >
       <span class="visually-hidden">Закрыть форму авторизации</span>
     </a>
     <div class="sign-form__title">
-      <h1 class="title title--small">Авторизуйтесь на сайте</h1>
+      <h1 class="title title--small">
+        Авторизуйтесь на сайте
+      </h1>
     </div>
-    <form action="#" method="post" @submit.prevent="tryLogin">
+    <form
+      action="#"
+      method="post"
+      @submit.prevent="tryLogin"
+    >
       <div class="sign-form__input">
         <AppInput
+          v-model="email"
+          v-autofocus
           type="email"
           name="email"
           placeholder="example@mail.ru"
           caption="E-mail"
-          ref="inputLogin"
+          required
         />
       </div>
 
       <div class="sign-form__input">
         <AppInput
+          v-model="password"
           type="password"
-          name="pass"
+          name="password"
           placeholder="***********"
           caption="Пароль"
+          required
         />
       </div>
-      <button type="submit" class="button">Авторизоваться</button>
+      <button
+        type="submit"
+        class="button"
+      >
+        Авторизоваться
+      </button>
     </form>
   </div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+import notificationTypes from "@/common/enums/notificationTypes";
+
 export default {
   name: "Login",
 
@@ -46,13 +68,32 @@ export default {
     },
   },
 
+  data() {
+    return {
+      email: "",
+      password: "",
+    };
+  },
+
   methods: {
-    tryLogin() {
-      //TODO: добавить логику авторизации
-      if (this.isPopup) {
-        this.sendClose();
-      } else {
-        this.$router.push(this.$route.query.back ?? "/");
+    ...mapActions("Auth", ["loginUser"]),
+
+    async tryLogin() {
+      try {
+        await this.loginUser({
+          email: this.email,
+          password: this.password,
+        });
+        if (this.isPopup) {
+          this.sendClose();
+        } else {
+          this.$router.push(this.$route.query.back ?? "/");
+        }
+      } catch (error) {
+        this.$store.dispatch("createNotification", {
+          text: error.message,
+          type: notificationTypes.ERROR,
+        });
       }
     },
 
@@ -61,12 +102,6 @@ export default {
         this.$emit("close");
       }
     },
-  },
-
-  mounted() {
-    this.$nextTick().then(() => {
-      this.$refs.inputLogin.$el.querySelector("input").focus();
-    });
   },
 };
 </script>

@@ -1,30 +1,32 @@
+import { getView } from "@/common/helpers";
+
 export default [
   {
     path: "/",
     name: "Index",
-    component: () => import("@/views/Index.vue"),
+    component: getView("Index"),
   },
   {
     path: "/Login",
     name: "Login",
-    component: () => import("@/views/Login.vue"),
+    component: getView("Login"),
     meta: { layout: "AppLayoutClean" },
   },
   {
     path: "/cart",
     name: "Cart",
-    component: () => import("@/views/Cart.vue"),
+    component: getView("Cart"),
   },
   {
     path: "/profile",
     name: "Profile",
-    component: () => import("@/views/Profile.vue"),
+    component: getView("Profile"),
     meta: { layout: "AppLayoutAccount" },
   },
   {
     path: "/orders",
     name: "Orders",
-    component: () => import("@/views/Orders.vue"),
+    component: getView("Orders"),
     meta: { layout: "AppLayoutAccount" },
   },
 ];
