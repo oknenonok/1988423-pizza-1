@@ -11,3 +11,6 @@ export const SET_SAUCE = "setChosenSauceId";
 export const SET_PIZZA_NAME = "setPizzaName";
 export const PUSH_TO_CART = "pushToCart";
 export const SET_DELIVERY_TYPE = "setDeliveryType";
+export const SET_LOGGED_USER = "setLoggedUser";
+export const ADD_NOTIFICATION = "addNotification";
+export const DELETE_NOTIFICATION = "deleteNotification";

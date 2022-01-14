@@ -1,24 +1,28 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import { uniqueId } from "lodash";
 import VuexPersistence from "vuex-persist";
 import modules from "@/store/modules";
 import {
   SET_ENTITY,
   UPDATE_ENTITY,
   DELETE_ENTITY,
+  ADD_NOTIFICATION,
+  DELETE_NOTIFICATION,
 } from "@/store/mutations-types";
 import {
   MAPPING_DOUGH,
   MAPPING_DOUGH_CAPTIONS,
   MAPPING_SIZE,
   MAPPING_SAUCE,
+  MESSAGE_LIVE_TIME,
 } from "@/common/constants";
 
 Vue.use(Vuex);
 
 const vuexLocal = new VuexPersistence({
   storage: window.localStorage,
-  modules: ["Cart", "Builder"],
+  modules: ["Cart", "Builder", "Auth"],
 })
 
 export default new Vuex.Store({
@@ -30,6 +34,7 @@ export default new Vuex.Store({
     rawSauces: [],
     rawSizes: [],
     rawMisc: [],
+    notifications: [],
   },
 
   getters: {
@@ -134,6 +139,26 @@ export default new Vuex.Store({
       let objToChange = module ? state[module] : state;
       objToChange[entity] = objToChange[entity].filter(e => +e.id !== +id);
     },
+
+    /**
+     * Добавление уведомления
+     * @param {object} state
+     * @param {object} notification
+     */
+    [ADD_NOTIFICATION](state, notification) {
+      state.notifications = [...state.notifications, notification];
+    },
+
+    /**
+     * Удаление уведомления
+     * @param {object} state
+     * @param {string} id
+     */
+    [DELETE_NOTIFICATION](state, id) {
+      state.notifications = state.notifications.filter(
+        notification => notification.id !== id
+      );
+    },
   },
 
   actions: {
@@ -212,6 +237,23 @@ export default new Vuex.Store({
         entity: "rawMisc",
         value: misc,
       });
+    },
+
+    /**
+     * Создать уведомление
+     * @param {object} context
+     * @param {object} payload
+     */
+    async createNotification({ commit }, { ...notification }) {
+      const uniqueNotification = {
+        ...notification,
+        id: uniqueId(),
+      };
+      commit(ADD_NOTIFICATION, uniqueNotification);
+      setTimeout(
+        () => commit(DELETE_NOTIFICATION, uniqueNotification.id),
+        MESSAGE_LIVE_TIME
+      );
     },
   },
 

@@ -7,7 +7,13 @@
       {{ caption }}
     </span>
     <input
+      v-if="inputMask"
       v-mask="inputMask"
+      v-bind="{ value, type, name, placeholder, required }"
+      @input="$emit('input', $event.target.value)"
+    >
+    <input
+      v-else
       v-bind="{ value, type, name, placeholder, required }"
       @input="$emit('input', $event.target.value)"
     >
@@ -49,7 +55,7 @@ export default {
     },
     inputMask: {
       type: String,
-      default: undefined,
+      default: null,
     },
   },
 };

@@ -8,7 +8,34 @@
         {{ $priceFormat(price) }}
       </router-link>
     </div>
-    <div class="header__user">
+
+    <div
+      v-if="user"
+      class="header__user"
+    >
+      <router-link to="/profile">
+        <picture>
+          <img
+            :src="user.avatar"
+            :alt="user.name"
+            width="32"
+            height="32"
+          >
+        </picture>
+        <span>{{ user.name }}</span>
+      </router-link>
+      <a
+        href="#"
+        class="header__logout"
+        @click.prevent.stop="logoutUser"
+      >
+        <span>Выйти</span>
+      </a>
+    </div>
+    <div
+      v-else
+      class="header__user"
+    >
       <a
         :href="`/login?back=${$route.path}`"
         class="header__login"
@@ -27,7 +54,11 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import {
+  mapState,
+  mapGetters,
+  mapActions,
+} from "vuex";
 import { getView } from "@/common/helpers";
 import AppLogo from "@/common/components/AppLogo";
 
@@ -46,10 +77,13 @@ export default {
   },
 
   computed: {
+    ...mapState("Auth", ["user"]),
     ...mapGetters("Cart", ["price"]),
   },
 
   methods: {
+    ...mapActions("Auth", ["logoutUser"]),
+
     showLoginForm() {
       this.isLoginFormOpened = true;
     },

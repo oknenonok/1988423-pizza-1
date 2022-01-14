@@ -72,3 +72,8 @@ export const DELIVERY_TYPE_SELFTAKE = "selftake";
  * @constant {string} адрес доставки - новый
  */
 export const DELIVERY_TYPE_NEW = "new";
+
+/**
+ * @constant {number} время жизни уведомления (мс)
+ */
+export const MESSAGE_LIVE_TIME = 3000;

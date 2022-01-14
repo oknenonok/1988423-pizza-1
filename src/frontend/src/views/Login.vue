@@ -24,6 +24,7 @@
     >
       <div class="sign-form__input">
         <AppInput
+          v-model="email"
           v-autofocus
           type="email"
           name="email"
@@ -34,8 +35,9 @@
 
       <div class="sign-form__input">
         <AppInput
+          v-model="password"
           type="password"
-          name="pass"
+          name="password"
           placeholder="***********"
           caption="Пароль"
         />
@@ -51,6 +53,9 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+import notificationTypes from "@/common/enums/notificationTypes";
+
 export default {
   name: "Login",
 
@@ -61,13 +66,32 @@ export default {
     },
   },
 
+  data() {
+    return {
+      email: "",
+      password: "",
+    };
+  },
+
   methods: {
-    tryLogin() {
-      //TODO: добавить логику авторизации
-      if (this.isPopup) {
-        this.sendClose();
-      } else {
-        this.$router.push(this.$route.query.back ?? "/");
+    ...mapActions("Auth", ["loginUser"]),
+
+    async tryLogin() {
+      try {
+        await this.loginUser({
+          email: this.email,
+          password: this.password,
+        });
+        if (this.isPopup) {
+          this.sendClose();
+        } else {
+          this.$router.push(this.$route.query.back ?? "/");
+        }
+      } catch (error) {
+        this.$store.dispatch("createNotification", {
+          text: error.message,
+          type: notificationTypes.ERROR,
+        });
       }
     },
 

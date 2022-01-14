@@ -24,6 +24,7 @@
       caption="Контактный телефон:"
       placeholder="+7 999-999-99-99"
       :value="phone"
+      required
       input-mask="+7 ###-###-##-##"
       @input.native="setEntity($event)"
     />
@@ -39,6 +40,7 @@
           name="street"
           caption="Улица*"
           :value="street"
+          required
           @input.native="setEntity($event)"
         />
       </div>
@@ -48,6 +50,7 @@
           name="building"
           caption="Дом*"
           :value="building"
+          required
           @input.native="setEntity($event)"
         />
       </div>

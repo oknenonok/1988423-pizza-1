@@ -222,7 +222,6 @@ export default {
         let cartItem = rootState.Cart.cartItems.find((item) => item.id === state.editCartItemId);
         dispatch("Cart/addToCart", {
           ...cartItem,
-          id: state.editCartItemId,
           name: state.pizzaName,
           sauce: getters.chosenSauce,
           dough: getters.chosenDough,

@@ -1,4 +1,5 @@
 import Vue from "vue";
+import { uniqueId } from "lodash";
 import {
   PUSH_TO_CART,
   UPDATE_ENTITY,
@@ -135,14 +136,14 @@ export default {
      * @param {object} context
      * @param {object} payload
      */
-    addToCart({commit, state, rootGetters}, {id, name, sauce, dough, size, ingredients, quantity}) {
+    addToCart({commit, rootGetters}, {id, name, sauce, dough, size, ingredients, quantity}) {
       let payload = {
         name,
         sauce,
         dough,
         size,
         ingredients,
-        id: id ?? state.cartItems.length + 1,
+        id: id ?? uniqueId(),
         quantity: quantity ?? 1,
         price: rootGetters["Builder/calculatePrice"]({
           sauce,
