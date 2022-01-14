@@ -76,7 +76,10 @@ import {
   SET_DELIVERY_TYPE,
   SET_ENTITY,
 } from "@/store/mutations-types";
-import { DELIVERY_TYPE_NEW, DELIVERY_TYPE_SELFTAKE } from "@/common/constants";
+import {
+  DELIVERY_TYPE_NEW,
+  DELIVERY_TYPE_SELFTAKE,
+} from "@/common/constants";
 
 export default {
   name: "CartAddress",
@@ -85,6 +88,7 @@ export default {
     ...mapState("Cart", ["deliveryType", "phone", "street", "building", "flat"]),
 
     deliveryOptions() {
+      //TOOD: дополнить адресами юзера из апи
       return [
         {
           id: DELIVERY_TYPE_SELFTAKE,
@@ -106,11 +110,16 @@ export default {
     ...mapMutations("Cart", {
       setDeliveryType: SET_DELIVERY_TYPE,
     }),
-    setEntity($event) {
+
+    /**
+     * Сохранить поле контактной информации
+     * @param {object} event
+     */
+    setEntity({target: {name, value}}) {
       this.$store.commit(SET_ENTITY, {
         module: "Cart",
-        entity: $event.target.name,
-        value: $event.target.value,
+        entity: name,
+        value,
       });
     },
   },

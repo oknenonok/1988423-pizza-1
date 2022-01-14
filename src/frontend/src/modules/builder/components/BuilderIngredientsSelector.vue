@@ -15,7 +15,7 @@
           name="sauce"
           :value="sauce.id"
           :checked="chosenSauceId === sauce.id"
-          @select="setSauce($event)"
+          @select="setSauce"
         >
           <span>{{ sauce.name }}</span>
         </AppRadioButton>

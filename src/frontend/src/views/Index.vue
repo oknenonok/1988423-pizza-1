@@ -73,7 +73,7 @@ export default {
   },
 
   created() {
-    this.$store.dispatch("init");
+    this.$store.dispatch("Builder/init");
     let cartItemId = this.$route.query.edit;
     if (cartItemId) {
       let cartItem = this.$store.state.Cart.cartItems.find(item => item.id === cartItemId);

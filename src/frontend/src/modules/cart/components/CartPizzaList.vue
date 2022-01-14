@@ -19,7 +19,7 @@
           </h2>
           <ul>
             <li>{{ item.size.name }}, {{ item.dough.caption }}</li>
-            <li>Соус: {{ item.sauce.name }}</li>
+            <li>Соус: {{ item.sauce.name.toLowerCase() }}</li>
             <li>
               Начинка:
               <span

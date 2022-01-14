@@ -14,7 +14,7 @@
         :value="size.id"
         :checked="chosenSizeId === size.id"
         input-class="visually-hidden"
-        @select="setSize($event)"
+        @select="setSize"
       >
         <span>{{ size.name }}</span>
       </AppRadioButton>
@@ -26,7 +26,7 @@
 import {
   mapState,
   mapGetters,
-  mapMutations
+  mapMutations,
 } from "vuex";
 import { SET_SIZE } from "@/store/mutations-types";
 

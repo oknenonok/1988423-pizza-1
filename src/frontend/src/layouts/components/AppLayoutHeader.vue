@@ -27,7 +27,7 @@
       <a
         href="#"
         class="header__logout"
-        @click.prevent.stop="logoutUser"
+        @click.prevent="logoutUser"
       >
         <span>Выйти</span>
       </a>

@@ -6,7 +6,7 @@
     placeholder="Введите название пиццы"
     caption="Название пиццы"
     hide-caption
-    @input="setPizzaName($event)"
+    @input="setPizzaName"
   />
 </template>
 

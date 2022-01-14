@@ -38,11 +38,7 @@ export default {
      * @returns {boolean}
      */
     dataReady(state, getters, rootState) {
-      return rootState.rawDough.length
-        && rootState.rawIngredients.length
-        && rootState.rawSauces.length
-        && rootState.rawSizes.length
-        && rootState.rawMisc.length;
+      return rootState.rawMisc.length;
     },
 
     /**
@@ -92,7 +88,7 @@ export default {
     },
 
     /**
-     * Замыкание для количества ингредиента на пицце
+     * Замыкание для количества дополнительного товара в корзине
      * @returns {function}
      */
     getMiscQuantity(state) {
@@ -128,22 +124,33 @@ export default {
     /**
      * Выбрать способ получения
      * @param {object} state
-     * @param {string|number} newDeliveryType
+     * @param {string|number} deliveryType
      */
-    [SET_DELIVERY_TYPE](state, newDeliveryType) {
-      state.deliveryType = newDeliveryType;
+    [SET_DELIVERY_TYPE](state, deliveryType) {
+      state.deliveryType = deliveryType;
     },
 
     /**
      * Сбросить состояние
      * @param {object} state
      */
-     [RESET_STATE](state) {
-      Object.assign(state, setupState())
+    [RESET_STATE](state) {
+      Object.assign(state, setupState());
+      if (this.state.Auth.user) {
+        state.phone = this.state.Auth.user.phone;
+      }
     },
   },
 
   actions: {
+    /**
+     * Подгрузить все необходимые для работы модуля данные
+     * @param {object} context
+     */
+     async init({ dispatch }) {
+      dispatch("loadMisc", null, {root: true});
+    },
+
     /**
      * Добавить или обновить строку корзины
      * @param {object} context

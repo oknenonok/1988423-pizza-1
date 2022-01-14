@@ -29,6 +29,10 @@ export default {
   state: setupState(),
 
   getters: {
+    /**
+     * Все необходимые данные подгружены
+     * @returns {boolean}
+     */
     dataReady(state, getters, rootState) {
       return rootState.rawDough.length
         && rootState.rawIngredients.length
@@ -108,6 +112,10 @@ export default {
       });
     },
 
+    /**
+     * Замыкание для рассчета стоимости пиццы
+     * @returns {function}
+     */
     calculatePrice() {
       return ({dough, size, sauce, ingredientsPrice}) => {
         return (
@@ -119,6 +127,10 @@ export default {
       };
     },
 
+    /**
+     * Замыкание для рассчета стоимости ингредиентов
+     * @returns {function}
+     */
     calculateIngredientsPrice() {
       return (ingredients) => {
         return ingredients.reduce(
@@ -214,6 +226,17 @@ export default {
 
   actions: {
     /**
+     * Подгрузить все необходимые для работы модуля данные
+     * @param {object} context
+     */
+     async init({ dispatch }) {
+      dispatch("loadDough", null, {root: true});
+      dispatch("loadIngredients", null, {root: true});
+      dispatch("loadSauces", null, {root: true});
+      dispatch("loadSizes", null, {root: true});
+    },
+
+    /**
      * Обновить редактируемую строку корзины
      * @param {object} context
      */
@@ -229,6 +252,6 @@ export default {
           ingredients: getters.chosenIngredients,
         }, { root: true });
       }
-    }
+    },
   }
 };

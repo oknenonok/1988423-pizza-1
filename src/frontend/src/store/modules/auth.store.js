@@ -16,6 +16,11 @@ export default {
   },
 
   actions: {
+    /**
+     * Залогиниться
+     * @param {object} context
+     * @param {object} payload
+     */
     async loginUser({commit}, {email, password}) {
       let currentUser = require("@/static/user.json");
       if (currentUser.email === email && currentUser.password === password) {
@@ -30,6 +35,10 @@ export default {
       }
     },
 
+    /**
+     * Разлогиниться
+     * @param {object} context
+     */
     async logoutUser({commit}) {
       commit(SET_LOGGED_USER, null);
     }

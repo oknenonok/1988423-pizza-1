@@ -44,13 +44,11 @@ export default new Vuex.Store({
      * @returns {array}
      */
     dough(state) {
-      return state.rawDough.map((dough) => {
-        return {
-          ...dough,
-          value: MAPPING_DOUGH[dough.id],
-          caption: MAPPING_DOUGH_CAPTIONS[dough.id],
-        }
-      });
+      return state.rawDough.map((dough) => ({
+        ...dough,
+        value: MAPPING_DOUGH[dough.id],
+        caption: MAPPING_DOUGH_CAPTIONS[dough.id],
+      }));
     },
 
     /**
@@ -59,12 +57,10 @@ export default new Vuex.Store({
      * @returns {array}
      */
     ingredients(state) {
-      return state.rawIngredients.map((ingredient) => {
-        return {
-          ...ingredient,
-          value: ingredient.image.replace(/^.*\//, "").replace(".svg", ""),
-        }
-      });
+      return state.rawIngredients.map((ingredient) => ({
+        ...ingredient,
+        value: ingredient.image.replace(/^.*\//, "").replace(".svg", ""),
+      }));
     },
 
     /**
@@ -73,12 +69,10 @@ export default new Vuex.Store({
      * @returns {array}
      */
     sauces(state) {
-      return state.rawSauces.map((sauce) => {
-        return {
-          ...sauce,
-          value: MAPPING_SAUCE[sauce.id],
-        }
-      });
+      return state.rawSauces.map((sauce) => ({
+        ...sauce,
+        value: MAPPING_SAUCE[sauce.id],
+      }));
     },
 
     /**
@@ -87,12 +81,10 @@ export default new Vuex.Store({
      * @returns {array}
      */
     sizes(state) {
-      return state.rawSizes.map((size) => {
-        return {
-          ...size,
-          value: MAPPING_SIZE[size.id],
-        }
-      });
+      return state.rawSizes.map((size) => ({
+        ...size,
+        value: MAPPING_SIZE[size.id],
+      }));
     },
 
     /**
@@ -100,7 +92,7 @@ export default new Vuex.Store({
      * @param {object} state
      * @returns {array}
      */
-     misc(state) {
+    misc(state) {
       return state.rawMisc;
     },
   },
@@ -163,24 +155,12 @@ export default new Vuex.Store({
 
   actions: {
     /**
-     * Подгрузить все необходимые для работы приложения данные
-     * @param {object} context
-     */
-    async init({ dispatch }) {
-      await dispatch("loadDough");
-      await dispatch("loadIngredients");
-      await dispatch("loadSauces");
-      await dispatch("loadSizes");
-      await dispatch("loadMisc");
-    },
-
-    /**
      * Подгрузить виды теста
      * @param {object} context
      */
     async loadDough({ commit }) {
       //TODO: сделать получение из апи
-      let { dough } = await import("@/static/pizza.json");
+      let { dough } = require("@/static/pizza.json");
       commit(SET_ENTITY, {
         entity: "rawDough",
         value: dough,
@@ -193,7 +173,7 @@ export default new Vuex.Store({
      */
     async loadIngredients({ commit }) {
       //TODO: сделать получение из апи
-      let { ingredients } = await import("@/static/pizza.json");
+      let { ingredients } = require("@/static/pizza.json");
       commit(SET_ENTITY, {
         entity: "rawIngredients",
         value: ingredients,
@@ -206,7 +186,7 @@ export default new Vuex.Store({
      */
     async loadSauces({ commit }) {
       //TODO: сделать получение из апи
-      let { sauces } = await import("@/static/pizza.json");
+      let { sauces } = require("@/static/pizza.json");
       commit(SET_ENTITY, {
         entity: "rawSauces",
         value: sauces,
@@ -219,7 +199,7 @@ export default new Vuex.Store({
      */
     async loadSizes({ commit }) {
       //TODO: сделать получение из апи
-      let { sizes } = await import("@/static/pizza.json");
+      let { sizes } = require("@/static/pizza.json");
       commit(SET_ENTITY, {
         entity: "rawSizes",
         value: sizes,

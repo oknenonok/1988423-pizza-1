@@ -1,32 +1,32 @@
 <template>
   <ul class="additional-list">
     <li
-      v-for="item in misc"
-      :key="item.id"
+      v-for="{id, image, name, price} in misc"
+      :key="id"
       class="additional-list__item sheet"
     >
       <p class="additional-list__description">
         <img
-          :src="item.image"
+          :src="image"
           width="39"
           height="60"
-          :alt="item.name"
+          :alt="name"
         >
         <span>
-          {{ item.name }}
+          {{ name }}
         </span>
       </p>
 
       <div class="additional-list__wrapper">
         <AppItemCounter
           class="additional-list__counter"
-          :value="getMiscQuantity(item.id)"
+          :value="getMiscQuantity(id)"
           counter-button-class="counter__button--orange"
-          @change="setMiscQuantity({id: item.id, quantity: $event})"
+          @change="setMiscQuantity({ id, quantity: $event })"
         />
 
         <div class="additional-list__price">
-          <b>× {{ $priceFormat(item.price) }}</b>
+          <b>× {{ $priceFormat(price) }}</b>
         </div>
       </div>
     </li>

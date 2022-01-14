@@ -30,6 +30,7 @@
           name="email"
           placeholder="example@mail.ru"
           caption="E-mail"
+          required
         />
       </div>
 
@@ -40,6 +41,7 @@
           name="password"
           placeholder="***********"
           caption="Пароль"
+          required
         />
       </div>
       <button

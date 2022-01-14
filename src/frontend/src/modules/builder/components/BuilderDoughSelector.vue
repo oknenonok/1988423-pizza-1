@@ -14,7 +14,7 @@
         :value="doughItem.id"
         input-class="visually-hidden"
         :checked="chosenDoughId === doughItem.id"
-        @select="setDough($event)"
+        @select="setDough"
       >
         <b>{{ doughItem.name }}</b>
         <span>{{ doughItem.description }}</span>
