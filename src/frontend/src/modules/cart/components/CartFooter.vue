@@ -19,7 +19,7 @@
       <button
         type="submit"
         class="button"
-        :disabled="isCartEmpty"
+        :disabled="!canMakeOrder"
       >
         Оформить заказ
       </button>
@@ -28,7 +28,9 @@
 </template>
 
 <script>
+import orderCreateStatuses from "@/common/enums/orderCreateStatuses";
 import {
+  mapState,
   mapGetters,
 } from "vuex";
 
@@ -36,7 +38,12 @@ export default {
   name: "CartFooter",
 
   computed: {
+    ...mapState("Cart", ["orderCreateStatus"]),
     ...mapGetters("Cart", ["price", "isCartEmpty"]),
+
+    canMakeOrder() {
+      return !this.isCartEmpty && this.orderCreateStatus === orderCreateStatuses.EDITING;
+    }
   },
 };
 </script>

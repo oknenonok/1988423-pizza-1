@@ -6,26 +6,31 @@ import {
   DELETE_ENTITY,
   SET_MISC_QUANTITY,
   SET_DELIVERY_TYPE,
+  RESET_STATE,
 } from "@/store/mutations-types";
 import { DELIVERY_TYPE_SELFTAKE } from "@/common/constants";
+import orderCreateStatuses from "@/common/enums/orderCreateStatuses";
 
 const cartItemsNamespace = {
   module: "Cart",
   entity: "cartItems",
 };
 
+const setupState = () => ({
+  cartItems: [],
+  chosenMiscById: {},
+  deliveryType: DELIVERY_TYPE_SELFTAKE,
+  phone: "",
+  street: "",
+  building: "",
+  flat: "",
+  orderCreateStatus: orderCreateStatuses.EDITING,
+});
+
 export default {
   namespaced: true,
 
-  state: {
-    cartItems: [],
-    chosenMiscById: {},
-    deliveryType: DELIVERY_TYPE_SELFTAKE,
-    phone: "",
-    street: "",
-    building: "",
-    flat: "",
-  },
+  state: setupState(),
 
   getters: {
     /**
@@ -128,11 +133,19 @@ export default {
     [SET_DELIVERY_TYPE](state, newDeliveryType) {
       state.deliveryType = newDeliveryType;
     },
+
+    /**
+     * Сбросить состояние
+     * @param {object} state
+     */
+     [RESET_STATE](state) {
+      Object.assign(state, setupState())
+    },
   },
 
   actions: {
     /**
-     * Добавить или обновить строку корзине
+     * Добавить или обновить строку корзины
      * @param {object} context
      * @param {object} payload
      */

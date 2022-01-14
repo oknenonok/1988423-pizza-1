@@ -37,15 +37,27 @@
     </main>
 
     <CartFooter />
+
+    <CartOrderPopup
+      v-if="isOrderPopupOpened"
+      @close="hidePopup"
+    />
   </form>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import {
+  mapGetters,
+  mapState,
+  mapActions,
+} from "vuex";
+import { RESET_STATE } from "@/store/mutations-types";
 import CartPizzaList from "@/modules/cart/components/CartPizzaList";
 import CartAdditionalList from "@/modules/cart/components/CartAdditionalList";
 import CartAddress from "@/modules/cart/components/CartAddress";
 import CartFooter from "@/modules/cart/components/CartFooter";
+import CartOrderPopup from "@/modules/cart/components/CartOrderPopup";
+import orderCreateStatuses from "@/common/enums/orderCreateStatuses";
 
 export default {
   name: "Cart",
@@ -55,9 +67,18 @@ export default {
     CartAdditionalList,
     CartAddress,
     CartFooter,
+    CartOrderPopup,
+  },
+
+  data() {
+    return {
+      isOrderPopupOpened: false,
+    };
   },
 
   computed: {
+    ...mapState("Auth", ["user"]),
+    ...mapState("Cart", ["orderCreateStatus"]),
     ...mapGetters("Cart", ["dataReady", "price", "isCartEmpty"]),
   },
 
@@ -66,9 +87,20 @@ export default {
   },
 
   methods: {
-    placeOrder() {
-      console.log("order");
-    }
+    ...mapActions("Orders", ["createOrder"]),
+
+    async placeOrder() {
+      this.isOrderPopupOpened = true;
+      await this.createOrder();
+    },
+
+    hidePopup() {
+      if (this.orderCreateStatus === orderCreateStatuses.SUCCESS) {
+        this.$store.commit(`Cart/${RESET_STATE}`);
+        this.$router.push(this.user ? "/orders" : "/");
+      }
+      this.isOrderPopupOpened = false;
+    },
   }
 };
 </script>
