@@ -27,7 +27,7 @@
       <a
         href="#"
         class="header__logout"
-        @click.prevent="logoutUser"
+        @click.prevent="logout"
       >
         <span>Выйти</span>
       </a>
@@ -59,7 +59,7 @@ import {
   mapGetters,
   mapActions,
 } from "vuex";
-import { getView } from "@/common/helpers";
+import getView from "@/common/helpers/getView";
 import AppLogo from "@/common/components/AppLogo";
 
 export default {
@@ -82,7 +82,7 @@ export default {
   },
 
   methods: {
-    ...mapActions("Auth", ["logoutUser"]),
+    ...mapActions("Auth", ["logout"]),
 
     showLoginForm() {
       this.isLoginFormOpened = true;

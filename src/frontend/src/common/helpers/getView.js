@@ -1,3 +1,3 @@
-export const getView = (view) => {
+export default (view) => {
   return () => import(`@/views/${view}.vue`);
 };

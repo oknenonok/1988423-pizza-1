@@ -1,4 +1,4 @@
-import { getView } from "@/common/helpers";
+import getView from "@/common/helpers/getView";
 
 export default [
   {

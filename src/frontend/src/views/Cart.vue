@@ -51,10 +51,7 @@ import {
   mapState,
   mapActions,
 } from "vuex";
-import {
-  RESET_STATE,
-  SET_ENTITY,
-} from "@/store/mutations-types";
+import { RESET_STATE } from "@/store/mutations-types";
 import CartPizzaList from "@/modules/cart/components/CartPizzaList";
 import CartAdditionalList from "@/modules/cart/components/CartAdditionalList";
 import CartAddress from "@/modules/cart/components/CartAddress";
@@ -87,15 +84,6 @@ export default {
 
   created() {
     this.$store.dispatch("Cart/init");
-    if (this.orderCreateStatus === orderCreateStatuses.SUCCESS) {
-      this.$store.commit(`Cart/${RESET_STATE}`);
-    } else if (this.orderCreateStatus === orderCreateStatuses.SENDING) {
-      this.$store.commit(SET_ENTITY, {
-        module: "Cart",
-        entity: "orderCreateStatus",
-        value: orderCreateStatuses.EDITING,
-      }, { root: true });
-    }
   },
 
   methods: {

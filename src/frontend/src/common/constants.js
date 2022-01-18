@@ -77,3 +77,8 @@ export const DELIVERY_TYPE_NEW = "new";
  * @constant {number} время жизни уведомления (мс)
  */
 export const MESSAGE_LIVE_TIME = 3000;
+
+/**
+ * @constant {number} левая кнопкамыши в мышиных событиях
+ */
+export const MOUSE_BUTTON_LEFT = 0;

@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import { uniqueId } from "lodash";
 import VuexPersistence from "vuex-persist";
 import modules from "@/store/modules";
+import VuexPlugins from "@/plugins/vuexPlugins";
 import {
   SET_ENTITY,
   UPDATE_ENTITY,
@@ -84,7 +85,7 @@ export default new Vuex.Store({
       return state.rawSizes.map((size) => ({
         ...size,
         value: MAPPING_SIZE[size.id],
-      }));
+      })).sort((a, b) => a.multiplier < b.multiplier ? -1 : 0);
     },
 
     /**
@@ -159,8 +160,7 @@ export default new Vuex.Store({
      * @param {object} context
      */
     async loadDough({ commit }) {
-      //TODO: сделать получение из апи
-      let { dough } = require("@/static/pizza.json");
+      let dough = await this.$api.dough.query();
       commit(SET_ENTITY, {
         entity: "rawDough",
         value: dough,
@@ -172,8 +172,7 @@ export default new Vuex.Store({
      * @param {object} context
      */
     async loadIngredients({ commit }) {
-      //TODO: сделать получение из апи
-      let { ingredients } = require("@/static/pizza.json");
+      let ingredients = await this.$api.ingredients.query();
       commit(SET_ENTITY, {
         entity: "rawIngredients",
         value: ingredients,
@@ -185,8 +184,7 @@ export default new Vuex.Store({
      * @param {object} context
      */
     async loadSauces({ commit }) {
-      //TODO: сделать получение из апи
-      let { sauces } = require("@/static/pizza.json");
+      let sauces = await this.$api.sauces.query();
       commit(SET_ENTITY, {
         entity: "rawSauces",
         value: sauces,
@@ -198,8 +196,7 @@ export default new Vuex.Store({
      * @param {object} context
      */
     async loadSizes({ commit }) {
-      //TODO: сделать получение из апи
-      let { sizes } = require("@/static/pizza.json");
+      let sizes = await this.$api.sizes.query();
       commit(SET_ENTITY, {
         entity: "rawSizes",
         value: sizes,
@@ -207,12 +204,11 @@ export default new Vuex.Store({
     },
 
     /**
-     * Подгрузить размеры
+     * Подгрузить дополнительные товары
      * @param {object} context
      */
     async loadMisc({ commit }) {
-      //TODO: сделать получение из апи
-      let misc = require("@/static/misc.json");
+      let misc = await this.$api.misc.query();
       commit(SET_ENTITY, {
         entity: "rawMisc",
         value: misc,
@@ -239,5 +235,5 @@ export default new Vuex.Store({
 
   modules,
 
-  plugins: [vuexLocal.plugin],
+  plugins: [VuexPlugins, vuexLocal.plugin],
 });

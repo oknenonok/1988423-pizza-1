@@ -56,7 +56,6 @@
 
 <script>
 import { mapActions } from "vuex";
-import notificationTypes from "@/common/enums/notificationTypes";
 
 export default {
   name: "Login",
@@ -76,24 +75,19 @@ export default {
   },
 
   methods: {
-    ...mapActions("Auth", ["loginUser"]),
+    ...mapActions("Auth", ["login"]),
 
     async tryLogin() {
-      try {
-        await this.loginUser({
-          email: this.email,
-          password: this.password,
-        });
+      let token = await this.login({
+        email: this.email,
+        password: this.password,
+      });
+      if (token) {
         if (this.isPopup) {
           this.sendClose();
         } else {
           this.$router.push(this.$route.query.back ?? "/");
         }
-      } catch (error) {
-        this.$store.dispatch("createNotification", {
-          text: error.message,
-          type: notificationTypes.ERROR,
-        });
       }
     },
 
