@@ -14,3 +14,4 @@ export const SET_DELIVERY_TYPE = "setDeliveryType";
 export const SET_LOGGED_USER = "setLoggedUser";
 export const ADD_NOTIFICATION = "addNotification";
 export const DELETE_NOTIFICATION = "deleteNotification";
+export const ADD_ADDRESS = "addAddress";

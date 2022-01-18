@@ -74,6 +74,7 @@ export default {
      */
     async logout({ commit }, sendRequest = true) {
       commit(RESET_STATE);
+      commit(`Addresses/${RESET_STATE}`, { root: true });
       if (sendRequest) {
         await this.$api.auth.logout();
       }

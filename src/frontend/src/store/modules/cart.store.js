@@ -8,7 +8,10 @@ import {
   SET_DELIVERY_TYPE,
   RESET_STATE,
 } from "@/store/mutations-types";
-import { DELIVERY_TYPE_SELFTAKE } from "@/common/constants";
+import {
+  DELIVERY_TYPE_SELFTAKE,
+  DELIVERY_TYPE_NEW,
+} from "@/common/constants";
 import orderCreateStatuses from "@/common/enums/orderCreateStatuses";
 
 const cartItemsNamespace = {
@@ -24,6 +27,7 @@ const setupState = () => ({
   street: "",
   building: "",
   flat: "",
+  comment: "",
   orderCreateStatus: orderCreateStatuses.EDITING,
 });
 
@@ -128,6 +132,15 @@ export default {
      */
     [SET_DELIVERY_TYPE](state, deliveryType) {
       state.deliveryType = deliveryType;
+      if ([DELIVERY_TYPE_SELFTAKE, DELIVERY_TYPE_NEW].indexOf(deliveryType) === -1) {
+        const address = this.state.Addresses.addresses.find((address) => address.id === +deliveryType);
+        if (address) {
+          state.street = address.street;
+          state.building = address.building;
+          state.flat = address.flat;
+          state.comment = address.comment;
+        }
+      }
     },
 
     /**
@@ -149,6 +162,7 @@ export default {
      */
      async init({ dispatch }) {
       dispatch("loadMisc", null, {root: true});
+      dispatch("Addresses/load", null, {root: true});
     },
 
     /**

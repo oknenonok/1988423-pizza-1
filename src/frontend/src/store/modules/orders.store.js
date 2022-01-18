@@ -31,7 +31,7 @@ export default {
             street: cartState.street,
             building: cartState.building,
             flat: cartState.flat,
-            comment: "",
+            comment: cartState.comment,
           },
           pizzas: cartState.cartItems.map(item => ({
             name: item.name,

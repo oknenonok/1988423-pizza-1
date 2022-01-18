@@ -201,7 +201,7 @@ export default {
      * @param {object} state
      */
     [RESET_STATE](state) {
-      Object.assign(state, setupState())
+      Object.assign(state, setupState());
     },
 
     /**

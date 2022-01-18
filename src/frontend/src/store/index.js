@@ -114,10 +114,11 @@ export default new Vuex.Store({
      * @param {object} state
      * @param {object} payload
      */
-    [UPDATE_ENTITY](state, { module, entity, value }) {
+    [UPDATE_ENTITY](state, { module, entity, value, oldId }) {
+      oldId = oldId ?? value.id;
       let objToChange = module ? state[module] : state;
       const index = objToChange[entity]
-        .findIndex(({ id }) => id === value.id);
+        .findIndex(({ id }) => id === oldId);
       if (~index) {
         objToChange[entity].splice(index, 1, value);
       }
@@ -130,7 +131,7 @@ export default new Vuex.Store({
      */
     [DELETE_ENTITY](state, { module, entity, id }) {
       let objToChange = module ? state[module] : state;
-      objToChange[entity] = objToChange[entity].filter(e => +e.id !== +id);
+      objToChange[entity] = objToChange[entity].filter(e => e.id !== id);
     },
 
     /**

@@ -82,3 +82,8 @@ export const MESSAGE_LIVE_TIME = 3000;
  * @constant {number} левая кнопкамыши в мышиных событиях
  */
 export const MOUSE_BUTTON_LEFT = 0;
+
+/**
+ * @constant {string} префикс для id новых адресов
+ */
+export const NEW_ADDRESS_ID_PREFIX = "new-";
