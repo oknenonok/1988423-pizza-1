@@ -23,35 +23,35 @@ const populateUsers = async (
 }
 
 const populateDough = (
-    dough: { name: string, image: string, description: string },
+    dough: { id: number, name: string, image: string, description: string },
     doughRepository: DoughRepository
 ) => {
   return doughRepository.create(dough);
 };
 
 const populateIngredients = (
-    ingredient: { name: string, image: string },
+    ingredient: { id: number, name: string, image: string },
     ingredientRepository: IngredientRepository
 ) => {
   return ingredientRepository.create(ingredient);
 };
 
 const populateSauces = (
-    sauce: { name: string },
+    sauce: { id: number, name: string },
     sauceRepository: SauceRepository
 ) => {
   return sauceRepository.create(sauce);
 };
 
 const populateSizes = (
-    size: { name: string, image: string, multiplier: number },
+    size: { id: number, name: string, image: string, multiplier: number },
     sizeRepository: SizeRepository
 ) => {
   return sizeRepository.create(size);
 };
 
 const populateMisc = (
-    misc: { name: string, image: string, price: number },
+    misc: { id: number, name: string, image: string, price: number },
     miscRepository: MiscRepository
 ) => {
   return miscRepository.create(misc);
