@@ -7,6 +7,7 @@ import {
   SET_MISC_QUANTITY,
   SET_DELIVERY_TYPE,
   RESET_STATE,
+  RESET_STATE_TO_ORDER,
 } from "@/store/mutations-types";
 import {
   DELIVERY_TYPE_SELFTAKE,
@@ -28,6 +29,7 @@ const setupState = () => ({
   building: "",
   flat: "",
   comment: "",
+  addressId: null,
   orderCreateStatus: orderCreateStatuses.EDITING,
 });
 
@@ -135,11 +137,14 @@ export default {
       if ([DELIVERY_TYPE_SELFTAKE, DELIVERY_TYPE_NEW].indexOf(deliveryType) === -1) {
         const address = this.state.Addresses.addresses.find((address) => address.id === +deliveryType);
         if (address) {
+          state.addressId = address.id;
           state.street = address.street;
           state.building = address.building;
           state.flat = address.flat;
           state.comment = address.comment;
         }
+      } else {
+        state.addressId = null;
       }
     },
 
@@ -153,6 +158,29 @@ export default {
         state.phone = this.state.Auth.user.phone;
       }
     },
+
+    /**
+     * Установить состояние из строки корзины
+     * @param {object} state
+     * @param {object} cartItem
+     */
+    [RESET_STATE_TO_ORDER](state, order) {
+      Object.assign(state, {
+        cartItems: order.orderPizzas,
+        chosenMiscById: order.orderMisc.reduce((result, misc) => ({
+          ...result,
+          [misc.miscId]: misc.quantity,
+        }), {}),
+        deliveryType: order.addressId ?? DELIVERY_TYPE_SELFTAKE,
+        phone: order.phone,
+        street: order?.orderAddress?.street ?? "",
+        building: order?.orderAddress?.building ?? "",
+        flat: order?.orderAddress?.flat ?? "",
+        comment: order?.orderAddress?.comment ?? "",
+        addressId: order.addressId,
+        orderCreateStatus: orderCreateStatuses.EDITING,
+      });
+    },
   },
 
   actions: {
@@ -160,9 +188,11 @@ export default {
      * Подгрузить все необходимые для работы модуля данные
      * @param {object} context
      */
-     async init({ dispatch }) {
+     async init({ rootState, dispatch }) {
       dispatch("loadMisc", null, {root: true});
-      dispatch("Addresses/load", null, {root: true});
+      if (rootState.Auth.user) {
+        dispatch("Addresses/load", null, {root: true});
+      }
     },
 
     /**

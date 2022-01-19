@@ -160,60 +160,70 @@ export default new Vuex.Store({
      * Подгрузить виды теста
      * @param {object} context
      */
-    async loadDough({ commit }) {
-      let dough = await this.$api.dough.query();
-      commit(SET_ENTITY, {
-        entity: "rawDough",
-        value: dough,
-      });
+    async loadDough({ commit, state }) {
+      if (!state.rawDough.length) {
+        let dough = await this.$api.dough.query();
+        commit(SET_ENTITY, {
+          entity: "rawDough",
+          value: dough,
+        });
+      }
     },
 
     /**
      * Подгрузить ингредиенты
      * @param {object} context
      */
-    async loadIngredients({ commit }) {
-      let ingredients = await this.$api.ingredients.query();
-      commit(SET_ENTITY, {
-        entity: "rawIngredients",
-        value: ingredients,
-      });
+    async loadIngredients({ commit, state }) {
+      if (!state.rawIngredients.length) {
+        let ingredients = await this.$api.ingredients.query();
+        commit(SET_ENTITY, {
+          entity: "rawIngredients",
+          value: ingredients,
+        });
+      }
     },
 
     /**
      * Подгрузить соусы
      * @param {object} context
      */
-    async loadSauces({ commit }) {
-      let sauces = await this.$api.sauces.query();
-      commit(SET_ENTITY, {
-        entity: "rawSauces",
-        value: sauces,
-      });
+    async loadSauces({ commit, state }) {
+      if (!state.rawSauces.length) {
+        let sauces = await this.$api.sauces.query();
+        commit(SET_ENTITY, {
+          entity: "rawSauces",
+          value: sauces,
+        });
+      }
     },
 
     /**
      * Подгрузить размеры
      * @param {object} context
      */
-    async loadSizes({ commit }) {
-      let sizes = await this.$api.sizes.query();
-      commit(SET_ENTITY, {
-        entity: "rawSizes",
-        value: sizes,
-      });
+    async loadSizes({ commit, state }) {
+      if (!state.rawSizes.length) {
+        let sizes = await this.$api.sizes.query();
+        commit(SET_ENTITY, {
+          entity: "rawSizes",
+          value: sizes,
+        });
+      }
     },
 
     /**
      * Подгрузить дополнительные товары
      * @param {object} context
      */
-    async loadMisc({ commit }) {
-      let misc = await this.$api.misc.query();
-      commit(SET_ENTITY, {
-        entity: "rawMisc",
-        value: misc,
-      });
+    async loadMisc({ commit, state }) {
+      if (!state.rawMisc.length) {
+        let misc = await this.$api.misc.query();
+        commit(SET_ENTITY, {
+          entity: "rawMisc",
+          value: misc,
+        });
+      }
     },
 
     /**

@@ -61,7 +61,7 @@ export default {
      * @param {object} context
      */
     async init({ dispatch }) {
-      await dispatch("load");
+      dispatch("load");
     },
 
     /**
@@ -70,9 +70,6 @@ export default {
      */
     async load({ commit }) {
       let addresses = await this.$api.addresses.query();
-      addresses = addresses.map((address) => ({
-        ...address,
-      }));
       commit(SET_ENTITY, {
         ...addressesNamespace,
         value: addresses,

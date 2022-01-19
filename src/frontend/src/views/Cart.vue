@@ -82,6 +82,14 @@ export default {
     ...mapGetters("Cart", ["dataReady", "price", "isCartEmpty"]),
   },
 
+  watch: {
+    user(newUser, oldUser) {
+      if (newUser && !oldUser) {
+        this.$store.dispatch("Addresses/load");
+      }
+    }
+  },
+
   created() {
     this.$store.dispatch("Cart/init");
   },
@@ -101,6 +109,6 @@ export default {
       }
       this.isOrderPopupOpened = false;
     },
-  }
+  },
 };
 </script>
