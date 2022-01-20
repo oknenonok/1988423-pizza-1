@@ -145,6 +145,10 @@ export default {
         }
       } else {
         state.addressId = null;
+        state.street = "";
+        state.building = "";
+        state.flat = "";
+        state.comment = "";
       }
     },
 
@@ -207,7 +211,7 @@ export default {
         dough,
         size,
         ingredients,
-        id: id ?? uniqueId(),
+        id: id ?? +uniqueId(),
         quantity: quantity ?? 1,
         price: rootGetters["Builder/calculatePrice"]({
           sauce,

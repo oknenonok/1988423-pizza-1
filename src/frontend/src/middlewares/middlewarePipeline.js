@@ -5,7 +5,10 @@ function middlewarePipeline (context, middlewares, index) {
   }
   return () => {
     const nextPipeline = middlewarePipeline(context, middlewares, index + 1);
-    nextMiddleware({ ...context, nextMiddleware: nextPipeline });
+    nextMiddleware({
+      ...context,
+      nextMiddleware: nextPipeline,
+    });
   };
 }
 

@@ -15,10 +15,10 @@ export default {
   name: "AppDrop",
   methods: {
     onDrop({ dataTransfer }) {
-      const payload = dataTransfer.loadData(DATA_TRANSFER_PAYLOAD);
+      const payload = dataTransfer.getData(DATA_TRANSFER_PAYLOAD);
       if (payload) {
         const transferData = JSON.parse(
-          dataTransfer.loadData(DATA_TRANSFER_PAYLOAD)
+          dataTransfer.getData(DATA_TRANSFER_PAYLOAD)
         );
         this.$emit("drop", transferData);
       }

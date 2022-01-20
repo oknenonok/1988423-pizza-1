@@ -101,7 +101,7 @@ export default {
           id: DELIVERY_TYPE_NEW,
           name: "Новый адрес",
         },
-        ...this.addresses.map(({ id, name }) => ({ id, name }))
+        ...this.addresses,
       ];
     },
 

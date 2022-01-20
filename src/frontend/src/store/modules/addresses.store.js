@@ -51,7 +51,7 @@ export default {
      * @param {object} state
      */
     [ADD_ADDRESS](state) {
-      state.addresses.push({ ...newAddress, id: `${NEW_ADDRESS_ID_PREFIX}${uniqueId()}` });
+      state.addresses.push({ ...newAddress, id: uniqueId(NEW_ADDRESS_ID_PREFIX)});
     },
   },
 
@@ -87,9 +87,7 @@ export default {
         let address = await this.$api.addresses.post({ userId, name, street, building, flat, comment });
         commit(UPDATE_ENTITY, {
           ...addressesNamespace,
-          value: {
-            ...address,
-          },
+          value: address,
           oldId: id,
         }, { root: true });
       } else {

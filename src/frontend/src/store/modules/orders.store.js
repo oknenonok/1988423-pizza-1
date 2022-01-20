@@ -92,7 +92,7 @@ export default {
     },
 
     /**
-     * Подгрузить адреса
+     * Подгрузить заказы
      * @param {object} context
      */
     async load({ commit }) {

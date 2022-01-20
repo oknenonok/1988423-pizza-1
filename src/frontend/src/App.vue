@@ -7,8 +7,12 @@
 </template>
 
 <script>
+import {
+  RESET_STATE,
+  SET_ENTITY,
+} from "@/store/mutations-types";
+import orderCreateStatuses from "@/common/enums/orderCreateStatuses";
 import setAuthHeader from "@/common/helpers/setAuthHeader";
-import fixCartStatus from "@/common/helpers/fixCartStatus";
 import AppLayout from "@/layouts/AppLayout";
 
 export default {
@@ -22,8 +26,25 @@ export default {
       setAuthHeader(this.$store);
       this.$store.dispatch("Auth/loadData");
     }
-    fixCartStatus(this.$store);
-  }
+    this.fixCartStatus();
+  },
+
+  methods: {
+    /**
+     * Если при загрузке страницы корзина не пребывает в состоянии редактирования, нужно это исправить
+     */
+    fixCartStatus() {
+      if (this.$store.state.Cart.orderCreateStatus === orderCreateStatuses.SUCCESS) {
+        this.$store.commit(`Cart/${RESET_STATE}`);
+      } else if (this.$store.state.Cart === orderCreateStatuses.SENDING) {
+        this.$store.commit(SET_ENTITY, {
+          module: "Cart",
+          entity: "orderCreateStatus",
+          value: orderCreateStatuses.EDITING,
+        });
+      }
+    },
+  },
 };
 </script>
 

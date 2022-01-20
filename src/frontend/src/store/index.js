@@ -234,7 +234,7 @@ export default new Vuex.Store({
     async createNotification({ commit }, { ...notification }) {
       const uniqueNotification = {
         ...notification,
-        id: uniqueId(),
+        id: +uniqueId(),
       };
       commit(ADD_NOTIFICATION, uniqueNotification);
       setTimeout(

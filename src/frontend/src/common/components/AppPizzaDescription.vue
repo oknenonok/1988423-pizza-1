@@ -16,14 +16,7 @@
         <li>Соус: {{ item.sauce.name.toLowerCase() }}</li>
         <li>
           Начинка:
-          <span
-            v-for="(ingredient, index) in item.ingredients"
-            :key="ingredient.id"
-          >
-            {{ ingredient.name.toLowerCase() }}<!--
-                --><span v-if="ingredient.quantity > 1"> (x{{ ingredient.quantity }})</span><!--
-                --><span v-if="index < item.ingredients.length - 1">,</span>
-          </span>
+          {{ ingredientsString }}
         </li>
       </ul>
     </div>
@@ -39,5 +32,13 @@ export default {
       required: true,
     },
   },
+
+  computed: {
+    ingredientsString() {
+      return this.item.ingredients.map((ingredient) =>
+        ingredient.name.toLowerCase() + (ingredient.quantity > 1 ? ` (x${ingredient.quantity})` : "")
+      ).join(", ");
+    }
+  }
 };
 </script>

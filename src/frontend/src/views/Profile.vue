@@ -46,7 +46,7 @@ export default {
   },
 
   mixins: [
-    redirectOnLogout
+    redirectOnLogout,
   ],
 
   computed: {
