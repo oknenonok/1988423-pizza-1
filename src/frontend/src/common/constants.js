@@ -77,3 +77,13 @@ export const DELIVERY_TYPE_NEW = "new";
  * @constant {number} время жизни уведомления (мс)
  */
 export const MESSAGE_LIVE_TIME = 3000;
+
+/**
+ * @constant {number} левая кнопка мыши в мышиных событиях
+ */
+export const MOUSE_BUTTON_LEFT = 0;
+
+/**
+ * @constant {string} префикс для id новых адресов
+ */
+export const NEW_ADDRESS_ID_PREFIX = "new-";

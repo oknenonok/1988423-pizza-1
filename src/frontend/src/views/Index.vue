@@ -74,7 +74,7 @@ export default {
 
   created() {
     this.$store.dispatch("Builder/init");
-    let cartItemId = this.$route.query.edit;
+    let cartItemId = +this.$route.query.edit;
     if (cartItemId) {
       let cartItem = this.$store.state.Cart.cartItems.find(item => item.id === cartItemId);
       this.$store.commit(`Builder/${RESET_STATE_TO_CART_ITEM}`, cartItem);

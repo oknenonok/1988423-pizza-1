@@ -5,7 +5,6 @@ export class Ingredient extends Entity {
   @property({
     type: 'number',
     id: true,
-    generated: true,
   })
   id?: number;
 

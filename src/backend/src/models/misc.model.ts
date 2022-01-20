@@ -6,7 +6,6 @@ export class Misc extends Entity {
   @property({
     type: 'number',
     id: true,
-    generated: true,
   })
   id?: number;
 

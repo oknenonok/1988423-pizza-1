@@ -12,7 +12,7 @@
           v-for="{id, name} in deliveryOptions"
           :key="id"
           :value="id"
-          :selected="deliveryType === id"
+          :selected="`${deliveryType}` === `${id}`"
         >{{ name }}</option>
       </select>
     </label>
@@ -40,6 +40,7 @@
           name="street"
           caption="Улица*"
           :value="street"
+          :disabled="!canEditAddress"
           required
           @input.native="setEntity($event)"
         />
@@ -50,6 +51,7 @@
           name="building"
           caption="Дом*"
           :value="building"
+          :disabled="!canEditAddress"
           required
           @input.native="setEntity($event)"
         />
@@ -60,6 +62,7 @@
           name="flat"
           caption="Квартира"
           :value="flat"
+          :disabled="!canEditAddress"
           @input.native="setEntity($event)"
         />
       </div>
@@ -86,9 +89,9 @@ export default {
 
   computed: {
     ...mapState("Cart", ["deliveryType", "phone", "street", "building", "flat"]),
+    ...mapState("Addresses", ["addresses"]),
 
     deliveryOptions() {
-      //TOOD: дополнить адресами юзера из апи
       return [
         {
           id: DELIVERY_TYPE_SELFTAKE,
@@ -98,11 +101,16 @@ export default {
           id: DELIVERY_TYPE_NEW,
           name: "Новый адрес",
         },
+        ...this.addresses,
       ];
     },
 
     isSelftake() {
       return this.deliveryType === DELIVERY_TYPE_SELFTAKE;
+    },
+
+    canEditAddress() {
+      return [DELIVERY_TYPE_SELFTAKE, DELIVERY_TYPE_NEW].indexOf(this.deliveryType) >= 0;
     },
   },
 

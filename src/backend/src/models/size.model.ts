@@ -6,7 +6,6 @@ export class Size extends Entity {
   @property({
     type: 'number',
     id: true,
-    generated: true,
   })
   id?: number;
 

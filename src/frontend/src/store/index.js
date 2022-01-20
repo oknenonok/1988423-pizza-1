@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import { uniqueId } from "lodash";
 import VuexPersistence from "vuex-persist";
 import modules from "@/store/modules";
+import VuexPlugins from "@/plugins/vuexPlugins";
 import {
   SET_ENTITY,
   UPDATE_ENTITY,
@@ -84,7 +85,7 @@ export default new Vuex.Store({
       return state.rawSizes.map((size) => ({
         ...size,
         value: MAPPING_SIZE[size.id],
-      }));
+      })).sort((a, b) => a.multiplier < b.multiplier ? -1 : 0);
     },
 
     /**
@@ -113,10 +114,11 @@ export default new Vuex.Store({
      * @param {object} state
      * @param {object} payload
      */
-    [UPDATE_ENTITY](state, { module, entity, value }) {
+    [UPDATE_ENTITY](state, { module, entity, value, oldId }) {
+      oldId = oldId ?? value.id;
       let objToChange = module ? state[module] : state;
       const index = objToChange[entity]
-        .findIndex(({ id }) => id === value.id);
+        .findIndex(({ id }) => id === oldId);
       if (~index) {
         objToChange[entity].splice(index, 1, value);
       }
@@ -129,7 +131,7 @@ export default new Vuex.Store({
      */
     [DELETE_ENTITY](state, { module, entity, id }) {
       let objToChange = module ? state[module] : state;
-      objToChange[entity] = objToChange[entity].filter(e => +e.id !== +id);
+      objToChange[entity] = objToChange[entity].filter(e => e.id !== id);
     },
 
     /**
@@ -158,65 +160,70 @@ export default new Vuex.Store({
      * Подгрузить виды теста
      * @param {object} context
      */
-    async loadDough({ commit }) {
-      //TODO: сделать получение из апи
-      let { dough } = require("@/static/pizza.json");
-      commit(SET_ENTITY, {
-        entity: "rawDough",
-        value: dough,
-      });
+    async loadDough({ commit, state }) {
+      if (!state.rawDough.length) {
+        let dough = await this.$api.dough.query();
+        commit(SET_ENTITY, {
+          entity: "rawDough",
+          value: dough,
+        });
+      }
     },
 
     /**
      * Подгрузить ингредиенты
      * @param {object} context
      */
-    async loadIngredients({ commit }) {
-      //TODO: сделать получение из апи
-      let { ingredients } = require("@/static/pizza.json");
-      commit(SET_ENTITY, {
-        entity: "rawIngredients",
-        value: ingredients,
-      });
+    async loadIngredients({ commit, state }) {
+      if (!state.rawIngredients.length) {
+        let ingredients = await this.$api.ingredients.query();
+        commit(SET_ENTITY, {
+          entity: "rawIngredients",
+          value: ingredients,
+        });
+      }
     },
 
     /**
      * Подгрузить соусы
      * @param {object} context
      */
-    async loadSauces({ commit }) {
-      //TODO: сделать получение из апи
-      let { sauces } = require("@/static/pizza.json");
-      commit(SET_ENTITY, {
-        entity: "rawSauces",
-        value: sauces,
-      });
+    async loadSauces({ commit, state }) {
+      if (!state.rawSauces.length) {
+        let sauces = await this.$api.sauces.query();
+        commit(SET_ENTITY, {
+          entity: "rawSauces",
+          value: sauces,
+        });
+      }
     },
 
     /**
      * Подгрузить размеры
      * @param {object} context
      */
-    async loadSizes({ commit }) {
-      //TODO: сделать получение из апи
-      let { sizes } = require("@/static/pizza.json");
-      commit(SET_ENTITY, {
-        entity: "rawSizes",
-        value: sizes,
-      });
+    async loadSizes({ commit, state }) {
+      if (!state.rawSizes.length) {
+        let sizes = await this.$api.sizes.query();
+        commit(SET_ENTITY, {
+          entity: "rawSizes",
+          value: sizes,
+        });
+      }
     },
 
     /**
-     * Подгрузить размеры
+     * Подгрузить дополнительные товары
      * @param {object} context
      */
-    async loadMisc({ commit }) {
-      //TODO: сделать получение из апи
-      let misc = require("@/static/misc.json");
-      commit(SET_ENTITY, {
-        entity: "rawMisc",
-        value: misc,
-      });
+    async loadMisc({ commit, state }) {
+      if (!state.rawMisc.length) {
+        let misc = await this.$api.misc.query();
+        commit(SET_ENTITY, {
+          entity: "rawMisc",
+          value: misc,
+        });
+      }
     },
 
     /**
@@ -227,7 +234,7 @@ export default new Vuex.Store({
     async createNotification({ commit }, { ...notification }) {
       const uniqueNotification = {
         ...notification,
-        id: uniqueId(),
+        id: +uniqueId(),
       };
       commit(ADD_NOTIFICATION, uniqueNotification);
       setTimeout(
@@ -239,5 +246,5 @@ export default new Vuex.Store({
 
   modules,
 
-  plugins: [vuexLocal.plugin],
+  plugins: [VuexPlugins, vuexLocal.plugin],
 });

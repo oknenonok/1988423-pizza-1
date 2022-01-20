@@ -4,8 +4,8 @@
     class="notification__wrapper"
   >
     <div
-      v-for="({ text, type }, i) in notifications"
-      :key="i"
+      v-for="{ text, type, id } in notifications"
+      :key="id"
       :class="`notification notification--${type}`"
     >
       <span>{{ text }}</span>

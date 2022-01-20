@@ -6,7 +6,6 @@ export class Sauce extends Entity {
   @property({
     type: 'number',
     id: true,
-    generated: true,
   })
   id?: number;
 
