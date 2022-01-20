@@ -27,6 +27,7 @@ export default {
       this.$store.dispatch("Auth/loadData");
     }
     this.fixCartStatus();
+    this.$store.dispatch("Cart/loadDataForCalculation");
   },
 
   methods: {

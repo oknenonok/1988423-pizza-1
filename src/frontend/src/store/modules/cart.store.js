@@ -14,6 +14,8 @@ import {
   DELIVERY_TYPE_NEW,
 } from "@/common/constants";
 import orderCreateStatuses from "@/common/enums/orderCreateStatuses";
+import calculateIngredientsPrice from "@/common/helpers/calculateIngredientsPrice";
+import calculatePizzaPrice from "@/common/helpers/calculatePizzaPrice";
 
 const cartItemsNamespace = {
   module: "Cart",
@@ -115,7 +117,7 @@ export default {
     },
 
     /**
-     * Обновить количество ингредиента на пицце
+     * Обновить количество дополнительного товара
      * @param {object} state
      * @param {object} payload
      */
@@ -134,7 +136,7 @@ export default {
      */
     [SET_DELIVERY_TYPE](state, deliveryType) {
       state.deliveryType = deliveryType;
-      if ([DELIVERY_TYPE_SELFTAKE, DELIVERY_TYPE_NEW].indexOf(deliveryType) === -1) {
+      if (![DELIVERY_TYPE_SELFTAKE, DELIVERY_TYPE_NEW].includes(deliveryType)) {
         const address = this.state.Addresses.addresses.find((address) => address.id === +deliveryType);
         if (address) {
           state.addressId = address.id;
@@ -164,7 +166,7 @@ export default {
     },
 
     /**
-     * Установить состояние из строки корзины
+     * Установить состояние из заказа
      * @param {object} state
      * @param {object} cartItem
      */
@@ -200,11 +202,21 @@ export default {
     },
 
     /**
+     * Подгрузить данные для расчета стоимости
+     * @param {object} context
+     */
+    async loadDataForCalculation({ state, dispatch }) {
+      if (Object.keys(state.chosenMiscById).length > 0) {
+        dispatch("loadMisc", null, {root: true});
+      }
+    },
+
+    /**
      * Добавить или обновить строку корзины
      * @param {object} context
      * @param {object} payload
      */
-    addToCart({commit, rootGetters}, {id, name, sauce, dough, size, ingredients, quantity}) {
+    addToCart({commit}, {id, name, sauce, dough, size, ingredients, quantity}) {
       let payload = {
         name,
         sauce,
@@ -213,11 +225,11 @@ export default {
         ingredients,
         id: id ?? +uniqueId(),
         quantity: quantity ?? 1,
-        price: rootGetters["Builder/calculatePrice"]({
+        price: calculatePizzaPrice({
           sauce,
           dough,
           size,
-          ingredientsPrice: rootGetters["Builder/calculateIngredientsPrice"](ingredients)
+          ingredientsPrice: calculateIngredientsPrice(ingredients)
         }),
       }
       if (id) {

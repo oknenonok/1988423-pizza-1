@@ -13,6 +13,8 @@ import {
   SET_SAUCE,
   SET_PIZZA_NAME,
 } from "@/store/mutations-types";
+import calculateIngredientsPrice from "@/common/helpers/calculateIngredientsPrice";
+import calculatePizzaPrice from "@/common/helpers/calculatePizzaPrice";
 
 const setupState = () => ({
   chosenDoughId: DEFAULT_DOUGH,
@@ -96,7 +98,7 @@ export default {
      * @returns {number}
      */
     chosenIngredientsPrice(state, getters) {
-      return getters.calculateIngredientsPrice(getters.chosenIngredients);
+      return calculateIngredientsPrice(getters.chosenIngredients);
     },
 
     /**
@@ -104,40 +106,12 @@ export default {
      * @returns {number}
      */
     price(state, getters) {
-      return getters.calculatePrice({
+      return calculatePizzaPrice({
         dough: getters.chosenDough,
         sauce: getters.chosenSauce,
         size: getters.chosenSize,
         ingredientsPrice: getters.chosenIngredientsPrice,
       });
-    },
-
-    /**
-     * Замыкание для рассчета стоимости пиццы
-     * @returns {function}
-     */
-    calculatePrice() {
-      return ({dough, size, sauce, ingredientsPrice}) => {
-        return (
-          (dough.price +
-            sauce.price +
-            ingredientsPrice
-          ) * size.multiplier
-        );
-      };
-    },
-
-    /**
-     * Замыкание для рассчета стоимости ингредиентов
-     * @returns {function}
-     */
-    calculateIngredientsPrice() {
-      return (ingredients) => {
-        return ingredients.reduce(
-          (total, ingredient) => total + ingredient.price * ingredient.quantity,
-          0
-        );
-      };
     },
   },
 

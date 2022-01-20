@@ -8,20 +8,28 @@
       @drop="addIngredient"
     >
       <div
-        v-for="ingredient in chosenIngredients"
-        :key="ingredient.id"
+        v-for="{ id, value } in chosenIngredients"
+        :key="id"
         class="pizza__filling"
-        :class="fillingClass(ingredient)"
-      />
+        :class="`pizza__filling--${value}`"
+      >
+        <div
+          v-if="getIngredientQuantity(id) >= 2"
+          class="pizza__filling pizza__filling--second"
+          :class="`pizza__filling--${value}`"
+        />
+        <div
+          v-if="getIngredientQuantity(id) >= 3"
+          class="pizza__filling pizza__filling--third"
+          :class="`pizza__filling--${value}`"
+        />
+      </div>
     </AppDrop>
   </div>
 </template>
 
 <script>
-import {
-  MAX_INGREDIENT_QUANTITY,
-  MAPPING_FILLING_CLASS,
-} from "@/common/constants";
+import { MAX_INGREDIENT_QUANTITY } from "@/common/constants";
 import {
   mapGetters,
   mapMutations,
@@ -52,18 +60,6 @@ export default {
       if (ingredientId && quantity < MAX_INGREDIENT_QUANTITY) {
         this.setIngredientQuantity({ingredientId, quantity: quantity + 1});
       }
-    },
-
-    /**
-     * css-класс для отображения ингредиента
-     * @param {object} ingredient
-     * @returns {string}
-     */
-    fillingClass(ingredient) {
-      return (
-        `pizza__filling--${ingredient.value} ` +
-        MAPPING_FILLING_CLASS[this.getIngredientQuantity(ingredient.id)]
-      );
     },
   },
 };
