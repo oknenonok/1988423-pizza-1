@@ -15,10 +15,9 @@
 </template>
 
 <script>
-import {
-  mapGetters,
-} from "vuex";
+import { mapGetters } from "vuex";
 import OrderInfo from "@/modules/orders/components/OrderInfo";
+import redirectOnLogout from "@/common/mixins/redirectOnLogout";
 
 export default {
   name: "Orders",
@@ -27,8 +26,11 @@ export default {
     OrderInfo,
   },
 
+  mixins: [
+    redirectOnLogout
+  ],
+
   computed: {
-   // ...mapState("Orders", ["orders"]),
     ...mapGetters("Orders", ["dataReady", "orders"]),
   },
 

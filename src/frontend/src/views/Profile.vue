@@ -35,6 +35,7 @@ import {
 import { ADD_ADDRESS } from "@/store/mutations-types";
 import ProfileCard from "@/modules/profile/components/ProfileCard";
 import ProfileAddress from "@/modules/profile/components/ProfileAddress";
+import redirectOnLogout from "@/common/mixins/redirectOnLogout";
 
 export default {
   name: "Profile",
@@ -43,6 +44,10 @@ export default {
     ProfileCard,
     ProfileAddress,
   },
+
+  mixins: [
+    redirectOnLogout
+  ],
 
   computed: {
     ...mapState("Addresses", ["addresses"]),

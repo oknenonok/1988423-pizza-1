@@ -1,4 +1,5 @@
 import getView from "@/common/helpers/getView";
+import { auth, isLoggedIn } from "@/middlewares";
 
 export default [
   {
@@ -10,7 +11,10 @@ export default [
     path: "/Login",
     name: "Login",
     component: getView("Login"),
-    meta: { layout: "AppLayoutClean" },
+    meta: {
+      layout: "AppLayoutClean",
+      middlewares: [isLoggedIn],
+    },
   },
   {
     path: "/cart",
@@ -21,12 +25,18 @@ export default [
     path: "/profile",
     name: "Profile",
     component: getView("Profile"),
-    meta: { layout: "AppLayoutAccount" },
+    meta: {
+      layout: "AppLayoutAccount",
+      middlewares: [auth],
+    },
   },
   {
     path: "/orders",
     name: "Orders",
     component: getView("Orders"),
-    meta: { layout: "AppLayoutAccount" },
+    meta: {
+      layout: "AppLayoutAccount",
+      middlewares: [auth],
+    },
   },
 ];
