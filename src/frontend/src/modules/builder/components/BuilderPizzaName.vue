@@ -5,6 +5,7 @@
     name="pizza_name"
     placeholder="Введите название пиццы"
     caption="Название пиццы"
+    required
     hide-caption
     @input="setPizzaName"
   />

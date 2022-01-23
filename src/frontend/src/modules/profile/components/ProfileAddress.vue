@@ -102,10 +102,8 @@
 </template>
 
 <script>
-import {
-  mapState,
-  mapGetters,
-} from "vuex";
+import { mapState } from "vuex";
+import isNew from "@/common/helpers/isNew";
 
 export default {
   name: "ProfileAddress",
@@ -136,7 +134,6 @@ export default {
 
   computed: {
     ...mapState("Addresses", ["addresses"]),
-    ...mapGetters("Addresses", ["isNew"]),
 
     addressString() {
       return this.street
@@ -146,7 +143,7 @@ export default {
   },
 
   created() {
-    this.isEditing = this.isNew(this.address.id);
+    this.isEditing = isNew(this.address.id);
   },
 
   methods: {

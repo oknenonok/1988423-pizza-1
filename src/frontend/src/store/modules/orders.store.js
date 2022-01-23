@@ -4,6 +4,8 @@ import {
 } from "@/store/mutations-types";
 import { DELIVERY_TYPE_SELFTAKE } from "@/common/constants";
 import orderCreateStatuses from "@/common/enums/orderCreateStatuses";
+import calculateIngredientsPrice from "@/common/helpers/calculateIngredientsPrice";
+import calculatePizzaPrice from "@/common/helpers/calculatePizzaPrice";
 
 const setupState = () => ({
   rawOrders: [],
@@ -55,11 +57,11 @@ export default {
                 };
               }),
             };
-            pizzaData.price = rootGetters["Builder/calculatePrice"]({
+            pizzaData.price = calculatePizzaPrice({
               dough: pizzaData.dough,
               sauce: pizzaData.sauce,
               size: pizzaData.size,
-              ingredientsPrice: rootGetters["Builder/calculateIngredientsPrice"](pizzaData.ingredients),
+              ingredientsPrice: calculateIngredientsPrice(pizzaData.ingredients),
             });
             return pizzaData;
           }),

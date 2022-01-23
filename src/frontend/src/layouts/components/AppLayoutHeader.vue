@@ -45,11 +45,12 @@
       </a>
     </div>
 
-    <Login
-      v-if="isLoginFormOpened"
-      is-popup
-      @close="hideLoginForm"
-    />
+    <AppPopup :is-open="isLoginFormOpened">
+      <Login
+        is-popup
+        @close="hideLoginForm"
+      />
+    </AppPopup>
   </header>
 </template>
 
@@ -61,12 +62,14 @@ import {
 } from "vuex";
 import getView from "@/common/helpers/getView";
 import AppLogo from "@/common/components/AppLogo";
+import AppPopup from "@/common/components/AppPopup";
 
 export default {
   name: "AppLayoutHeader",
 
   components: {
     AppLogo,
+    AppPopup,
     Login: getView("Login"),
   },
 

@@ -34,16 +34,6 @@ export const MAPPING_SIZE = ["", "small", "normal", "big"];
 export const MAPPING_SAUCE = ["", "tomato", "creamy"];
 
 /**
- * @constant {array} соответствие между классами css и количеством ингредиентов
- */
-export const MAPPING_FILLING_CLASS = [
-  "",
-  "",
-  "pizza__filling--second",
-  "pizza__filling--third",
-];
-
-/**
  * @constant {number} максимальное количество ингредиентов на пицце
  */
 export const MAX_INGREDIENT_QUANTITY = 3;
@@ -76,7 +66,7 @@ export const DELIVERY_TYPE_NEW = "new";
 /**
  * @constant {number} время жизни уведомления (мс)
  */
-export const MESSAGE_LIVE_TIME = 3000;
+export const MESSAGE_LIVE_TIME = 5000;
 
 /**
  * @constant {number} левая кнопка мыши в мышиных событиях
@@ -86,4 +76,4 @@ export const MOUSE_BUTTON_LEFT = 0;
 /**
  * @constant {string} префикс для id новых адресов
  */
-export const NEW_ADDRESS_ID_PREFIX = "new-";
+export const NEW_ID_PREFIX = "new-";

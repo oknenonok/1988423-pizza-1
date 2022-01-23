@@ -1,22 +1,27 @@
 <template>
-  <AppLayoutDefault>
+  <div>
+    <AppLayoutHeader />
     <main class="layout">
       <AppLayoutAccountSidebar />
-      <slot />
+      <AppTransitionSlide>
+        <router-view />
+      </AppTransitionSlide>
     </main>
-  </AppLayoutDefault>
+  </div>
 </template>
 
 <script>
-import AppLayoutDefault from "@/layouts/AppLayoutDefault";
 import AppLayoutAccountSidebar from "@/layouts/components/AppLayoutAccountSidebar";
+import AppLayoutHeader from "@/layouts/components/AppLayoutHeader";
+import AppTransitionSlide from "@/common/transitions/AppTransitionSlide";
 
 export default {
   name: "AppLayoutAccount",
 
   components: {
-    AppLayoutDefault,
     AppLayoutAccountSidebar,
+    AppLayoutHeader,
+    AppTransitionSlide,
   },
 };
 </script>

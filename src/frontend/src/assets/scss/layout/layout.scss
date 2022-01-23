@@ -8,6 +8,20 @@
   height: 100%;
 
   background-color: rgba($green-500, 0.05);
+
+  animation: slide-sidebar ease-out $animation-time;
+}
+
+@keyframes slide-sidebar {
+  from {
+    top: 20vh;
+    opacity: 0;
+  }
+
+  to {
+    top: 0;
+    opacity: 1;
+  }
 }
 
 .layout__logo {
@@ -17,10 +31,9 @@
   padding-top: 10px;
   padding-bottom: 10px;
 
-  background-color: $green-500;
-
   img {
     display: block;
+    visibility: hidden;
 
     margin: 0 auto;
   }

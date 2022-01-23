@@ -110,7 +110,7 @@ export default {
     },
 
     canEditAddress() {
-      return [DELIVERY_TYPE_SELFTAKE, DELIVERY_TYPE_NEW].indexOf(this.deliveryType) >= 0;
+      return [DELIVERY_TYPE_SELFTAKE, DELIVERY_TYPE_NEW].includes(this.deliveryType);
     },
   },
 

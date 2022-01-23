@@ -1,44 +1,61 @@
 <template>
-  <div
-    v-if="notifications.length"
+  <transition-group
+    name="notifications"
     class="notification__wrapper"
+    tag="ul"
   >
-    <div
+    <li
       v-for="{ text, type, id } in notifications"
       :key="id"
       :class="`notification notification--${type}`"
+      @click="deleteNotification(id)"
     >
       <span>{{ text }}</span>
-    </div>
-  </div>
+    </li>
+  </transition-group>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import {
+  mapState,
+  mapMutations,
+} from "vuex";
+import { DELETE_NOTIFICATION } from "@/store/mutations-types";
+
 export default {
   name: "Notifications",
   computed: {
-    ...mapState(["notifications"])
-  }
+    ...mapState("Notifications", ["notifications"])
+  },
+  methods: {
+    ...mapMutations("Notifications", {
+      deleteNotification: DELETE_NOTIFICATION,
+    }),
+  },
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .notification {
+  position: relative;
   box-sizing: border-box;
   width: 100%;
   max-width: 100%;
   padding: 20px;
+  margin-top: 10px;
   text-align: center;
   color: $white;
   border-bottom: 2px solid transparent;
+  border-radius: 5px;
+  opacity: 0.8;
   &__wrapper {
     position: fixed;
     z-index: 9999;
-    bottom: 20px;
-    right: 0;
-    width: 420px;
-    padding: 10px;
+    bottom: 10px;
+    right: 10px;
+    width: 360px;
+    list-style: none;
+    margin: 0;
   }
   &--info {
     border-color: $silver-300;
@@ -55,6 +72,22 @@ export default {
   &--warning {
     border-color: $orange-300;
     background: $orange-100;
+  }
+}
+
+.notifications {
+  &-enter {
+    transform: translateX(360px);
+    opacity: 0;
+  }
+
+  &-enter-active, &-leave-active {
+    transition: all $animation-time;
+  }
+
+  &-leave-to {
+    transform: translateY(100px) rotate(30deg);
+    opacity: 0;
   }
 }
 </style>

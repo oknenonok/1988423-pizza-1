@@ -6,7 +6,8 @@ import {
   RESET_STATE,
   ADD_ADDRESS,
 } from "@/store/mutations-types";
-import { NEW_ADDRESS_ID_PREFIX } from "@/common/constants";
+import { NEW_ID_PREFIX } from "@/common/constants";
+import isNew from "@/common/helpers/isNew";
 
 const setupState = () => ({
   addresses: [],
@@ -29,14 +30,6 @@ export default {
   namespaced: true,
   state: setupState(),
 
-  getters: {
-    isNew() {
-      return (id) => {
-        return `${id}`.startsWith(NEW_ADDRESS_ID_PREFIX);
-      };
-    }
-  },
-
   mutations: {
     /**
      * Сбросить состояние
@@ -51,7 +44,7 @@ export default {
      * @param {object} state
      */
     [ADD_ADDRESS](state) {
-      state.addresses.push({ ...newAddress, id: uniqueId(NEW_ADDRESS_ID_PREFIX)});
+      state.addresses.push({ ...newAddress, id: uniqueId(NEW_ID_PREFIX)});
     },
   },
 
@@ -81,9 +74,9 @@ export default {
      * @param {object} context
      * @param {object} payload
      */
-    async save({ commit, rootState, getters }, { id, name, street, building, flat, comment }) {
+    async save({ commit, rootState }, { id, name, street, building, flat, comment }) {
       let userId = rootState.Auth.user.id;
-      if (getters.isNew(id)) {
+      if (isNew(id)) {
         let address = await this.$api.addresses.post({ userId, name, street, building, flat, comment });
         commit(UPDATE_ENTITY, {
           ...addressesNamespace,
@@ -111,8 +104,8 @@ export default {
      * @param {object} context
      * @param {object} payload
      */
-    async remove({ getters, commit }, { id }) {
-      if (!getters.isNew(id)) {
+    async remove({ commit }, { id }) {
+      if (!isNew(id)) {
         await this.$api.addresses.delete(id);
       }
       commit(DELETE_ENTITY, {
