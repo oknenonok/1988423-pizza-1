@@ -38,10 +38,9 @@
 
     <CartFooter />
 
-    <CartOrderPopup
-      v-if="isOrderPopupOpened"
-      @close="hidePopup"
-    />
+    <AppPopup :is-open="isOrderPopupOpened">
+      <CartOrderPopup @close="hidePopup" />
+    </AppPopup>
   </form>
 </template>
 
@@ -58,6 +57,7 @@ import CartAddress from "@/modules/cart/components/CartAddress";
 import CartFooter from "@/modules/cart/components/CartFooter";
 import CartOrderPopup from "@/modules/cart/components/CartOrderPopup";
 import orderCreateStatuses from "@/common/enums/orderCreateStatuses";
+import AppPopup from "@/common/components/AppPopup";
 
 export default {
   name: "Cart",
@@ -68,6 +68,7 @@ export default {
     CartAddress,
     CartFooter,
     CartOrderPopup,
+    AppPopup,
   },
 
   data() {
@@ -104,8 +105,10 @@ export default {
 
     hidePopup() {
       if (this.orderCreateStatus === orderCreateStatuses.SUCCESS) {
-        this.$store.commit(`Cart/${RESET_STATE}`);
-        this.$router.push(this.user ? "/orders" : "/");
+        setTimeout(() => {
+          this.$store.commit(`Cart/${RESET_STATE}`);
+          this.$router.push(this.user ? "/orders" : "/");
+        }, 400);
       }
       this.isOrderPopupOpened = false;
     },

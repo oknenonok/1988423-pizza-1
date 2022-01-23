@@ -1,31 +1,26 @@
 <template>
-  <div
+  <AppDrop
     class="pizza"
     :class="`pizza--foundation--${chosenDough.value}-${chosenSauce.value}`"
+    @drop="addIngredient"
   >
-    <AppDrop
+    <transition-group
+      name="pizza"
       class="pizza__wrapper"
-      @drop="addIngredient"
+      tag="div"
     >
       <div
-        v-for="{ id, value } in chosenIngredients"
+        v-for="({value, id}) in ingredientClasses"
         :key="id"
-        class="pizza__filling"
-        :class="`pizza__filling--${value}`"
+        class="pizza__filling-wrapper"
       >
         <div
-          v-if="getIngredientQuantity(id) >= 2"
-          class="pizza__filling pizza__filling--second"
-          :class="`pizza__filling--${value}`"
-        />
-        <div
-          v-if="getIngredientQuantity(id) >= 3"
-          class="pizza__filling pizza__filling--third"
-          :class="`pizza__filling--${value}`"
+          class="pizza__filling"
+          :class="value"
         />
       </div>
-    </AppDrop>
-  </div>
+    </transition-group>
+  </AppDrop>
 </template>
 
 <script>
@@ -43,7 +38,30 @@ export default {
   components: { AppDrop },
 
   computed: {
-    ...mapGetters("Builder", ["chosenDough", "chosenSauce", "getIngredientQuantity", "chosenIngredients"])
+    ...mapGetters("Builder", ["chosenDough", "chosenSauce", "getIngredientQuantity", "chosenIngredients"]),
+
+    ingredientClasses() {
+      let result = [];
+      this.chosenIngredients.forEach(({ id, value }) => {
+        result.push({
+          id: `${id}-1`,
+          value: `pizza__filling--${value}`,
+        });
+        if (this.getIngredientQuantity(id) >= 2) {
+          result.push({
+            id: `${id}-2`,
+            value: `pizza__filling--${value} pizza__filling--second`,
+          });
+        }
+        if (this.getIngredientQuantity(id) >= 3) {
+          result.push({
+            id: `${id}-3`,
+            value: `pizza__filling--${value} pizza__filling--third`,
+          });
+        }
+      });
+      return result;
+    },
   },
 
   methods: {
@@ -64,3 +82,45 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.pizza {
+  &-enter-active{
+    animation: ingredient-appear ease-out $animation-time;
+    z-index: 100;
+  }
+
+  &-leave-active{
+    animation: ingredient-disappear ease-out $animation-time;
+    z-index: 100;
+  }
+
+  @keyframes ingredient-appear {
+    from {
+      transform: scale(130%);
+    }
+
+    50% {
+      transform: scale(80%);
+    }
+
+    to {
+      transform: scale(100%);
+    }
+  }
+
+  @keyframes ingredient-disappear {
+    from {
+      transform: scale(100%);
+    }
+
+    50% {
+      transform: scale(120%);
+    }
+
+    to {
+      transform: scale(10%);
+    }
+  }
+}
+</style>

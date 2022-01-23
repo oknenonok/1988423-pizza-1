@@ -1,21 +1,22 @@
 <template>
   <div>
     <AppLayoutHeader />
-    <slot />
-    <AppNotifications />
+    <AppTransitionSlide>
+      <router-view />
+    </AppTransitionSlide>
   </div>
 </template>
 
 <script>
 import AppLayoutHeader from "@/layouts/components/AppLayoutHeader";
-import AppNotifications from "@/common/components/AppNotifications";
+import AppTransitionSlide from "@/common/transitions/AppTransitionSlide";
 
 export default {
   name: "AppLayoutDefault",
 
   components: {
     AppLayoutHeader,
-    AppNotifications,
+    AppTransitionSlide,
  },
 };
 </script>

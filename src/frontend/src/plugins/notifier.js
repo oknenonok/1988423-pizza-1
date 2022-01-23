@@ -7,28 +7,28 @@ export default class Notifier {
   }
 
   info(text) {
-    this.#store.dispatch("createNotification", {
+    this.#store.dispatch("Notifications/createNotification", {
       text,
       type: notificationTypes.INFO
     });
   }
 
   success(text) {
-    this.#store.dispatch("createNotification", {
+    this.#store.dispatch("Notifications/createNotification", {
       text,
       type: notificationTypes.SUCCESS
     });
   }
 
   error(text) {
-    this.#store.dispatch("createNotification", {
+    this.#store.dispatch("Notifications/createNotification", {
       text,
       type: notificationTypes.ERROR
     });
   }
 
   warning(text) {
-    this.#store.dispatch("createNotification", {
+    this.#store.dispatch("Notifications/createNotification", {
       text,
       type: notificationTypes.WARNING
     });

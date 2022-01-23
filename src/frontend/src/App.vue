@@ -1,8 +1,10 @@
 <template>
   <div id="app">
-    <AppLayout>
-      <router-view />
-    </AppLayout>
+    <component
+      :is="layout"
+      class="body"
+    />
+    <AppNotifications />
   </div>
 </template>
 
@@ -11,14 +13,27 @@ import {
   RESET_STATE,
   SET_ENTITY,
 } from "@/store/mutations-types";
+import { APP_DEFAULT_LAYOUT } from "@/common/constants";
+import AppNotifications from "@/common/components/AppNotifications";
 import orderCreateStatuses from "@/common/enums/orderCreateStatuses";
 import setAuthHeader from "@/common/helpers/setAuthHeader";
-import AppLayout from "@/layouts/AppLayout";
+import AppLayoutDefault from "@/layouts/AppLayoutDefault";
+import AppLayoutAccount from "@/layouts/AppLayoutAccount";
+import AppLayoutClean from "@/layouts/AppLayoutClean";
 
 export default {
   name: "App",
   components: {
-    AppLayout,
+    AppLayoutDefault,
+    AppLayoutAccount,
+    AppLayoutClean,
+    AppNotifications,
+  },
+
+  computed: {
+    layout() {
+      return this.$route.meta.layout ?? APP_DEFAULT_LAYOUT;
+    },
   },
 
   created() {

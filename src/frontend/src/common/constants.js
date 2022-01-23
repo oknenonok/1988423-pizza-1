@@ -66,7 +66,7 @@ export const DELIVERY_TYPE_NEW = "new";
 /**
  * @constant {number} время жизни уведомления (мс)
  */
-export const MESSAGE_LIVE_TIME = 3000;
+export const MESSAGE_LIVE_TIME = 5000;
 
 /**
  * @constant {number} левая кнопка мыши в мышиных событиях
