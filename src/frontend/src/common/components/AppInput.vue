@@ -2,6 +2,7 @@
   <label class="input">
     <span
       v-if="caption"
+      data-test="caption"
       :class="{ 'visually-hidden': hideCaption }"
     >
       {{ caption }}
@@ -46,7 +47,7 @@ export default {
     },
     caption: {
       type: String,
-      default: "text",
+      default: "",
     },
     hideCaption: {
       type: Boolean,

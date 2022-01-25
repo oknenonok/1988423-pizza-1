@@ -2,6 +2,7 @@
   <router-link
     to="/"
     class="logo"
+    data-test="logo"
   >
     <img
       src="@/assets/img/logo.svg"

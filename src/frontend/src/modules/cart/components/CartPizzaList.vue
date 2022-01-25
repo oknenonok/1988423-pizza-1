@@ -14,7 +14,7 @@
         class="cart-list__counter"
         :value="item.quantity"
         counter-button-class="counter__button--orange"
-        @change="updateQuantity({item, quantity: $event})"
+        @input="updateQuantity({item, quantity: $event})"
       />
 
       <div class="cart-list__price">

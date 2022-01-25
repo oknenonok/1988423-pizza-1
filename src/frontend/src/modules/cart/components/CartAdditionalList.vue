@@ -22,7 +22,7 @@
           class="additional-list__counter"
           :value="getMiscQuantity(id)"
           counter-button-class="counter__button--orange"
-          @change="setMiscQuantity({ id, quantity: $event })"
+          @input="setMiscQuantity({ id, quantity: $event })"
         />
 
         <div class="additional-list__price">
