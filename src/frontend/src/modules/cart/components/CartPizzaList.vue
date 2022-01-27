@@ -26,7 +26,6 @@
       <div class="cart-list__button">
         <router-link
           :to="`/?edit=${item.id}`"
-          tag="span"
           class="cart-list__edit"
         >
           Изменить

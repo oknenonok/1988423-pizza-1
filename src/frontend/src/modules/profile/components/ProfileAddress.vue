@@ -96,7 +96,7 @@
         </div>
       </div>
       <p>{{ addressString }}</p>
-      <small v-if="comment">{{ comment }}</small>
+      <small v-if="address.comment">{{ address.comment }}</small>
     </div>
   </div>
 </template>

@@ -13,6 +13,7 @@
         <button
           type="button"
           class="button button--border"
+          data-test="remove"
           @click="remove(order)"
         >
           Удалить
@@ -22,6 +23,7 @@
         <button
           type="button"
           class="button"
+          data-test="repeat"
           @click="repeat"
         >
           Повторить
@@ -62,7 +64,7 @@
         >
         <p>
           <span>{{ name }}</span>
-          <b>
+          <b data-test="additionalPrice">
             <span v-if="quantity > 1">{{ quantity }} x</span>
             {{ $priceFormat(price) }}
           </b>

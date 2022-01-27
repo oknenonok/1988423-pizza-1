@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Первый",
+    "street": "Ленина",
+    "building": "5",
+    "flat": "10",
+    "comment": "коммент",
+    "userId": "uuid"
+  },
+  {
+    "id": 2,
+    "name": "Второй",
+    "street": "Пушкина",
+    "building": "44а",
+    "flat": "11",
+    "comment": "",
+    "userId": "uuid"
+  }
+]

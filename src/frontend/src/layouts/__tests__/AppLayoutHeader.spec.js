@@ -5,8 +5,6 @@ import Vuex from "vuex";
 import VueRouter from "vue-router";
 import priceFormat from "@/plugins/priceFormat";
 
-//import { ADD_NOTIFICATION, DELETE_NOTIFICATION } from "@/store/mutations-types";
-
 const localVue = createLocalVue();
 localVue.use(Vuex);
 localVue.use(priceFormat);
