@@ -4,8 +4,8 @@
  * @returns {number}
  */
 export default (ingredients) => {
-  return ingredients.reduce(
+  return +ingredients.reduce(
     (total, ingredient) => total + ingredient.price * ingredient.quantity,
     0
-  );
+  ).toFixed(2);
 };

@@ -3,12 +3,13 @@ import App from "@/App";
 import router from "@/router";
 import store from "@/store";
 import VueTheMask from "vue-the-mask";
+import priceFormat from "@/plugins/priceFormat";
 import "@/common/directives/clickOutside";
 import "@/common/directives/autofocus";
 import "@/plugins/ui";
-import "@/plugins/priceFormat";
 
 Vue.use(VueTheMask);
+Vue.use(priceFormat);
 
 Vue.config.productionTip = false;
 

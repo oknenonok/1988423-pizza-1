@@ -1,6 +1,4 @@
-import Vue from "vue";
-
-const plugin = {
+export default {
   install(Vue) {
     Vue.prototype.$priceFormat = (price) => {
       return new Intl.NumberFormat("ru-RU", {
@@ -13,5 +11,3 @@ const plugin = {
     };
   },
 };
-
-Vue.use(plugin);
