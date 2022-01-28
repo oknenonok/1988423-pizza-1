@@ -62,11 +62,15 @@ export default {
      * @param {object} context
      */
     async load({ commit }) {
-      let addresses = await this.$api.addresses.query();
-      commit(SET_ENTITY, {
-        ...addressesNamespace,
-        value: addresses,
-      }, { root: true });
+      try {
+        let addresses = await this.$api.addresses.query();
+        commit(SET_ENTITY, {
+          ...addressesNamespace,
+          value: addresses,
+        }, { root: true });
+      } catch (e) {
+        console.error(e);
+      }
     },
 
     /**

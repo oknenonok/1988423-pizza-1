@@ -2,7 +2,12 @@ import {
   SET_LOGGED_USER,
   SET_ENTITY,
   RESET_STATE,
+  SET_DELIVERY_TYPE,
 } from "@/store/mutations-types";
+import {
+  DELIVERY_TYPE_SELFTAKE,
+  DELIVERY_TYPE_NEW,
+} from "@/common/constants";
 import setAuthHeader from "@/common/helpers/setAuthHeader";
 
 const setupState = () => ({
@@ -42,17 +47,21 @@ export default {
      * @param {object} payload
      */
     async login({ commit, dispatch }, { email, password }) {
-      let { token } = await this.$api.auth.login({ email, password });
-      if (token) {
-        commit(SET_ENTITY, {
-          module: "Auth",
-          entity: "token",
-          value: token,
-        }, { root: true });
-        setAuthHeader(this);
-        await dispatch("loadData");
+      try {
+        let { token } = await this.$api.auth.login({ email, password });
+        if (token) {
+          commit(SET_ENTITY, {
+            module: "Auth",
+            entity: "token",
+            value: token,
+          }, { root: true });
+          setAuthHeader(this);
+          await dispatch("loadData");
+        }
+        return token;
+      } catch (e) {
+        return null;
       }
-      return token;
     },
 
     /**
@@ -72,9 +81,12 @@ export default {
      * Разлогиниться
      * @param {object} context
      */
-    async logout({ commit }, sendRequest = true) {
+    async logout({ commit, rootState }, sendRequest = true) {
       commit(RESET_STATE);
       commit(`Addresses/${RESET_STATE}`, null, { root: true });
+      if (![DELIVERY_TYPE_SELFTAKE, DELIVERY_TYPE_NEW].includes(rootState.Cart.deliveryType)) {
+        commit(`Cart/${SET_DELIVERY_TYPE}`, DELIVERY_TYPE_SELFTAKE, { root: true });
+      }
       if (sendRequest) {
         await this.$api.auth.logout();
       }

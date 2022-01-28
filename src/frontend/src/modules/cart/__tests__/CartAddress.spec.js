@@ -4,7 +4,7 @@ import CartAddress from "@/modules/cart/components/CartAddress";
 import Vuex from "vuex";
 import AppInput from "@/common/components/AppInput";
 import VueTheMask from "vue-the-mask";
-import { DELIVERY_TYPE_NEW } from "@/common/constants";
+import { DELIVERY_TYPE_NEW, DELIVERY_TYPE_SELFTAKE } from "@/common/constants";
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
@@ -67,5 +67,9 @@ describe("CartAddress", () => {
     expect(wrapper.find("input[name=street]").element.disabled).toBeTruthy();
     expect(wrapper.find("input[name=building]").element.disabled).toBeTruthy();
     expect(wrapper.find("input[name=flat]").element.disabled).toBeTruthy();
+
+    await store.dispatch("Auth/logout", false, { root: true });
+    expect(wrapper.findAll("option").length).toBe(2);
+    expect(store.state.Cart.deliveryType).toBe(DELIVERY_TYPE_SELFTAKE);
   });
 });

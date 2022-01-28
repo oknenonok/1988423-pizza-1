@@ -18,6 +18,7 @@ import {
   SET_LOGGED_USER,
   SET_MISC_QUANTITY,
   SET_INGREDIENT_QUANTITY,
+  SET_PIZZA_NAME,
 } from "@/store/mutations-types";
 
 import VuexPlugins from "@/plugins/vuexPlugins";
@@ -60,17 +61,17 @@ export const createMockApi = (store) => {
       query: jest.fn(() => Promise.resolve(sizes)),
     },
     auth: {
-      login: jest.fn(),
+      login: jest.fn(() => ({ token: "token" })),
       logout: jest.fn(),
-      whoAmI: jest.fn(),
+      loadData: jest.fn(),
     },
     orders: {
-      query: jest.fn(),
+      query: jest.fn(() => Promise.resolve(orders)),
       post: jest.fn(),
       delete: jest.fn(),
     },
     addresses: {
-      query: jest.fn(),
+      query: jest.fn(() => Promise.resolve(addresses)),
       put: jest.fn(),
       post: jest.fn(),
       delete: jest.fn(),
@@ -140,6 +141,7 @@ export const fillCart = (store) => {
       },
     ],
     quantity: 1,
+    // price: (300 + 50 + 33*1 + 42*2) * 1 * 1 = 467
   }, { root: true });
   store.dispatch("Cart/addToCart", {
     name: "Pizza 2",
@@ -157,9 +159,11 @@ export const fillCart = (store) => {
       },
     ],
     quantity: 2,
+    // price: (300 + 50 + 42*1 + 42*2) * 2 * 2 = 952 * 2 = 1904
   }, { root: true });
   store.commit(`Cart/${SET_MISC_QUANTITY}`, { id: 1, quantity: 1 });
   store.commit(`Cart/${SET_MISC_QUANTITY}`, { id: 2, quantity: 2 });
+  // price = 1904 + 467 + 56 + 10*2 = 2447
 };
 
 /**
@@ -170,6 +174,8 @@ export const fillBuilder = (store) => {
   fillData(store);
   store.commit(`Builder/${SET_INGREDIENT_QUANTITY}`, { ingredientId: 1, quantity: 1 });
   store.commit(`Builder/${SET_INGREDIENT_QUANTITY}`, { ingredientId: 2, quantity: 2 });
+  store.commit(`Builder/${SET_PIZZA_NAME}`, "new");
+  // price: (300 + 50 + 33*1 + 42*2) * 2 = 934
 };
 
 /**

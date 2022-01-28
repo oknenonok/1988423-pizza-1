@@ -7,12 +7,17 @@
     >
       {{ caption }}
     </span>
-    <component
-      :is="componentName"
+    <the-mask
+      v-if="inputMask"
       :mask="inputMask"
-      v-bind="{ value, type, name, placeholder, required, disabled }"
-      @input="handleInput"
+      v-bind="bindValues"
+      @input="$emit('input', $event)"
     />
+    <input
+      v-else
+      v-bind="bindValues"
+      @input="$emit('input', $event.target.value)"
+    >
   </label>
 </template>
 
@@ -60,15 +65,16 @@ export default {
   },
 
   computed: {
-    componentName() {
-      return this.inputMask ? "the-mask" : "input";
-    },
-  },
-
-  methods: {
-    handleInput($event) {
-      this.$emit("input", $event.target ? $event.target.value : $event);
-    },
-  },
+    bindValues() {
+      return {
+        value: this.value,
+        type: this.type,
+        name: this.name,
+        placeholder: this.placeholder,
+        required: this.required,
+        disabled: this.disabled,
+      };
+    }
+  }
 };
 </script>

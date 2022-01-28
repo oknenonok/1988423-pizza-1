@@ -134,11 +134,15 @@ export const actions = {
    */
   async loadDough({ commit, state }) {
     if (!state.rawDough.length) {
-      let dough = await this.$api.dough.query();
-      commit(SET_ENTITY, {
-        entity: "rawDough",
-        value: dough,
-      });
+      try {
+        let dough = await this.$api.dough.query();
+        commit(SET_ENTITY, {
+          entity: "rawDough",
+          value: dough,
+        });
+      } catch (e) {
+        console.error(e);
+      }
     }
   },
 
@@ -148,11 +152,15 @@ export const actions = {
    */
   async loadIngredients({ commit, state }) {
     if (!state.rawIngredients.length) {
-      let ingredients = await this.$api.ingredients.query();
-      commit(SET_ENTITY, {
-        entity: "rawIngredients",
-        value: ingredients,
-      });
+      try {
+        let ingredients = await this.$api.ingredients.query();
+        commit(SET_ENTITY, {
+          entity: "rawIngredients",
+          value: ingredients,
+        });
+      } catch (e) {
+        console.error(e);
+      }
     }
   },
 
@@ -162,11 +170,15 @@ export const actions = {
    */
   async loadSauces({ commit, state }) {
     if (!state.rawSauces.length) {
-      let sauces = await this.$api.sauces.query();
-      commit(SET_ENTITY, {
-        entity: "rawSauces",
-        value: sauces,
-      });
+      try {
+        let sauces = await this.$api.sauces.query();
+        commit(SET_ENTITY, {
+          entity: "rawSauces",
+          value: sauces,
+        });
+      } catch (e) {
+        console.error(e);
+      }
     }
   },
 
@@ -176,11 +188,15 @@ export const actions = {
    */
   async loadSizes({ commit, state }) {
     if (!state.rawSizes.length) {
-      let sizes = await this.$api.sizes.query();
-      commit(SET_ENTITY, {
-        entity: "rawSizes",
-        value: sizes,
-      });
+      try {
+        let sizes = await this.$api.sizes.query();
+        commit(SET_ENTITY, {
+          entity: "rawSizes",
+          value: sizes,
+        });
+      } catch (e) {
+        console.error(e);
+      }
     }
   },
 
@@ -190,11 +206,15 @@ export const actions = {
    */
   async loadMisc({ commit, state }) {
     if (!state.rawMisc.length) {
-      let misc = await this.$api.misc.query();
-      commit(SET_ENTITY, {
-        entity: "rawMisc",
-        value: misc,
-      });
+      try {
+        let misc = await this.$api.misc.query();
+        commit(SET_ENTITY, {
+          entity: "rawMisc",
+          value: misc,
+        });
+      } catch (e) {
+        console.error(e);
+      }
     }
   },
 };

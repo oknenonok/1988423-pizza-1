@@ -4,7 +4,6 @@ import BuilderPriceCounter from "@/modules/builder/components/BuilderPriceCounte
 import Vuex from "vuex";
 import priceFormat from "@/plugins/priceFormat";
 import { SET_PIZZA_NAME } from "@/store/mutations-types";
-import Vue from "vue";
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
@@ -34,9 +33,8 @@ describe("BuilderPriceCounter", () => {
   it("render correct", async () => {
     createComponent({ localVue, store });
     expect(wrapper.find("[data-test='finalPrice']").text()).toContain("934 ₽");
-    expect(wrapper.find("button").element.disabled).toBeTruthy();
-    store.commit(`Builder/${SET_PIZZA_NAME}`, "new");
-    await Vue.nextTick();
     expect(wrapper.find("button").element.disabled).toBeFalsy();
+    await store.commit(`Builder/${SET_PIZZA_NAME}`, "");
+    expect(wrapper.find("button").element.disabled).toBeTruthy();
   });
 });

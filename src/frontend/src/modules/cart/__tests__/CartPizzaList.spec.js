@@ -70,6 +70,6 @@ describe("CartPizzaList", () => {
 
     await wrapper.find(".cart-list__edit").trigger("click");
     expect(wrapper.vm.$route.path).toBe("/");
-    expect(wrapper.vm.$route.query).toEqual({ edit: "4" });
+    expect(wrapper.vm.$route.query).toEqual({ edit: "2" });
   });
 });

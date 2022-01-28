@@ -6,16 +6,24 @@
       </h1>
     </div>
 
-    <OrderInfo
-      v-for="order in orders"
-      :key="order.id"
-      :order="order"
-    />
+    <div v-if="ordersLoaded">
+      <OrderInfo
+        v-for="order in orders"
+        :key="order.id"
+        :order="order"
+      />
+    </div>
+    <p v-else>
+      Заказы загружаются...
+    </p>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import {
+  mapGetters,
+  mapState,
+} from "vuex";
 import OrderInfo from "@/modules/orders/components/OrderInfo";
 import redirectOnLogout from "@/common/mixins/redirectOnLogout";
 
@@ -31,6 +39,7 @@ export default {
   ],
 
   computed: {
+    ...mapState("Orders", ["ordersLoaded"]),
     ...mapGetters("Orders", ["dataReady", "orders"]),
   },
 

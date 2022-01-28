@@ -1,34 +1,30 @@
 <template>
   <AppInput
-    :value="pizzaName"
+    v-model="pizzaName"
     type="text"
     name="pizza_name"
     placeholder="Введите название пиццы"
     caption="Название пиццы"
     required
     hide-caption
-    @input="setPizzaName"
   />
 </template>
 
 <script>
-import {
-  mapState,
-  mapMutations,
-} from "vuex";
 import { SET_PIZZA_NAME } from "@/store/mutations-types";
 
 export default {
   name: "BuilderPizzaName",
 
   computed: {
-    ...mapState("Builder", ["pizzaName"]),
-  },
-
-  methods: {
-    ...mapMutations("Builder", {
-      setPizzaName: SET_PIZZA_NAME,
-    }),
+    pizzaName: {
+      get() {
+        return this.$store.state.Builder.pizzaName;
+      },
+      set(value) {
+        return this.$store.commit(`Builder/${SET_PIZZA_NAME}`, value);
+      },
+    },
   },
 };
 </script>
