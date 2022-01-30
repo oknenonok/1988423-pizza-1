@@ -5,7 +5,7 @@ import {
 import {
   generateMockStore,
   fillBuilder,
-} from "@/common/test-utils";
+} from "@/tests/helpers";
 import BuilderSizeSelector from "@/modules/builder/components/BuilderSizeSelector";
 import Vuex from "vuex";
 import AppRadioButton from "@/common/components/AppRadioButton";

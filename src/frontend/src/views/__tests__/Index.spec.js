@@ -7,7 +7,7 @@ import {
   createMockApi,
   fillBuilder,
   fillCart,
-} from "@/common/test-utils";
+} from "@/tests/helpers";
 import Index from "@/views/Index";
 import Vuex from "vuex";
 import flushPromises from "flush-promises";

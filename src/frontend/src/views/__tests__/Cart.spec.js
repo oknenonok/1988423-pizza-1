@@ -6,7 +6,7 @@ import {
   generateMockStore,
   createMockApi,
   fillCart,
-} from "@/common/test-utils";
+} from "@/tests/helpers";
 import Cart from "@/views/Cart";
 import Vuex from "vuex";
 import flushPromises from "flush-promises";

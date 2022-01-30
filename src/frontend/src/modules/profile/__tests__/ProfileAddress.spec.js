@@ -7,7 +7,7 @@ import {
   createMockApi,
   fillAddresses,
   authenticateUser,
-} from "@/common/test-utils";
+} from "@/tests/helpers";
 import ProfileAddress from "@/modules/profile/components/ProfileAddress";
 import Vuex from "vuex";
 import AppInput from "@/common/components/AppInput";

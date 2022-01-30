@@ -6,7 +6,7 @@ import {
   generateMockStore,
   authenticateUser,
   fillCart,
-} from "@/common/test-utils";
+} from "@/tests/helpers";
 import AppLayoutHeader from "@/layouts/components/AppLayoutHeader";
 import Vuex from "vuex";
 import VueRouter from "vue-router";

@@ -6,7 +6,7 @@ import {
   generateMockStore,
   fillOrders,
   authenticateUser,
-} from "@/common/test-utils";
+} from "@/tests/helpers";
 import OrderInfo from "@/modules/orders/components/OrderInfo";
 import Vuex from "vuex";
 import priceFormat from "@/plugins/priceFormat";

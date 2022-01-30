@@ -1,18 +1,23 @@
 import { cloneDeep } from "lodash";
 import Vuex from "vuex";
 import jest from "jest-mock";
-import { state, mutations, getters, actions } from "@/store";
+import {
+  state,
+  mutations,
+  getters,
+  actions,
+} from "@/store";
 import modules from "@/store/modules";
-import user from "@/static/user.json";
-import misc from "@/static/misc.json";
-import addresses from "@/static/addresses.json";
-import orders from "@/static/orders.json";
+import user from "@/tests/fixtures/user.json";
+import misc from "@/tests/fixtures/misc.json";
+import addresses from "@/tests/fixtures/addresses.json";
+import orders from "@/tests/fixtures/orders.json";
 import {
   dough,
   ingredients,
   sauces,
   sizes,
-} from "@/static/pizza.json";
+} from "@/tests/fixtures/pizza.json";
 import {
   SET_ENTITY,
   SET_LOGGED_USER,
@@ -63,7 +68,7 @@ export const createMockApi = (store) => {
     auth: {
       login: jest.fn(() => ({ token: "token" })),
       logout: jest.fn(),
-      loadData: jest.fn(),
+      loadData: jest.fn(() => Promise.resolve(user)),
     },
     orders: {
       query: jest.fn(() => Promise.resolve(orders)),

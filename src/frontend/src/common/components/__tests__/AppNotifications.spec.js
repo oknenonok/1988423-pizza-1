@@ -2,7 +2,7 @@ import {
   mount,
   createLocalVue,
 } from "@vue/test-utils";
-import { generateMockStore } from "@/common/test-utils";
+import { generateMockStore } from "@/tests/helpers";
 import AppNotifications from "@/common/components/AppNotifications";
 import Vuex from "vuex";
 import {

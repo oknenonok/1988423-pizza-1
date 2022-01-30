@@ -7,7 +7,7 @@ import {
   fillCart,
   fillAddresses,
   authenticateUser,
-} from "@/common/test-utils";
+} from "@/tests/helpers";
 import CartAddress from "@/modules/cart/components/CartAddress";
 import Vuex from "vuex";
 import AppInput from "@/common/components/AppInput";

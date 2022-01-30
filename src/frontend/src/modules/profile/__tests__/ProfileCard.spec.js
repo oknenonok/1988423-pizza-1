@@ -5,7 +5,7 @@ import {
 import {
   generateMockStore,
   authenticateUser,
-} from "@/common/test-utils";
+} from "@/tests/helpers";
 import ProfileCard from "@/modules/profile/components/ProfileCard";
 import Vuex from "vuex";
 

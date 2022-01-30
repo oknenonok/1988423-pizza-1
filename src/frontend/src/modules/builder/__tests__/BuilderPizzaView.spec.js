@@ -5,7 +5,7 @@ import {
 import {
   generateMockStore,
   fillBuilder,
-} from "@/common/test-utils";
+} from "@/tests/helpers";
 import BuilderPizzaView from "@/modules/builder/components/BuilderPizzaView";
 import Vuex from "vuex";
 

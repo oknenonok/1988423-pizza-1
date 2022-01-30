@@ -5,7 +5,7 @@ import {
 import {
   generateMockStore,
   fillCart,
-} from "@/common/test-utils";
+} from "@/tests/helpers";
 import CartFooter from "@/modules/cart/components/CartFooter";
 import Vuex from "vuex";
 import priceFormat from "@/plugins/priceFormat";

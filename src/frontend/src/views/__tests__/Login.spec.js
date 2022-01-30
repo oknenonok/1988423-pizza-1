@@ -5,7 +5,7 @@ import {
 import {
   generateMockStore,
   createMockApi,
-} from "@/common/test-utils";
+} from "@/tests/helpers";
 import Login from "@/views/Login";
 import Vuex from "vuex";
 import AppInput from "@/common/components/AppInput";

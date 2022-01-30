@@ -5,7 +5,7 @@ import {
 import {
   generateMockStore,
   fillBuilder,
-} from "@/common/test-utils";
+} from "@/tests/helpers";
 import BuilderPriceCounter from "@/modules/builder/components/BuilderPriceCounter";
 import Vuex from "vuex";
 import priceFormat from "@/plugins/priceFormat";

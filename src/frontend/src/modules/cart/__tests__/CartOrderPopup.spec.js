@@ -5,7 +5,7 @@ import {
 import {
   generateMockStore,
   fillCart,
-} from "@/common/test-utils";
+} from "@/tests/helpers";
 import CartOrderPopup from "@/modules/cart/components/CartOrderPopup";
 import Vuex from "vuex";
 import orderCreateStatuses from "@/common/enums/orderCreateStatuses";
