@@ -1,5 +1,13 @@
-import { mount, createLocalVue } from "@vue/test-utils";
-import { generateMockStore, createMockApi, authenticateUser, fillAddresses } from "@/common/test-utils";
+import {
+  mount,
+  createLocalVue,
+} from "@vue/test-utils";
+import {
+  generateMockStore,
+  createMockApi,
+  authenticateUser,
+  fillAddresses,
+} from "@/common/test-utils";
 import Profile from "@/views/Profile";
 import Vuex from "vuex";
 
@@ -12,10 +20,10 @@ describe("Profile", () => {
   const stubs = ["ProfileCard", "ProfileAddress"];
   const mocks = {
     $router: {
-      push: jest.fn()
+      push: jest.fn(),
     },
   };
-  const createComponent = options => {
+  const createComponent = (options) => {
     wrapper = mount(Profile, options);
   };
 

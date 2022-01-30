@@ -1,5 +1,12 @@
-import { mount, createLocalVue } from "@vue/test-utils";
-import { generateMockStore, authenticateUser, fillCart } from "@/common/test-utils";
+import {
+  mount,
+  createLocalVue,
+} from "@vue/test-utils";
+import {
+  generateMockStore,
+  authenticateUser,
+  fillCart,
+} from "@/common/test-utils";
 import AppLayoutHeader from "@/layouts/components/AppLayoutHeader";
 import Vuex from "vuex";
 import VueRouter from "vue-router";
@@ -13,21 +20,16 @@ localVue.use(VueRouter);
 describe("AppLayoutHeader", () => {
   let wrapper;
   let store;
-  const stubs = [
-    "router-link",
-    "AppLogo",
-    "AppPopup",
-    "Login",
-  ];
+  const stubs = ["router-link", "AppLogo", "AppPopup", "Login"];
   const routes = [
     {
       path: "/",
-      component: AppLayoutHeader
-    }
+      component: AppLayoutHeader,
+    },
   ];
   const router = new VueRouter({ routes });
 
-  const createComponent = options => {
+  const createComponent = (options) => {
     wrapper = mount(AppLayoutHeader, options);
   };
 

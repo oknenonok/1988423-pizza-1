@@ -1,5 +1,13 @@
-import { mount, createLocalVue } from "@vue/test-utils";
-import { generateMockStore, createMockApi, fillAddresses, authenticateUser } from "@/common/test-utils";
+import {
+  mount,
+  createLocalVue,
+} from "@vue/test-utils";
+import {
+  generateMockStore,
+  createMockApi,
+  fillAddresses,
+  authenticateUser,
+} from "@/common/test-utils";
 import ProfileAddress from "@/modules/profile/components/ProfileAddress";
 import Vuex from "vuex";
 import AppInput from "@/common/components/AppInput";
@@ -23,7 +31,7 @@ describe("ProfileAddress", () => {
   let wrapper;
   let store;
   let propsData;
-  const createComponent = options => {
+  const createComponent = (options) => {
     wrapper = mount(ProfileAddress, options);
   };
 

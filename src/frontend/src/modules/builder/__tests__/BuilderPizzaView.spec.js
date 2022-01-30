@@ -1,5 +1,11 @@
-import { mount, createLocalVue } from "@vue/test-utils";
-import { generateMockStore, fillBuilder } from "@/common/test-utils";
+import {
+  mount,
+  createLocalVue,
+} from "@vue/test-utils";
+import {
+  generateMockStore,
+  fillBuilder,
+} from "@/common/test-utils";
 import BuilderPizzaView from "@/modules/builder/components/BuilderPizzaView";
 import Vuex from "vuex";
 
@@ -10,7 +16,7 @@ describe("BuilderPizzaView", () => {
   let wrapper;
   let store;
   const stubs = ["AppDrop"];
-  const createComponent = options => {
+  const createComponent = (options) => {
     wrapper = mount(BuilderPizzaView, options);
   };
 
@@ -32,7 +38,9 @@ describe("BuilderPizzaView", () => {
     createComponent({ localVue, store, stubs });
     expect(wrapper.classes()).toContain("pizza--foundation--light-tomato");
 
-    const subclasses = wrapper.findAll(".pizza__filling").wrappers.map(element => element.classes().join(" "));
+    const subclasses = wrapper
+      .findAll(".pizza__filling")
+      .wrappers.map((element) => element.classes().join(" "));
     expect(subclasses.length).toBe(3);
     expect(subclasses).toContain("pizza__filling pizza__filling--mushrooms");
     expect(subclasses).toContain("pizza__filling pizza__filling--cheddar");

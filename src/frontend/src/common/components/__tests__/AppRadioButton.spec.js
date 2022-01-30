@@ -10,11 +10,11 @@ describe("AppRadioButton", () => {
   };
   const slots = {
     default: "slot",
-  }
+  };
   const listeners = { select: null };
 
   let wrapper;
-  const createComponent = options => {
+  const createComponent = (options) => {
     wrapper = shallowMount(AppRadioButton, options);
   };
 

@@ -1,5 +1,11 @@
-import { mount, createLocalVue } from "@vue/test-utils";
-import { generateMockStore, fillBuilder } from "@/common/test-utils";
+import {
+  mount,
+  createLocalVue,
+} from "@vue/test-utils";
+import {
+  generateMockStore,
+  fillBuilder,
+} from "@/common/test-utils";
 import BuilderDoughSelector from "@/modules/builder/components/BuilderDoughSelector";
 import Vuex from "vuex";
 import AppRadioButton from "@/common/components/AppRadioButton";
@@ -11,7 +17,7 @@ localVue.component("AppRadioButton", AppRadioButton);
 describe("BuilderDoughSelector", () => {
   let wrapper;
   let store;
-  const createComponent = options => {
+  const createComponent = (options) => {
     wrapper = mount(BuilderDoughSelector, options);
   };
 

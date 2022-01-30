@@ -1,5 +1,11 @@
-import { mount, createLocalVue } from "@vue/test-utils";
-import { generateMockStore, authenticateUser } from "@/common/test-utils";
+import {
+  mount,
+  createLocalVue,
+} from "@vue/test-utils";
+import {
+  generateMockStore,
+  authenticateUser,
+} from "@/common/test-utils";
 import ProfileCard from "@/modules/profile/components/ProfileCard";
 import Vuex from "vuex";
 
@@ -9,7 +15,7 @@ localVue.use(Vuex);
 describe("ProfileCard", () => {
   let wrapper;
   let store;
-  const createComponent = options => {
+  const createComponent = (options) => {
     wrapper = mount(ProfileCard, options);
   };
 

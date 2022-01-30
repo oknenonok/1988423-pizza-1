@@ -1,5 +1,11 @@
-import { mount, createLocalVue } from "@vue/test-utils";
-import { generateMockStore, fillCart } from "@/common/test-utils";
+import {
+  mount,
+  createLocalVue,
+} from "@vue/test-utils";
+import {
+  generateMockStore,
+  fillCart,
+} from "@/common/test-utils";
 import CartFooter from "@/modules/cart/components/CartFooter";
 import Vuex from "vuex";
 import priceFormat from "@/plugins/priceFormat";
@@ -12,7 +18,7 @@ describe("CartFooter", () => {
   let wrapper;
   let store;
   const stubs = ["router-link"];
-  const createComponent = options => {
+  const createComponent = (options) => {
     wrapper = mount(CartFooter, options);
   };
 

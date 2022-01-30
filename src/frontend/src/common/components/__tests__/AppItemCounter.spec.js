@@ -10,7 +10,7 @@ describe("AppItemCounter", () => {
   };
 
   let wrapper;
-  const createComponent = options => {
+  const createComponent = (options) => {
     wrapper = shallowMount(AppItemCounter, options);
   };
 
@@ -36,14 +36,14 @@ describe("AppItemCounter", () => {
     await buttonPlus.trigger("click");
     expect(wrapper.emitted("input")[0][0]).toBe(1);
 
-    await wrapper.setProps({ value: 1 })
+    await wrapper.setProps({ value: 1 });
     expect(buttonMinus.element.disabled).toBeFalsy();
     expect(buttonPlus.element.disabled).toBeFalsy();
     expect(element.element.value).toBe("1");
     await buttonPlus.trigger("click");
     expect(wrapper.emitted("input")[1][0]).toBe(2);
 
-    await wrapper.setProps({ value: 2 })
+    await wrapper.setProps({ value: 2 });
     expect(buttonMinus.element.disabled).toBeFalsy();
     expect(buttonPlus.element.disabled).toBeTruthy();
     expect(element.element.value).toBe("2");

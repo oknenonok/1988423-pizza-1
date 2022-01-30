@@ -14,7 +14,7 @@ describe("calculateIngredientsPrice", () => {
       },
       {
         price: 0.2,
-        quantity: 3
+        quantity: 3,
       },
     ])).toBe(117.2);
   });

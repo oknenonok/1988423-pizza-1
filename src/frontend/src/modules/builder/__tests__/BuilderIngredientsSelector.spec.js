@@ -1,5 +1,11 @@
-import { mount, createLocalVue } from "@vue/test-utils";
-import { generateMockStore, fillBuilder } from "@/common/test-utils";
+import {
+  mount,
+  createLocalVue,
+} from "@vue/test-utils";
+import {
+  generateMockStore,
+  fillBuilder,
+} from "@/common/test-utils";
 import BuilderIngredientsSelector from "@/modules/builder/components/BuilderIngredientsSelector";
 import Vuex from "vuex";
 import AppRadioButton from "@/common/components/AppRadioButton";
@@ -14,7 +20,7 @@ describe("BuilderIngredientsSelector", () => {
   let wrapper;
   let store;
   const stubs = ["AppDrag"];
-  const createComponent = options => {
+  const createComponent = (options) => {
     wrapper = mount(BuilderIngredientsSelector, options);
   };
 

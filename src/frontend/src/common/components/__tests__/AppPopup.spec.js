@@ -7,10 +7,10 @@ describe("AppPopup", () => {
   };
   const slots = {
     default: "slot",
-  }
+  };
 
   let wrapper;
-  const createComponent = options => {
+  const createComponent = (options) => {
     wrapper = shallowMount(AppPopup, options);
   };
 

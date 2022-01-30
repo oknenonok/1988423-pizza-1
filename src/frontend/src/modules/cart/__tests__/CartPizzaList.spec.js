@@ -1,5 +1,11 @@
-import { mount, createLocalVue } from "@vue/test-utils";
-import { generateMockStore, fillCart } from "@/common/test-utils";
+import {
+  mount,
+  createLocalVue,
+} from "@vue/test-utils";
+import {
+  generateMockStore,
+  fillCart,
+} from "@/common/test-utils";
 import CartPizzaList from "@/modules/cart/components/CartPizzaList";
 import Vuex from "vuex";
 import VueRouter from "vue-router";
@@ -16,19 +22,19 @@ describe("CartPizzaList", () => {
   let wrapper;
   let store;
   const stubs = ["AppPizzaDescription"];
-  const createComponent = options => {
+  const createComponent = (options) => {
     wrapper = mount(CartPizzaList, options);
   };
 
   const routes = [
     {
       path: "/cart",
-      component: CartPizzaList
+      component: CartPizzaList,
     },
     {
       path: "/",
-      component: {render: () => "-"}
-    }
+      component: { render: () => "-" },
+    },
   ];
   const router = new VueRouter({ routes });
 

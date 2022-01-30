@@ -1,4 +1,7 @@
-import { mount, createLocalVue } from "@vue/test-utils";
+import {
+  mount,
+  createLocalVue,
+} from "@vue/test-utils";
 import VueRouter from "vue-router";
 import AppLayoutAccountSidebar from "@/layouts/components/AppLayoutAccountSidebar";
 
@@ -8,18 +11,18 @@ localVue.use(VueRouter);
 const routes = [
   {
     path: "/orders",
-    component: AppLayoutAccountSidebar
+    component: AppLayoutAccountSidebar,
   },
   {
     path: "/profile",
-    component: {render: () => "-"}
-  }
+    component: { render: () => "-" },
+  },
 ];
 const router = new VueRouter({ routes });
 
 describe("AppLayoutAccountSidebar", () => {
   let wrapper;
-  const createComponent = options => {
+  const createComponent = (options) => {
     wrapper = mount(AppLayoutAccountSidebar, options);
   };
 

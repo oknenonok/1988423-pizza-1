@@ -1,5 +1,12 @@
-import { mount, createLocalVue } from "@vue/test-utils";
-import { generateMockStore, createMockApi, authenticateUser } from "@/common/test-utils";
+import {
+  mount,
+  createLocalVue,
+} from "@vue/test-utils";
+import {
+  generateMockStore,
+  createMockApi,
+  authenticateUser,
+} from "@/common/test-utils";
 import Orders from "@/views/Orders";
 import Vuex from "vuex";
 import flushPromises from "flush-promises";
@@ -13,10 +20,10 @@ describe("Orders", () => {
   const stubs = ["OrderInfo"];
   const mocks = {
     $router: {
-      push: jest.fn()
+      push: jest.fn(),
     },
   };
-  const createComponent = options => {
+  const createComponent = (options) => {
     wrapper = mount(Orders, options);
   };
 

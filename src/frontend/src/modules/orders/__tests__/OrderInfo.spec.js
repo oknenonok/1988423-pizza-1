@@ -1,5 +1,12 @@
-import { mount, createLocalVue } from "@vue/test-utils";
-import { generateMockStore, fillOrders, authenticateUser } from "@/common/test-utils";
+import {
+  mount,
+  createLocalVue,
+} from "@vue/test-utils";
+import {
+  generateMockStore,
+  fillOrders,
+  authenticateUser,
+} from "@/common/test-utils";
 import OrderInfo from "@/modules/orders/components/OrderInfo";
 import Vuex from "vuex";
 import priceFormat from "@/plugins/priceFormat";
@@ -14,10 +21,10 @@ describe("OrderInfo", () => {
   const stubs = ["AppPizzaDescription"];
   const mocks = {
     $router: {
-      push: jest.fn()
+      push: jest.fn(),
     },
   };
-  const createComponent = options => {
+  const createComponent = (options) => {
     wrapper = mount(OrderInfo, options);
   };
 

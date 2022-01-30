@@ -1,5 +1,11 @@
-import { mount, createLocalVue } from "@vue/test-utils";
-import { generateMockStore, fillCart } from "@/common/test-utils";
+import {
+  mount,
+  createLocalVue,
+} from "@vue/test-utils";
+import {
+  generateMockStore,
+  fillCart,
+} from "@/common/test-utils";
 import CartOrderPopup from "@/modules/cart/components/CartOrderPopup";
 import Vuex from "vuex";
 import orderCreateStatuses from "@/common/enums/orderCreateStatuses";
@@ -12,10 +18,10 @@ describe("CartOrderPopup", () => {
   let wrapper;
   let store;
   const directives = {
-    clickOutside: jest.fn()
+    clickOutside: jest.fn(),
   };
   const listeners = { close: null };
-  const createComponent = options => {
+  const createComponent = (options) => {
     wrapper = mount(CartOrderPopup, options);
   };
 

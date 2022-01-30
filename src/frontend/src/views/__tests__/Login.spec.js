@@ -1,5 +1,11 @@
-import { mount, createLocalVue } from "@vue/test-utils";
-import { generateMockStore, createMockApi } from "@/common/test-utils";
+import {
+  mount,
+  createLocalVue,
+} from "@vue/test-utils";
+import {
+  generateMockStore,
+  createMockApi,
+} from "@/common/test-utils";
 import Login from "@/views/Login";
 import Vuex from "vuex";
 import AppInput from "@/common/components/AppInput";
@@ -28,7 +34,7 @@ describe("Login", () => {
     },
   };
   const listeners = { close: null };
-  const createComponent = options => {
+  const createComponent = (options) => {
     wrapper = mount(Login, options);
   };
 

@@ -1,5 +1,13 @@
-import { mount, createLocalVue } from "@vue/test-utils";
-import { generateMockStore, createMockApi, fillBuilder, fillCart } from "@/common/test-utils";
+import {
+  mount,
+  createLocalVue,
+} from "@vue/test-utils";
+import {
+  generateMockStore,
+  createMockApi,
+  fillBuilder,
+  fillCart,
+} from "@/common/test-utils";
 import Index from "@/views/Index";
 import Vuex from "vuex";
 import flushPromises from "flush-promises";
@@ -12,7 +20,7 @@ describe("Index", () => {
   let wrapper;
   let store;
   const stubs = ["BuilderDoughSelector", "BuilderSizeSelector", "BuilderIngredientsSelector", "BuilderPizzaName", "BuilderPizzaView", "BuilderPriceCounter"];
-  const createComponent = options => {
+  const createComponent = (options) => {
     wrapper = mount(Index, options);
   };
 
@@ -44,7 +52,7 @@ describe("Index", () => {
     const mocks = {
       $route: {
         query: { edit: store.state.Cart.cartItems[0].id },
-      }
+      },
     };
     createComponent({ localVue, store, stubs, mocks });
     await flushPromises();

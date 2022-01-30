@@ -1,5 +1,11 @@
-import { mount, createLocalVue } from "@vue/test-utils";
-import { generateMockStore, fillBuilder } from "@/common/test-utils";
+import {
+  mount,
+  createLocalVue,
+} from "@vue/test-utils";
+import {
+  generateMockStore,
+  fillBuilder,
+} from "@/common/test-utils";
 import BuilderSizeSelector from "@/modules/builder/components/BuilderSizeSelector";
 import Vuex from "vuex";
 import AppRadioButton from "@/common/components/AppRadioButton";
@@ -11,7 +17,7 @@ localVue.component("AppRadioButton", AppRadioButton);
 describe("BuilderSizeSelector", () => {
   let wrapper;
   let store;
-  const createComponent = options => {
+  const createComponent = (options) => {
     wrapper = mount(BuilderSizeSelector, options);
   };
 

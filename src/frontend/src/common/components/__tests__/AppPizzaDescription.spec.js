@@ -22,7 +22,7 @@ describe("AppPizzaDescription", () => {
   };
 
   let wrapper;
-  const createComponent = options => {
+  const createComponent = (options) => {
     wrapper = shallowMount(AppPizzaDescription, options);
   };
 

@@ -1,4 +1,7 @@
-import { mount, createLocalVue } from "@vue/test-utils";
+import {
+  mount,
+  createLocalVue,
+} from "@vue/test-utils";
 import AppInput from "@/common/components/AppInput";
 import VueTheMask from "vue-the-mask";
 
@@ -18,7 +21,7 @@ describe("AppInput", () => {
   };
 
   let wrapper;
-  const createComponent = options => {
+  const createComponent = (options) => {
     wrapper = mount(AppInput, options);
   };
 

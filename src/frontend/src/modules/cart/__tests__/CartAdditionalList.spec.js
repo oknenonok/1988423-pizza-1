@@ -1,5 +1,11 @@
-import { mount, createLocalVue } from "@vue/test-utils";
-import { generateMockStore, fillCart } from "@/common/test-utils";
+import {
+  mount,
+  createLocalVue,
+} from "@vue/test-utils";
+import {
+  generateMockStore,
+  fillCart,
+} from "@/common/test-utils";
 import CartAdditionalList from "@/modules/cart/components/CartAdditionalList";
 import Vuex from "vuex";
 import AppItemCounter from "@/common/components/AppItemCounter";
@@ -13,7 +19,7 @@ localVue.component("AppItemCounter", AppItemCounter);
 describe("CartAdditionalList", () => {
   let wrapper;
   let store;
-  const createComponent = options => {
+  const createComponent = (options) => {
     wrapper = mount(CartAdditionalList, options);
   };
 

@@ -1,8 +1,14 @@
-import { mount, createLocalVue } from "@vue/test-utils";
+import {
+  mount,
+  createLocalVue,
+} from "@vue/test-utils";
 import { generateMockStore } from "@/common/test-utils";
 import AppNotifications from "@/common/components/AppNotifications";
 import Vuex from "vuex";
-import { ADD_NOTIFICATION, DELETE_NOTIFICATION } from "@/store/mutations-types";
+import {
+  ADD_NOTIFICATION,
+  DELETE_NOTIFICATION,
+} from "@/store/mutations-types";
 import notificationTypes from "@/common/enums/notificationTypes";
 
 const localVue = createLocalVue();
@@ -11,7 +17,7 @@ localVue.use(Vuex);
 describe("AppNotifications", () => {
   let wrapper;
   let store;
-  const createComponent = options => {
+  const createComponent = (options) => {
     wrapper = mount(AppNotifications, options);
   };
 

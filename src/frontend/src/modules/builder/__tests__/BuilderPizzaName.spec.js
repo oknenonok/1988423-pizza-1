@@ -1,5 +1,11 @@
-import { mount, createLocalVue } from "@vue/test-utils";
-import { generateMockStore, fillBuilder } from "@/common/test-utils";
+import {
+  mount,
+  createLocalVue,
+} from "@vue/test-utils";
+import {
+  generateMockStore,
+  fillBuilder,
+} from "@/common/test-utils";
 import BuilderPizzaName from "@/modules/builder/components/BuilderPizzaName";
 import Vuex from "vuex";
 import AppInput from "@/common/components/AppInput";
@@ -11,7 +17,7 @@ localVue.component("AppInput", AppInput);
 describe("BuilderPizzaName", () => {
   let wrapper;
   let store;
-  const createComponent = options => {
+  const createComponent = (options) => {
     wrapper = mount(BuilderPizzaName, options);
   };
 

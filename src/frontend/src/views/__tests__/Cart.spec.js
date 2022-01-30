@@ -1,5 +1,12 @@
-import { mount, createLocalVue } from "@vue/test-utils";
-import { generateMockStore, createMockApi, fillCart } from "@/common/test-utils";
+import {
+  mount,
+  createLocalVue,
+} from "@vue/test-utils";
+import {
+  generateMockStore,
+  createMockApi,
+  fillCart,
+} from "@/common/test-utils";
 import Cart from "@/views/Cart";
 import Vuex from "vuex";
 import flushPromises from "flush-promises";
@@ -34,7 +41,7 @@ describe("Cart", () => {
   let wrapper;
   let store;
   const stubs = ["CartPizzaList", "CartAdditionalList", "CartAddress", "CartFooter", "AppPopup", "CartOrderPopup"];
-  const createComponent = options => {
+  const createComponent = (options) => {
     wrapper = mount(Cart, options);
   };
 

@@ -1,5 +1,13 @@
-import { mount, createLocalVue } from "@vue/test-utils";
-import { generateMockStore, fillCart, fillAddresses, authenticateUser } from "@/common/test-utils";
+import {
+  mount,
+  createLocalVue,
+} from "@vue/test-utils";
+import {
+  generateMockStore,
+  fillCart,
+  fillAddresses,
+  authenticateUser,
+} from "@/common/test-utils";
 import CartAddress from "@/modules/cart/components/CartAddress";
 import Vuex from "vuex";
 import AppInput from "@/common/components/AppInput";
@@ -14,7 +22,7 @@ localVue.component("AppInput", AppInput);
 describe("CartAddress", () => {
   let wrapper;
   let store;
-  const createComponent = options => {
+  const createComponent = (options) => {
     wrapper = mount(CartAddress, options);
   };
 

@@ -1,4 +1,7 @@
-import { mount, createLocalVue } from "@vue/test-utils";
+import {
+  mount,
+  createLocalVue,
+} from "@vue/test-utils";
 import VueRouter from "vue-router";
 import AppLogo from "@/common/components/AppLogo";
 
@@ -8,18 +11,18 @@ localVue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    component: AppLogo
+    component: AppLogo,
   },
   {
     path: "/other",
-    component: {render: () => "-"}
+    component: { render: () => "-" },
   }
 ];
 const router = new VueRouter({ routes });
 
 describe("AppLogo", () => {
   let wrapper;
-  const createComponent = options => {
+  const createComponent = (options) => {
     wrapper = mount(AppLogo, options);
   };
 

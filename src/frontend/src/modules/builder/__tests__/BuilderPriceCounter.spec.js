@@ -1,5 +1,11 @@
-import { mount, createLocalVue } from "@vue/test-utils";
-import { generateMockStore, fillBuilder } from "@/common/test-utils";
+import {
+  mount,
+  createLocalVue,
+} from "@vue/test-utils";
+import {
+  generateMockStore,
+  fillBuilder,
+} from "@/common/test-utils";
 import BuilderPriceCounter from "@/modules/builder/components/BuilderPriceCounter";
 import Vuex from "vuex";
 import priceFormat from "@/plugins/priceFormat";
@@ -12,7 +18,7 @@ localVue.use(priceFormat);
 describe("BuilderPriceCounter", () => {
   let wrapper;
   let store;
-  const createComponent = options => {
+  const createComponent = (options) => {
     wrapper = mount(BuilderPriceCounter, options);
   };
 
