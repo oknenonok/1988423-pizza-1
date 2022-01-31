@@ -6,6 +6,7 @@ import {
   generateMockStore,
   fillOrders,
   authenticateUser,
+  createMockApi,
 } from "@/tests/helpers";
 import OrderInfo from "@/modules/orders/components/OrderInfo";
 import Vuex from "vuex";
@@ -30,6 +31,7 @@ describe("OrderInfo", () => {
 
   beforeEach(() => {
     store = generateMockStore();
+    createMockApi(store);
     authenticateUser(store);
     fillOrders(store);
   });
@@ -82,9 +84,8 @@ describe("OrderInfo", () => {
   it("action delete", async () => {
     const propsData = { order: store.getters["Orders/orders"][0] };
     createComponent({ localVue, store, stubs, propsData, mocks });
-    const spy = jest.spyOn(wrapper.vm, "remove");
     await wrapper.find("[data-test='remove']").trigger("click");
-    expect(spy).toHaveBeenCalledTimes(1);
+    expect(store.$api.orders.delete).toHaveBeenCalledWith(2);
   });
 
   it("action repeat", async () => {

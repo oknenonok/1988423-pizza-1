@@ -33,7 +33,6 @@ describe("Login", () => {
       push: jest.fn()
     },
   };
-  const listeners = { close: null };
   const createComponent = (options) => {
     wrapper = mount(Login, options);
   };
@@ -41,7 +40,6 @@ describe("Login", () => {
   beforeEach(() => {
     store = generateMockStore();
     createMockApi(store);
-    listeners.close = jest.fn();
     propsData.isPopup = true;
   });
 
@@ -50,12 +48,12 @@ describe("Login", () => {
   });
 
   it("rendered", () => {
-    createComponent({ localVue, store, directives, propsData, listeners, mocks });
+    createComponent({ localVue, store, directives, propsData, mocks });
     expect(wrapper.exists()).toBeTruthy();
   });
 
   it("can login", async () => {
-    createComponent({ localVue, store, directives, propsData, listeners, mocks });
+    createComponent({ localVue, store, directives, propsData, mocks });
     await wrapper.find("input[type=email]").setValue("user@example.com");
     await wrapper.find("input[type=password]").setValue("password");
     await wrapper.find("form").trigger("submit");
@@ -63,12 +61,12 @@ describe("Login", () => {
     expect(store.state.Auth.token).toBe("token");
     expect(store.$api.auth.login).toHaveBeenCalledWith({ "email": "user@example.com", "password": "password" });
     expect(store.$api.auth.loadData).toHaveBeenCalledTimes(1);
-    expect(listeners.close).toHaveBeenCalledTimes(1);
+    expect(wrapper.emitted("close").length).toBe(1);
   });
 
   it("not in popup login", async () => {
     propsData.isPopup = false;
-    createComponent({ localVue, store, directives, propsData, listeners, mocks });
+    createComponent({ localVue, store, directives, propsData, mocks });
     await wrapper.find("input[type=email]").setValue("user@example.com");
     await wrapper.find("input[type=password]").setValue("password");
     await wrapper.find("form").trigger("submit");
@@ -81,12 +79,12 @@ describe("Login", () => {
 
   it("error login", async () => {
     store.$api.auth.login = jest.fn(() => Promise.reject({ statusCode: 400, name: "BadRequestError", message: "Логин и/или пароль неверны" }));
-    createComponent({ localVue, store, directives, propsData, listeners, mocks });
+    createComponent({ localVue, store, directives, propsData, mocks });
     await wrapper.find("input[type=email]").setValue("user@example.com");
     await wrapper.find("input[type=password]").setValue("password");
     await wrapper.find("form").trigger("submit");
     expect(store.state.Auth.token).toBe(null);
     expect(store.$api.auth.loadData).toHaveBeenCalledTimes(0);
-    expect(listeners.close).toHaveBeenCalledTimes(0);
+    expect(wrapper.emitted("close")).toBeFalsy();
   });
 });

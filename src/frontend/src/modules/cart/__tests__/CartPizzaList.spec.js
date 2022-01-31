@@ -75,7 +75,7 @@ describe("CartPizzaList", () => {
     expect(prices.at(0).text()).toBe("2 856 ₽");
 
     await wrapper.find(".cart-list__edit").trigger("click");
-    expect(wrapper.vm.$route.path).toBe("/");
-    expect(wrapper.vm.$route.query).toEqual({ edit: "2" });
+    expect(router.currentRoute.path).toBe("/");
+    expect(router.currentRoute.query).toEqual({ edit: "2" });
   });
 });

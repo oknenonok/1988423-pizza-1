@@ -11,23 +11,18 @@ describe("AppRadioButton", () => {
   const slots = {
     default: "slot",
   };
-  const listeners = { select: null };
 
   let wrapper;
   const createComponent = (options) => {
     wrapper = shallowMount(AppRadioButton, options);
   };
 
-  beforeEach(() => {
-    listeners.select = jest.fn();
-  });
-
   afterEach(() => {
     wrapper.destroy();
   });
 
   it("works correctly", async () => {
-    createComponent({ propsData, slots, listeners });
+    createComponent({ propsData, slots });
     const element = wrapper.find("input[type=radio]");
     expect(wrapper.text()).toBe("slot");
     expect(element.element.value).toBe("value");
@@ -35,6 +30,6 @@ describe("AppRadioButton", () => {
     expect(element.element.checked).toBeFalsy();
     expect(element.classes()).toContain("inputClass");
     await element.trigger("change");
-    expect(listeners.select).toHaveBeenCalledWith("value");
+    expect(wrapper.emitted("select")[0]).toEqual(["value"]);
   });
 });

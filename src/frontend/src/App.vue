@@ -32,12 +32,12 @@ export default {
 
   computed: {
     layout() {
-      return this?.$route?.meta?.layout ?? APP_DEFAULT_LAYOUT;
+      return this.$route?.meta.layout ?? APP_DEFAULT_LAYOUT;
     },
   },
 
   created() {
-    if (this?.$store?.state?.Auth?.token) {
+    if (this.$store.state.Auth.token) {
       setAuthHeader(this.$store);
       this.$store.dispatch("Auth/loadData");
     }

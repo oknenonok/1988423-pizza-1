@@ -50,7 +50,7 @@ describe("AppLayoutHeader", () => {
     createComponent({ localVue, store, stubs, router });
     expect(wrapper.find(".header__user").text()).toBe("Войти");
     await wrapper.find(".header__user a").trigger("click");
-    expect(wrapper.vm.isLoginFormOpened).toBeTruthy();
+    expect(wrapper.find("apppopup-stub").props("isOpen")).toBeTruthy();
   });
 
   it("authenticated user", async () => {

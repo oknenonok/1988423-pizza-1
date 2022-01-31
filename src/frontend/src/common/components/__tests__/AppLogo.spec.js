@@ -39,6 +39,6 @@ describe("AppLogo", () => {
     createComponent({ localVue, router });
     router.push("/other");
     await wrapper.find("[data-test='logo']").trigger("click");
-    expect(wrapper.vm.$route.path).toBe("/");
+    expect(router.currentRoute.path).toBe("/");
   });
 });

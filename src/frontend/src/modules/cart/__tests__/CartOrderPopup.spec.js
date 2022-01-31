@@ -20,7 +20,6 @@ describe("CartOrderPopup", () => {
   const directives = {
     clickOutside: jest.fn(),
   };
-  const listeners = { close: null };
   const createComponent = (options) => {
     wrapper = mount(CartOrderPopup, options);
   };
@@ -28,7 +27,6 @@ describe("CartOrderPopup", () => {
   beforeEach(() => {
     store = generateMockStore();
     fillCart(store);
-    listeners.close = jest.fn();
   });
 
   afterEach(() => {
@@ -36,12 +34,12 @@ describe("CartOrderPopup", () => {
   });
 
   it("rendered", () => {
-    createComponent({ localVue, store, directives, listeners });
+    createComponent({ localVue, store, directives });
     expect(wrapper.exists()).toBeTruthy();
   });
 
   it("renders correctly", async () => {
-    createComponent({ localVue, store, directives, listeners });
+    createComponent({ localVue, store, directives });
     expect(wrapper.find("p").text()).toContain("Что-то пошло не так");
     expect(wrapper.find(".button").text()).toContain("Ладно");
 
@@ -63,6 +61,6 @@ describe("CartOrderPopup", () => {
 
     await wrapper.find(".button").trigger("click");
     await wrapper.find(".close").trigger("click");
-    expect(listeners.close).toHaveBeenCalledTimes(2);
+    expect(wrapper.emitted("close").length).toBe(2);
   });
 });

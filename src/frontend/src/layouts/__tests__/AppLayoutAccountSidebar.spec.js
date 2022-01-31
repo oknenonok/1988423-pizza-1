@@ -41,6 +41,6 @@ describe("AppLayoutAccountSidebar", () => {
     const elements = wrapper.findAll(".layout__link");
     expect(elements.at(0).classes()).toContain("layout__link--active");
     await elements.at(1).trigger("click");
-    expect(wrapper.vm.$route.path).toBe("/profile");
+    expect(router.currentRoute.path).toBe("/profile");
   });
 });

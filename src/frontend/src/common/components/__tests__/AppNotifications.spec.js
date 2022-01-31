@@ -5,10 +5,7 @@ import {
 import { generateMockStore } from "@/tests/helpers";
 import AppNotifications from "@/common/components/AppNotifications";
 import Vuex from "vuex";
-import {
-  ADD_NOTIFICATION,
-  DELETE_NOTIFICATION,
-} from "@/store/mutations-types";
+import { ADD_NOTIFICATION } from "@/store/mutations-types";
 import notificationTypes from "@/common/enums/notificationTypes";
 
 const localVue = createLocalVue();
@@ -44,8 +41,7 @@ describe("AppNotifications", () => {
     const element = wrapper.find(".notification");
     expect(element.html()).toContain("test notification");
     expect(element.classes()).toContain("notification--success");
-    const spy = jest.spyOn(wrapper.vm, DELETE_NOTIFICATION);
     await element.trigger("click");
-    expect(spy).toHaveBeenCalledWith(1);
+    expect(store.state.Notifications.notifications.length).toBe(0);
   });
 });
