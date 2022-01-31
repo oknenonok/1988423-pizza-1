@@ -32,12 +32,12 @@ export default {
 
   computed: {
     layout() {
-      return this.$route.meta.layout ?? APP_DEFAULT_LAYOUT;
+      return this?.$route?.meta?.layout ?? APP_DEFAULT_LAYOUT;
     },
   },
 
   created() {
-    if (this.$store.state.Auth.token) {
+    if (this?.$store?.state?.Auth?.token) {
       setAuthHeader(this.$store);
       this.$store.dispatch("Auth/loadData");
     }
@@ -52,7 +52,7 @@ export default {
     fixCartStatus() {
       if (this.$store.state.Cart.orderCreateStatus === orderCreateStatuses.SUCCESS) {
         this.$store.commit(`Cart/${RESET_STATE}`);
-      } else if (this.$store.state.Cart === orderCreateStatuses.SENDING) {
+      } else if (this.$store.state.Cart.orderCreateStatus === orderCreateStatuses.SENDING) {
         this.$store.commit(SET_ENTITY, {
           module: "Cart",
           entity: "orderCreateStatus",
