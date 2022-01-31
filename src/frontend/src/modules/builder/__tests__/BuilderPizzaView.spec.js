@@ -1,5 +1,5 @@
 import {
-  mount,
+  shallowMount,
   createLocalVue,
 } from "@vue/test-utils";
 import {
@@ -17,7 +17,7 @@ describe("BuilderPizzaView", () => {
   let store;
   const stubs = ["AppDrop"];
   const createComponent = (options) => {
-    wrapper = mount(BuilderPizzaView, options);
+    wrapper = shallowMount(BuilderPizzaView, options);
   };
 
   beforeEach(() => {

@@ -1,5 +1,5 @@
 import {
-  mount,
+  shallowMount,
   createLocalVue,
 } from "@vue/test-utils";
 import {
@@ -21,7 +21,7 @@ describe("Index", () => {
   let store;
   const stubs = ["BuilderDoughSelector", "BuilderSizeSelector", "BuilderIngredientsSelector", "BuilderPizzaName", "BuilderPizzaView", "BuilderPriceCounter"];
   const createComponent = (options) => {
-    wrapper = mount(Index, options);
+    wrapper = shallowMount(Index, options);
   };
 
   beforeEach(() => {

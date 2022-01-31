@@ -12,7 +12,10 @@ import CartAddress from "@/modules/cart/components/CartAddress";
 import Vuex from "vuex";
 import AppInput from "@/common/components/AppInput";
 import VueTheMask from "vue-the-mask";
-import { DELIVERY_TYPE_NEW, DELIVERY_TYPE_SELFTAKE } from "@/common/constants";
+import {
+  DELIVERY_TYPE_NEW,
+  DELIVERY_TYPE_SELFTAKE,
+} from "@/common/constants";
 
 const localVue = createLocalVue();
 localVue.use(Vuex);

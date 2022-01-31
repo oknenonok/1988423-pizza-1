@@ -1,5 +1,5 @@
 import {
-  mount,
+  shallowMount,
   createLocalVue,
 } from "@vue/test-utils";
 import {
@@ -42,7 +42,7 @@ describe("Cart", () => {
   let store;
   const stubs = ["CartPizzaList", "CartAdditionalList", "CartAddress", "CartFooter", "AppPopup", "CartOrderPopup"];
   const createComponent = (options) => {
-    wrapper = mount(Cart, options);
+    wrapper = shallowMount(Cart, options);
   };
 
   beforeEach(() => {

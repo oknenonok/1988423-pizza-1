@@ -44,8 +44,8 @@ describe("AppNotifications", () => {
     const element = wrapper.find(".notification");
     expect(element.html()).toContain("test notification");
     expect(element.classes()).toContain("notification--success");
-    const spyOnMutation = jest.spyOn(wrapper.vm, DELETE_NOTIFICATION);
+    const spy = jest.spyOn(wrapper.vm, DELETE_NOTIFICATION);
     await element.trigger("click");
-    expect(spyOnMutation).toHaveBeenCalledWith(1);
+    expect(spy).toHaveBeenCalledWith(1);
   });
 });

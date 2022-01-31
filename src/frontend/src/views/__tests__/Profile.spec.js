@@ -1,5 +1,5 @@
 import {
-  mount,
+  shallowMount,
   createLocalVue,
 } from "@vue/test-utils";
 import {
@@ -24,7 +24,7 @@ describe("Profile", () => {
     },
   };
   const createComponent = (options) => {
-    wrapper = mount(Profile, options);
+    wrapper = shallowMount(Profile, options);
   };
 
   beforeEach(() => {

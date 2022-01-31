@@ -1,5 +1,5 @@
 import {
-  mount,
+  shallowMount,
   createLocalVue,
 } from "@vue/test-utils";
 import {
@@ -24,7 +24,7 @@ describe("Orders", () => {
     },
   };
   const createComponent = (options) => {
-    wrapper = mount(Orders, options);
+    wrapper = shallowMount(Orders, options);
   };
 
   beforeEach(() => {
