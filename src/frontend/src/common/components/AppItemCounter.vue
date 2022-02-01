@@ -2,6 +2,7 @@
   <div class="counter">
     <button
       type="button"
+      data-test="minus"
       class="counter__button counter__button--minus"
       :disabled="value <= minValue"
       @click="addValue(-1)"
@@ -20,6 +21,7 @@
     >
     <button
       type="button"
+      data-test="plus"
       class="counter__button counter__button--plus"
       :class="counterButtonClass"
       :disabled="value >= maxValue"
@@ -69,7 +71,7 @@ export default {
           setValue = this.minValue;
         }
       }
-      this.$emit("change", setValue);
+      this.$emit("input", setValue);
     },
 
     addValue(value) {
@@ -77,7 +79,7 @@ export default {
         (this.value < this.maxValue && value > 0) ||
         (this.value > this.minValue && value < 0)
       ) {
-        this.$emit("change", this.value + value);
+        this.$emit("input", this.value + value);
       }
     },
   },

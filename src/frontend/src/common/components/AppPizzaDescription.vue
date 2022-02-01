@@ -8,13 +8,17 @@
       :alt="item.name"
     >
     <div class="product__text">
-      <h2>
+      <h2 data-test="pizzaName">
         {{ item.name }}
       </h2>
       <ul>
-        <li>{{ item.size.name }}, {{ item.dough.caption }}</li>
-        <li>Соус: {{ item.sauce.name.toLowerCase() }}</li>
-        <li>
+        <li data-test="pizzaSize">
+          {{ item.size.name }}, {{ item.dough.caption }}
+        </li>
+        <li data-test="pizzaSauce">
+          Соус: {{ item.sauce.name.toLowerCase() }}
+        </li>
+        <li data-test="pizzaIngredients">
           Начинка:
           {{ ingredientsString }}
         </li>

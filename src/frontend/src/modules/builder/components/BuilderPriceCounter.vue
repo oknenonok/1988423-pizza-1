@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>
+    <p data-test="finalPrice">
       Итого:
       {{ $priceFormat(price) }}
     </p>

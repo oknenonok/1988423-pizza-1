@@ -9,6 +9,7 @@ import calculatePizzaPrice from "@/common/helpers/calculatePizzaPrice";
 
 const setupState = () => ({
   rawOrders: [],
+  ordersLoaded: false,
 });
 
 const ordersNamespace = {
@@ -98,11 +99,25 @@ export default {
      * @param {object} context
      */
     async load({ commit }) {
-      let orders = await this.$api.orders.query();
       commit(SET_ENTITY, {
-        ...ordersNamespace,
-        value: orders,
+        module: "Orders",
+        entity: "ordersLoaded",
+        value: false,
       }, { root: true });
+      try {
+        let orders = await this.$api.orders.query();
+        commit(SET_ENTITY, {
+          ...ordersNamespace,
+          value: orders,
+        }, { root: true });
+        commit(SET_ENTITY, {
+          module: "Orders",
+          entity: "ordersLoaded",
+          value: true,
+        }, { root: true });
+      } catch (e) {
+        console.error(e);
+      }
     },
 
     /**

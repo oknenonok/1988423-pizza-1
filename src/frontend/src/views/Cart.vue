@@ -1,7 +1,6 @@
 <template>
   <form
     v-if="dataReady"
-    action="test.html"
     method="post"
     class="layout-form"
     @submit.prevent="placeOrder"

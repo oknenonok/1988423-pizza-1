@@ -43,7 +43,7 @@
               class="counter--orange ingredients__counter"
               :value="getIngredientQuantity(ingredient.id)"
               :max-value="maxQuantity"
-              @change="setIngredientQuantity({ingredientId: ingredient.id, quantity: $event})"
+              @input="setIngredientQuantity({ingredientId: ingredient.id, quantity: $event})"
             />
           </li>
         </ul>

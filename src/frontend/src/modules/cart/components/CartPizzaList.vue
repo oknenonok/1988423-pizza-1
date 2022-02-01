@@ -14,7 +14,7 @@
         class="cart-list__counter"
         :value="item.quantity"
         counter-button-class="counter__button--orange"
-        @change="updateQuantity({item, quantity: $event})"
+        @input="updateQuantity({item, quantity: $event})"
       />
 
       <div class="cart-list__price">
@@ -26,7 +26,6 @@
       <div class="cart-list__button">
         <router-link
           :to="`/?edit=${item.id}`"
-          tag="span"
           class="cart-list__edit"
         >
           Изменить

@@ -32,7 +32,7 @@ export default {
 
   computed: {
     layout() {
-      return this.$route.meta.layout ?? APP_DEFAULT_LAYOUT;
+      return this.$route?.meta.layout ?? APP_DEFAULT_LAYOUT;
     },
   },
 
@@ -52,7 +52,7 @@ export default {
     fixCartStatus() {
       if (this.$store.state.Cart.orderCreateStatus === orderCreateStatuses.SUCCESS) {
         this.$store.commit(`Cart/${RESET_STATE}`);
-      } else if (this.$store.state.Cart === orderCreateStatuses.SENDING) {
+      } else if (this.$store.state.Cart.orderCreateStatus === orderCreateStatuses.SENDING) {
         this.$store.commit(SET_ENTITY, {
           module: "Cart",
           entity: "orderCreateStatus",
