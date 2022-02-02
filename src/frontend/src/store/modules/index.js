@@ -1,15 +1,10 @@
-import Builder from "@/store/modules/builder.store";
-import Cart from "@/store/modules/cart.store";
-import Auth from "@/store/modules/auth.store";
-import Orders from "@/store/modules/orders.store";
-import Addresses from "@/store/modules/addresses.store";
-import Notifications from "@/store/modules/notifications.store";
+const requireContext = require.context("../../modules/", true, /store\.js$/);
 
-export default {
-  Builder,
-  Cart,
-  Auth,
-  Orders,
-  Addresses,
-  Notifications,
-};
+export default requireContext.keys().reduce((modules, filename) => {
+  const moduleName = filename
+    .split("/")[1]
+    .replace(/^\w/, c => c.toUpperCase());
+  modules[moduleName] =
+    requireContext(filename).default || requireContext(filename);
+  return modules;
+}, {});

@@ -4,7 +4,7 @@
       :is="layout"
       class="body"
     />
-    <AppNotifications />
+    <NotificationsList />
   </div>
 </template>
 
@@ -14,7 +14,7 @@ import {
   SET_ENTITY,
 } from "@/store/mutations-types";
 import { APP_DEFAULT_LAYOUT } from "@/common/constants";
-import AppNotifications from "@/common/components/AppNotifications";
+import NotificationsList from "@/modules/notifications/components/NotificationsList";
 import orderCreateStatuses from "@/common/enums/orderCreateStatuses";
 import setAuthHeader from "@/common/helpers/setAuthHeader";
 import AppLayoutDefault from "@/layouts/AppLayoutDefault";
@@ -27,7 +27,7 @@ export default {
     AppLayoutDefault,
     AppLayoutAccount,
     AppLayoutClean,
-    AppNotifications,
+    NotificationsList,
   },
 
   computed: {

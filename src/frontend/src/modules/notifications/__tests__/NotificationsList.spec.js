@@ -3,7 +3,7 @@ import {
   createLocalVue,
 } from "@vue/test-utils";
 import { generateMockStore } from "@/tests/helpers";
-import AppNotifications from "@/common/components/AppNotifications";
+import NotificationsList from "@/modules/notifications/components/NotificationsList";
 import Vuex from "vuex";
 import { ADD_NOTIFICATION } from "@/store/mutations-types";
 import notificationTypes from "@/common/enums/notificationTypes";
@@ -11,11 +11,11 @@ import notificationTypes from "@/common/enums/notificationTypes";
 const localVue = createLocalVue();
 localVue.use(Vuex);
 
-describe("AppNotifications", () => {
+describe("NotificationsList", () => {
   let wrapper;
   let store;
   const createComponent = (options) => {
-    wrapper = mount(AppNotifications, options);
+    wrapper = mount(NotificationsList, options);
   };
 
   beforeEach(() => {
