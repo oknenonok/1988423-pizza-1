@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import { LOCALE } from "@/common/constants";
+
 export default {
   name: "AppPizzaDescription",
   props: {
@@ -39,9 +41,9 @@ export default {
 
   computed: {
     ingredientsString() {
-      return this.item.ingredients.map((ingredient) =>
+      return new Intl.ListFormat(LOCALE).format(this.item.ingredients.map((ingredient) =>
         ingredient.name.toLowerCase() + (ingredient.quantity > 1 ? ` (x${ingredient.quantity})` : "")
-      ).join(", ");
+      ));
     }
   }
 };
