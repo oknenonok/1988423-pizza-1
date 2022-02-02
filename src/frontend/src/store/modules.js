@@ -1,4 +1,4 @@
-const requireContext = require.context("../../modules/", true, /store\.js$/);
+const requireContext = require.context("../modules/", true, /store\.js$/);
 
 export default requireContext.keys().reduce((modules, filename) => {
   const moduleName = filename

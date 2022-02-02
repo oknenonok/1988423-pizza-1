@@ -26,9 +26,13 @@ import {
 } from "vuex";
 import OrderInfo from "@/modules/orders/components/OrderInfo";
 import redirectOnLogout from "@/common/mixins/redirectOnLogout";
+import { auth } from "@/middlewares";
 
 export default {
   name: "Orders",
+  title: "История заказов",
+  layout: "AppLayoutAccount",
+  middlewares: [auth],
 
   components: {
     OrderInfo,

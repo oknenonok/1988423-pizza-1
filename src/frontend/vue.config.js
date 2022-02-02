@@ -1,3 +1,5 @@
+const GenerateRoutesPlugin = require("./src/router/_generateRoutes.js");
+
 module.exports = {
   css: {
     loaderOptions: {
@@ -30,6 +32,17 @@ module.exports = {
     overlay: {
       warnings: true,
       errors: true,
+    },
+  },
+
+  configureWebpack: {
+    plugins: [
+      new GenerateRoutesPlugin(),
+    ],
+    devServer: {
+      watchOptions: {
+        ignored: "**/routes.js",
+      },
     },
   },
 };
