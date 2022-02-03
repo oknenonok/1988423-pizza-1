@@ -6,25 +6,25 @@ import {
   generateMockStore,
   createMockApi,
   authenticateUser,
-  fillAddresses,
 } from "@/tests/helpers";
-import Profile from "@/views/Profile";
+import PageOrders from "@/views/PageOrders";
 import Vuex from "vuex";
+import flushPromises from "flush-promises";
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
 
-describe("Profile", () => {
+describe("PageOrders", () => {
   let wrapper;
   let store;
-  const stubs = ["ProfileCard", "ProfileAddress"];
+  const stubs = ["OrderInfo"];
   const mocks = {
     $router: {
       push: jest.fn(),
     },
   };
   const createComponent = (options) => {
-    wrapper = shallowMount(Profile, options);
+    wrapper = shallowMount(PageOrders, options);
   };
 
   beforeEach(() => {
@@ -41,12 +41,11 @@ describe("Profile", () => {
     expect(mocks.$router.push).toHaveBeenCalledWith("/");
   });
 
-  it("profile works", async () => {
+  it("orders load", async () => {
     await authenticateUser(store);
-    await fillAddresses(store);
     createComponent({ localVue, store, stubs, mocks });
-    expect(wrapper.findAll("profileaddress-stub").length).toBe(2);
-    await wrapper.find("button").trigger("click");
-    expect(wrapper.findAll("profileaddress-stub").length).toBe(3);
+    expect(wrapper.find("p").text()).toBe("Заказы загружаются...");
+    await flushPromises();
+    expect(wrapper.findAll("orderinfo-stub").length).toBe(2);
   });
 });

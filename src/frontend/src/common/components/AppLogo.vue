@@ -18,3 +18,16 @@ export default {
   name: "AppLogo",
 };
 </script>
+
+<style lang="scss">
+.logo {
+  display: block;
+
+  img {
+    display: block;
+
+    width: 90px;
+    height: 40px;
+  }
+}
+</style>

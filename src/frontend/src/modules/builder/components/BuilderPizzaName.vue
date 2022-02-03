@@ -21,6 +21,7 @@ export default {
       get() {
         return this.$store.state.Builder.pizzaName;
       },
+
       set(value) {
         return this.$store.commit(`Builder/${SET_PIZZA_NAME}`, value);
       },

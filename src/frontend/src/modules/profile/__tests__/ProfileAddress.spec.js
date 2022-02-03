@@ -11,11 +11,15 @@ import {
 import ProfileAddress from "@/modules/profile/components/ProfileAddress";
 import Vuex from "vuex";
 import AppInput from "@/common/components/AppInput";
+import AppButton from "@/common/components/AppButton";
+import AppIcon from "@/common/components/AppIcon";
 import flushPromises from "flush-promises";
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
 localVue.component("AppInput", AppInput);
+localVue.component("AppButton", AppButton);
+localVue.component("AppIcon", AppIcon);
 
 const SAVED_PAYLOAD_TO_CHECK = {
   "building": "12",

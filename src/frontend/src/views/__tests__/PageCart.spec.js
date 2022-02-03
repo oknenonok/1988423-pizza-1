@@ -7,7 +7,7 @@ import {
   createMockApi,
   fillCart,
 } from "@/tests/helpers";
-import Cart from "@/views/Cart";
+import PageCart from "@/views/PageCart";
 import Vuex from "vuex";
 import flushPromises from "flush-promises";
 
@@ -37,12 +37,12 @@ const SAVED_PAYLOAD_TO_CHECK = {
     "userId": null,
   };
 
-describe("Cart", () => {
+describe("PageCart", () => {
   let wrapper;
   let store;
   const stubs = ["CartPizzaList", "CartAdditionalList", "CartAddress", "CartFooter", "AppPopup", "CartOrderPopup"];
   const createComponent = (options) => {
-    wrapper = shallowMount(Cart, options);
+    wrapper = shallowMount(PageCart, options);
   };
 
   beforeEach(() => {
