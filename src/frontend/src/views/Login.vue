@@ -56,9 +56,13 @@
 
 <script>
 import { mapActions } from "vuex";
+import { isLoggedIn } from "@/middlewares";
 
 export default {
   name: "Login",
+  title: "Вход",
+  layout: "AppLayoutClean",
+  middlewares: [isLoggedIn],
 
   props: {
     isPopup: {

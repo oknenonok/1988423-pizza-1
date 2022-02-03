@@ -40,6 +40,6 @@ describe("AppPizzaDescription", () => {
     expect(wrapper.find("[data-test='pizzaName']").text()).toBe("Pizza name");
     expect(wrapper.find("[data-test='pizzaSize']").text()).toBe("Size name, Dough name");
     expect(wrapper.find("[data-test='pizzaSauce']").text()).toBe("Соус: sauce name");
-    expect(wrapper.find("[data-test='pizzaIngredients']").text()).toContain("ingredient 1, ingredient 2 (x2)");
+    expect(wrapper.find("[data-test='pizzaIngredients']").text()).toContain("ingredient 1 и ingredient 2 (x2)");
   });
 });

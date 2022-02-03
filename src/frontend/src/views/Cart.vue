@@ -60,6 +60,7 @@ import AppPopup from "@/common/components/AppPopup";
 
 export default {
   name: "Cart",
+  title: "Корзина",
 
   components: {
     CartPizzaList,

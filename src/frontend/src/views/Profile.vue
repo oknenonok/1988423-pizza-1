@@ -36,9 +36,13 @@ import { ADD_ADDRESS } from "@/store/mutations-types";
 import ProfileCard from "@/modules/profile/components/ProfileCard";
 import ProfileAddress from "@/modules/profile/components/ProfileAddress";
 import redirectOnLogout from "@/common/mixins/redirectOnLogout";
+import { auth } from "@/middlewares";
 
 export default {
   name: "Profile",
+  title: "Профиль",
+  layout: "AppLayoutAccount",
+  middlewares: [auth],
 
   components: {
     ProfileCard,

@@ -77,3 +77,8 @@ export const MOUSE_BUTTON_LEFT = 0;
  * @constant {string} префикс для id новых адресов
  */
 export const NEW_ID_PREFIX = "new-";
+
+/**
+ * @constant {string} локаль для вызовов Intl
+ */
+export const LOCALE = "ru-RU";

@@ -23,7 +23,7 @@ import {
 import { DELETE_NOTIFICATION } from "@/store/mutations-types";
 
 export default {
-  name: "Notifications",
+  name: "NotificationsList",
   computed: {
     ...mapState("Notifications", ["notifications"])
   },

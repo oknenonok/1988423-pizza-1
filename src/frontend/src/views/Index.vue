@@ -57,6 +57,7 @@ import BuilderPizzaName from "@/modules/builder/components/BuilderPizzaName";
 
 export default {
   name: "Index",
+  title: "Конструктор пиццы",
 
   components: {
     BuilderDoughSelector,

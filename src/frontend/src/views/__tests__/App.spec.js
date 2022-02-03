@@ -19,7 +19,7 @@ localVue.use(Vuex);
 describe("App", () => {
   let wrapper;
   let store;
-  const stubs = ["AppNotifications"];
+  const stubs = ["NotificationsList"];
   const createComponent = (options) => {
     wrapper = shallowMount(App, options);
   };
