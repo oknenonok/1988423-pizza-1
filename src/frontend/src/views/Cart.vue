@@ -8,6 +8,7 @@
     <main class="content cart">
       <div
         v-if="!isCartEmpty"
+        key="cart-notempty"
         class="container"
       >
         <div class="cart__title">
@@ -29,6 +30,7 @@
 
       <div
         v-else
+        key="cart-empty"
         class="sheet cart__empty"
       >
         <p>В корзине нет ни одного товара</p>
