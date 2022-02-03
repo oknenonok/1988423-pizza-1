@@ -47,6 +47,11 @@ import {
 import {
   RESET_STATE,
   RESET_STATE_TO_CART_ITEM,
+  SET_INGREDIENT_QUANTITY,
+  SET_DOUGH,
+  SET_SIZE,
+  SET_SAUCE,
+  SET_PIZZA_NAME,
 } from "@/store/mutations-types";
 import BuilderDoughSelector from "@/modules/builder/components/BuilderDoughSelector";
 import BuilderSizeSelector from "@/modules/builder/components/BuilderSizeSelector";
@@ -59,6 +64,8 @@ export default {
   name: "Index",
   title: "Конструктор пиццы",
 
+  unsubscribeCallback: null,
+
   components: {
     BuilderDoughSelector,
     BuilderSizeSelector,
@@ -68,23 +75,37 @@ export default {
     BuilderPizzaName,
   },
 
+  data() {
+    return {
+      editCartItemId: +this?.$route?.query?.edit,
+    };
+  },
+
   computed: {
-    ...mapState("Builder", ["pizzaName", "editCartItemId"]),
+    ...mapState("Builder", ["pizzaName"]),
     ...mapGetters("Builder", ["dataReady", "chosenDough", "chosenSize", "chosenSauce", "chosenIngredients"]),
   },
 
   created() {
     this.$store.dispatch("Builder/init");
-    let cartItemId = +this?.$route?.query?.edit;
-    if (cartItemId) {
-      let cartItem = this.$store.state.Cart.cartItems.find(item => item.id === cartItemId);
+    if (this.editCartItemId) {
+      let cartItem = this.$store.state.Cart.cartItems.find(item => item.id === this.editCartItemId);
       this.$store.commit(`Builder/${RESET_STATE_TO_CART_ITEM}`, cartItem);
+
+      let subscribedMutations = [SET_INGREDIENT_QUANTITY, SET_DOUGH, SET_SIZE, SET_SAUCE, SET_PIZZA_NAME]
+        .map(mutation => `Builder/${mutation}`);
+      this.$options.unsubscribeCallback = this.$store.subscribe((mutation) => {
+        if (subscribedMutations.includes(mutation.type)) {
+          this.$store.dispatch("Builder/updateCart", this.editCartItemId);
+        }
+      });
     }
   },
 
   beforeDestroy() {
     if (this.editCartItemId) {
       this.resetBuilder();
+      this.$options.unsubscribeCallback();
     }
   },
 

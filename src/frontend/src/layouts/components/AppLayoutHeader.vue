@@ -11,6 +11,7 @@
 
     <div
       v-if="user"
+      key="user-auth"
       class="header__user"
     >
       <router-link to="/profile">
@@ -34,6 +35,7 @@
     </div>
     <div
       v-else
+      key="user-anonym"
       class="header__user"
     >
       <a

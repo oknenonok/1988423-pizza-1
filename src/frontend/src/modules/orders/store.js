@@ -45,7 +45,7 @@ export default {
       return state.rawOrders.map(order => {
         let orderData = {
           ...order,
-          orderPizzas: order.orderPizzas.map(pizza => {
+          orderPizzas: order.orderPizzas ? order.orderPizzas.map(pizza => {
             let pizzaData = {
               ...pizza,
               dough: rootGetters.dough.find((dough) => dough.id === pizza.doughId),
@@ -65,7 +65,7 @@ export default {
               ingredientsPrice: calculateIngredientsPrice(pizzaData.ingredients),
             });
             return pizzaData;
-          }),
+          }) : [],
           orderMisc: order.orderMisc ? order.orderMisc.map(misc => {
             return {
               ...misc,

@@ -62,6 +62,7 @@
 
       <div class="address-form__buttons">
         <button
+          v-if="!isNew"
           type="button"
           class="button button--transparent"
           :disabled="isSaving"
@@ -140,10 +141,14 @@ export default {
         + (this.building ? `, д. ${this.building}` : "")
         + (this.flat ? `, кв. ${this.flat}` : "");
     },
+
+    isNew() {
+      return isNew(this.address.id);
+    },
   },
 
   created() {
-    this.isEditing = isNew(this.address.id);
+    this.isEditing = this.isNew;
   },
 
   methods: {
