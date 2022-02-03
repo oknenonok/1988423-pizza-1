@@ -6,16 +6,18 @@ import {
   generateMockStore,
   createMockApi,
 } from "@/tests/helpers";
-import Login from "@/views/Login";
+import PageLogin from "@/views/PageLogin";
 import Vuex from "vuex";
 import AppInput from "@/common/components/AppInput";
+import AppButton from "@/common/components/AppButton";
 import flushPromises from "flush-promises";
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
 localVue.component("AppInput", AppInput);
+localVue.component("AppButton", AppButton);
 
-describe("Login", () => {
+describe("PageLogin", () => {
   let wrapper;
   let store;
   const directives = {
@@ -34,7 +36,7 @@ describe("Login", () => {
     },
   };
   const createComponent = (options) => {
-    wrapper = mount(Login, options);
+    wrapper = mount(PageLogin, options);
   };
 
   beforeEach(() => {

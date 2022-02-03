@@ -9,10 +9,12 @@ import {
 import CartFooter from "@/modules/cart/components/CartFooter";
 import Vuex from "vuex";
 import priceFormat from "@/plugins/priceFormat";
+import AppButton from "@/common/components/AppButton";
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
 localVue.use(priceFormat);
+localVue.component("AppButton", AppButton);
 
 describe("CartFooter", () => {
   let wrapper;

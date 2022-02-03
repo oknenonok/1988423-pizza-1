@@ -3,18 +3,11 @@
     <label class="cart-form__select">
       <span class="cart-form__label">Получение заказа:</span>
 
-      <select
-        name="test"
-        class="select"
-        @change="setDeliveryType($event.target.value)"
-      >
-        <option
-          v-for="{id, name} in deliveryOptions"
-          :key="id"
-          :value="id"
-          :selected="`${deliveryType}` === `${id}`"
-        >{{ name }}</option>
-      </select>
+      <AppSelect
+        v-model="deliveryType"
+        name="deliveryType"
+        :options="deliveryOptions"
+      />
     </label>
 
     <AppInput
@@ -71,10 +64,7 @@
 </template>
 
 <script>
-import {
-  mapState,
-  mapMutations,
-} from "vuex";
+import { mapState } from "vuex";
 import {
   SET_DELIVERY_TYPE,
   SET_ENTITY,
@@ -88,20 +78,25 @@ export default {
   name: "CartAddress",
 
   computed: {
-    ...mapState("Cart", ["deliveryType", "phone", "street", "building", "flat"]),
+    ...mapState("Cart", ["phone", "street", "building", "flat"]),
     ...mapState("Addresses", ["addresses"]),
 
     deliveryOptions() {
       return [
         {
-          id: DELIVERY_TYPE_SELFTAKE,
-          name: "Заберу сам",
+          key: DELIVERY_TYPE_SELFTAKE,
+          title: "Заберу сам",
         },
+
         {
-          id: DELIVERY_TYPE_NEW,
-          name: "Новый адрес",
+          key: DELIVERY_TYPE_NEW,
+          title: "Новый адрес",
         },
-        ...this.addresses,
+
+        ...this.addresses.map((address) => ({
+          key: address.id,
+          title: address.name,
+        })),
       ];
     },
 
@@ -112,13 +107,19 @@ export default {
     canEditAddress() {
       return [DELIVERY_TYPE_SELFTAKE, DELIVERY_TYPE_NEW].includes(this.deliveryType);
     },
+
+    deliveryType: {
+      get() {
+        return this.$store.state.Cart.deliveryType;
+      },
+
+      set(value) {
+        return this.$store.commit(`Cart/${SET_DELIVERY_TYPE}`, value);
+      },
+    },
   },
 
   methods: {
-    ...mapMutations("Cart", {
-      setDeliveryType: SET_DELIVERY_TYPE,
-    }),
-
     /**
      * Сохранить поле контактной информации
      * @param {object} event
@@ -133,3 +134,47 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.cart-form {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.cart-form__select {
+  display: flex;
+  align-items: center;
+
+  margin-right: auto;
+
+  span {
+    margin-right: 16px;
+  }
+}
+
+.cart-form__label {
+  @include b-s16-h19;
+
+  white-space: nowrap;
+}
+
+.cart-form__address {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  margin-top: 20px;
+}
+
+.cart-form__input {
+  flex-grow: 1;
+
+  margin-bottom: 20px;
+  margin-left: 16px;
+
+  &--small {
+    max-width: 120px;
+  }
+}
+</style>

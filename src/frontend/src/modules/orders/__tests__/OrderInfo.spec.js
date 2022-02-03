@@ -11,10 +11,12 @@ import {
 import OrderInfo from "@/modules/orders/components/OrderInfo";
 import Vuex from "vuex";
 import priceFormat from "@/plugins/priceFormat";
+import AppButton from "@/common/components/AppButton";
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
 localVue.use(priceFormat);
+localVue.component("AppButton", AppButton);
 
 describe("OrderInfo", () => {
   let wrapper;

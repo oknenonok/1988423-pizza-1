@@ -8,7 +8,7 @@ import {
   fillBuilder,
   fillCart,
 } from "@/tests/helpers";
-import Index from "@/views/Index";
+import PageIndex from "@/views/PageIndex";
 import Vuex from "vuex";
 import flushPromises from "flush-promises";
 import { SET_SIZE, SET_INGREDIENT_QUANTITY } from "@/store/mutations-types";
@@ -16,12 +16,12 @@ import { SET_SIZE, SET_INGREDIENT_QUANTITY } from "@/store/mutations-types";
 const localVue = createLocalVue();
 localVue.use(Vuex);
 
-describe("Index", () => {
+describe("PageIndex", () => {
   let wrapper;
   let store;
   const stubs = ["BuilderDoughSelector", "BuilderSizeSelector", "BuilderIngredientsSelector", "BuilderPizzaName", "BuilderPizzaView", "BuilderPriceCounter"];
   const createComponent = (options) => {
-    wrapper = shallowMount(Index, options);
+    wrapper = shallowMount(PageIndex, options);
   };
 
   beforeEach(() => {

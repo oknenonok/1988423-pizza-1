@@ -61,22 +61,18 @@
       </div>
 
       <div class="address-form__buttons">
-        <button
+        <AppButton
           v-if="!isNew"
-          type="button"
-          class="button button--transparent"
+          class="button--transparent"
           :disabled="isSaving"
+          caption="Удалить"
           @click="removeAddress"
-        >
-          Удалить
-        </button>
-        <button
+        />
+        <AppButton
           type="submit"
-          class="button"
           :disabled="isSaving"
-        >
-          Сохранить
-        </button>
+          caption="Сохранить"
+        />
       </div>
     </form>
 
@@ -87,13 +83,10 @@
       <div class="address-form__header">
         <b>Адрес №{{ index }}. {{ address.name }}</b>
         <div class="address-form__edit">
-          <button
-            type="button"
-            class="icon"
+          <AppIcon
+            caption="Изменить адрес"
             @click="editAddress"
-          >
-            <span class="visually-hidden">Изменить адрес</span>
-          </button>
+          />
         </div>
       </div>
       <p>{{ addressString }}</p>
@@ -179,3 +172,85 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.address-form {
+  $bl: &;
+
+  position: relative;
+
+  padding-top: 0;
+  padding-bottom: 26px;
+
+  &--opened {
+    #{$bl}__header {
+      padding: 16px;
+    }
+  }
+
+  p {
+    @include r-s16-h19;
+
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding: 0 16px;
+  }
+
+  small {
+    @include l-s11-h13;
+
+    display: block;
+
+    padding: 0 16px;
+  }
+}
+
+.address-form__wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  width: 80%;
+  padding: 16px;
+}
+
+.address-form__input {
+  width: 100%;
+  margin-bottom: 16px;
+
+  &--size {
+    &--normal {
+      width: 60.5%;
+    }
+
+    &--small {
+      width: 18%;
+    }
+  }
+}
+
+.address-form__buttons {
+  display: flex;
+  justify-content: flex-end;
+
+  padding: 0 16px;
+
+  button {
+    margin-left: 16px;
+    padding: 16px 27px;
+  }
+}
+
+.address-form__header {
+  @include b-s14-h16;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 21px;
+  padding: 10px 16px;
+
+  border-bottom: 1px solid rgba($green-500, 0.1);
+}
+</style>
