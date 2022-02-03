@@ -52,8 +52,8 @@ export default {
      * Пуста ли корзина
      * @returns {number}
      */
-    isCartEmpty(state) {
-      return state.cartItems.length === 0;
+    isCartEmpty(state, getters) {
+      return state.cartItems.length === 0 && getters.chosenMisc.length === 0;
     },
 
     /**

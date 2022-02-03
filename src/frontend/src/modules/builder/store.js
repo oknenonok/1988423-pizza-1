@@ -22,7 +22,6 @@ const setupState = () => ({
   chosenSauceId: DEFAULT_SAUCE,
   chosenIngredientsById: {},
   pizzaName: "",
-  editCartItemId: null,
 });
 
 export default {
@@ -127,7 +126,6 @@ export default {
       } else {
         Vue.delete(state.chosenIngredientsById, ingredientId);
       }
-      this.dispatch("Builder/updateCart");
     },
 
     /**
@@ -137,7 +135,6 @@ export default {
      */
     [SET_DOUGH](state, doughId) {
       state.chosenDoughId = +doughId;
-      this.dispatch("Builder/updateCart");
     },
 
     /**
@@ -147,7 +144,6 @@ export default {
      */
     [SET_SIZE](state, sizeId) {
       state.chosenSizeId = +sizeId;
-      this.dispatch("Builder/updateCart");
     },
 
     /**
@@ -157,7 +153,6 @@ export default {
      */
     [SET_SAUCE](state, sauceId) {
       state.chosenSauceId = +sauceId;
-      this.dispatch("Builder/updateCart");
     },
 
     /**
@@ -167,7 +162,6 @@ export default {
      */
     [SET_PIZZA_NAME](state, name) {
       state.pizzaName = name;
-      this.dispatch("Builder/updateCart");
     },
 
     /**
@@ -193,7 +187,6 @@ export default {
           [item.id]: item.quantity,
         }), {}),
         pizzaName: cartItem.name,
-        editCartItemId: cartItem.id,
       });
     },
   },
@@ -211,12 +204,13 @@ export default {
     },
 
     /**
-     * Обновить редактируемую строку корзины
+     * Обновить строку корзины из текущих данных конструктора
      * @param {object} context
+     * @param {number} cartItemId
      */
-    updateCart({dispatch, getters, state, rootState}) {
-      if (state.editCartItemId !== null) {
-        let cartItem = rootState.Cart.cartItems.find((item) => item.id === state.editCartItemId);
+    updateCart({dispatch, getters, state, rootState}, cartItemId) {
+      let cartItem = rootState.Cart.cartItems.find((item) => item.id === cartItemId);
+      if (cartItem) {
         dispatch("Cart/addToCart", {
           ...cartItem,
           name: state.pizzaName,

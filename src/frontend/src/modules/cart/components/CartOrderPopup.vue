@@ -18,13 +18,22 @@
         Спасибо за заказ
       </h2>
     </div>
-    <p v-if="isOrderSuccess">
+    <p
+      v-if="isOrderSuccess"
+      key="order-success"
+    >
       Мы начали готовить Ваш заказ, скоро привезём его вам ;)
     </p>
-    <p v-else-if="isOrderError">
+    <p
+      v-else-if="isOrderError"
+      key="order-error"
+    >
       Что-то пошло не так, попробуйте ещё
     </p>
-    <p v-if="isOrderSending">
+    <p
+      v-else-if="isOrderSending"
+      key="order-sending"
+    >
       Создаём ваш заказ...
     </p>
     <div
