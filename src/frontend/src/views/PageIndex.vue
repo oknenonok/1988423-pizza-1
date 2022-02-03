@@ -61,7 +61,7 @@ import BuilderPriceCounter from "@/modules/builder/components/BuilderPriceCounte
 import BuilderPizzaName from "@/modules/builder/components/BuilderPizzaName";
 
 export default {
-  name: "Index",
+  name: "PageIndex",
   title: "Конструктор пиццы",
 
   unsubscribeCallback: null,
@@ -113,6 +113,7 @@ export default {
     ...mapMutations("Builder", {
       resetBuilder: RESET_STATE,
     }),
+
     ...mapActions("Cart", ["addToCart"]),
 
     submit() {
@@ -132,3 +133,57 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.content__dough {
+  width: 527px;
+  margin-top: 15px;
+  margin-right: auto;
+  margin-bottom: 15px;
+}
+
+.content__diameter {
+  width: 373px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.content__ingredients {
+  width: 527px;
+  margin-top: 15px;
+  margin-right: auto;
+  margin-bottom: 15px;
+}
+
+.content__pizza {
+  width: 373px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.content__constructor {
+  width: 315px;
+  margin-top: 25px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.content__result {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 25px;
+
+  p {
+    @include b-s24-h28;
+
+    margin: 0;
+  }
+
+  button {
+    margin-left: 12px;
+    padding: 16px 45px;
+  }
+}
+</style>

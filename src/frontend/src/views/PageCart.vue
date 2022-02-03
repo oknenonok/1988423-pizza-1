@@ -61,7 +61,7 @@ import orderCreateStatuses from "@/common/enums/orderCreateStatuses";
 import AppPopup from "@/common/components/AppPopup";
 
 export default {
-  name: "Cart",
+  name: "PageCart",
   title: "Корзина",
 
   components: {
@@ -117,3 +117,18 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.cart__title {
+  margin-bottom: 15px;
+}
+
+.cart__additional {
+  margin-top: 15px;
+  margin-bottom: 25px;
+}
+
+.cart__empty {
+  padding: 20px 30px;
+}
+</style>

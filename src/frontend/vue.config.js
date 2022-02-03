@@ -4,7 +4,7 @@ module.exports = {
   css: {
     loaderOptions: {
       sass: {
-        prependData: "@import \"@/assets/scss/ds-system/ds.scss\";",
+        prependData: "@import \"@/assets/scss/ds-system/ds.scss\";\n@import \"@/assets/scss/mixins/mixins.scss\";",
       },
     },
   },
@@ -39,6 +39,7 @@ module.exports = {
     plugins: [
       new GenerateRoutesPlugin(),
     ],
+
     devServer: {
       watchOptions: {
         ignored: "**/routes.js",

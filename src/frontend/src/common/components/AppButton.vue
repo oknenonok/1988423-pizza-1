@@ -1,3 +1,38 @@
+<template>
+  <button
+    class="button"
+    :type="type"
+    :disabled="disabled"
+    @click="$emit('click')"
+  >
+    {{ caption }}
+  </button>
+</template>
+
+<script>
+export default {
+  name: "AppButton",
+
+  props: {
+    caption: {
+      type: String,
+      required: true,
+    },
+
+    type: {
+      type: String,
+      default: "button",
+    },
+
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+  },
+}
+</script>
+
+<style lang="scss">
 .button {
   $bl: &;
 
@@ -103,3 +138,4 @@
     color: $green-500;
   }
 }
+</style>

@@ -16,13 +16,11 @@
     />
 
     <div class="layout__button">
-      <button
-        type="button"
-        class="button button--border"
+      <AppButton
+        class="button--border"
+        caption="Добавить новый адрес"
         @click="addAddress"
-      >
-        Добавить новый адрес
-      </button>
+      />
     </div>
   </div>
 </template>
@@ -39,10 +37,8 @@ import redirectOnLogout from "@/common/mixins/redirectOnLogout";
 import { auth } from "@/middlewares";
 
 export default {
-  name: "Profile",
+  name: "PageProfile",
   title: "Профиль",
-  layout: "AppLayoutAccount",
-  middlewares: [auth],
 
   components: {
     ProfileCard,
@@ -52,6 +48,9 @@ export default {
   mixins: [
     redirectOnLogout,
   ],
+
+  layout: "AppLayoutAccount",
+  middlewares: [auth],
 
   computed: {
     ...mapState("Addresses", ["addresses"]),

@@ -4,13 +4,11 @@
       Итого:
       {{ $priceFormat(price) }}
     </p>
-    <button
+    <AppButton
       type="submit"
-      class="button"
       :disabled="!canCook"
-    >
-      Готовьте!
-    </button>
+      caption="Готовьте!"
+    />
   </div>
 </template>
 

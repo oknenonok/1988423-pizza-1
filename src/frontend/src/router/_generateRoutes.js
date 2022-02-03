@@ -1,7 +1,6 @@
 /**
  * Плагин для Webpack, генерирует файл routes.js с массивом роутов на основании информации из .vue файлов в каталоге views
  */
-
 const { parse: componentParse } = require("@vue/component-compiler-utils");
 const { readFileSync,
   readdirSync,
@@ -18,7 +17,7 @@ const EXTRACT_FIELDS = ["title", "layout", "middlewares"];
  * @returns {object}
  */
 const parseFile = (fileName) => {
-  let result = { name: fileName.replace(/\.vue$/, "") };
+  let result = { name: fileName.replace(/^Page(.*)\.vue$/, "$1") };
   try {
     const source = readFileSync(`${__dirname}/../views/${fileName}`, "utf8");
     const parsedVue = componentParse({
@@ -92,7 +91,7 @@ export default [`
 const generateRoutesFile = () => {
   let options = [];
   readdirSync(__dirname + "/../views").forEach(file => {
-    if (file.endsWith(".vue")) {
+    if (file.startsWith("Page") && file.endsWith(".vue")) {
       options.push(parseFile(file));
     }
   });

@@ -10,10 +10,12 @@ import BuilderPriceCounter from "@/modules/builder/components/BuilderPriceCounte
 import Vuex from "vuex";
 import priceFormat from "@/plugins/priceFormat";
 import { SET_PIZZA_NAME } from "@/store/mutations-types";
+import AppButton from "@/common/components/AppButton";
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
 localVue.use(priceFormat);
+localVue.component("AppButton", AppButton);
 
 describe("BuilderPriceCounter", () => {
   let wrapper;

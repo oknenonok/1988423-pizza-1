@@ -11,6 +11,7 @@ import {
 import CartAddress from "@/modules/cart/components/CartAddress";
 import Vuex from "vuex";
 import AppInput from "@/common/components/AppInput";
+import AppSelect from "@/common/components/AppSelect";
 import VueTheMask from "vue-the-mask";
 import {
   DELIVERY_TYPE_NEW,
@@ -21,6 +22,7 @@ const localVue = createLocalVue();
 localVue.use(Vuex);
 localVue.use(VueTheMask);
 localVue.component("AppInput", AppInput);
+localVue.component("AppSelect", AppSelect);
 
 describe("CartAddress", () => {
   let wrapper;

@@ -29,10 +29,8 @@ import redirectOnLogout from "@/common/mixins/redirectOnLogout";
 import { auth } from "@/middlewares";
 
 export default {
-  name: "Orders",
+  name: "PageOrders",
   title: "История заказов",
-  layout: "AppLayoutAccount",
-  middlewares: [auth],
 
   components: {
     OrderInfo,
@@ -41,6 +39,9 @@ export default {
   mixins: [
     redirectOnLogout,
   ],
+
+  layout: "AppLayoutAccount",
+  middlewares: [auth],
 
   computed: {
     ...mapState("Orders", ["ordersLoaded"]),

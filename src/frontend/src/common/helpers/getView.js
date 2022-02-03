@@ -1,3 +1,3 @@
 export default (view) => {
-  return () => import(`@/views/${view}.vue`);
+  return () => import(`@/views/Page${view}.vue`);
 };

@@ -1,30 +1,32 @@
 import {
-  shallowMount,
+  mount,
   createLocalVue,
 } from "@vue/test-utils";
 import {
   generateMockStore,
   createMockApi,
   authenticateUser,
+  fillAddresses,
 } from "@/tests/helpers";
-import Orders from "@/views/Orders";
+import PageProfile from "@/views/PageProfile";
 import Vuex from "vuex";
-import flushPromises from "flush-promises";
+import AppButton from "@/common/components/AppButton";
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
+localVue.component("AppButton", AppButton);
 
-describe("Orders", () => {
+describe("PageProfile", () => {
   let wrapper;
   let store;
-  const stubs = ["OrderInfo"];
+  const stubs = ["ProfileCard", "ProfileAddress"];
   const mocks = {
     $router: {
       push: jest.fn(),
     },
   };
   const createComponent = (options) => {
-    wrapper = shallowMount(Orders, options);
+    wrapper = mount(PageProfile, options);
   };
 
   beforeEach(() => {
@@ -41,11 +43,12 @@ describe("Orders", () => {
     expect(mocks.$router.push).toHaveBeenCalledWith("/");
   });
 
-  it("orders load", async () => {
+  it("profile works", async () => {
     await authenticateUser(store);
+    await fillAddresses(store);
     createComponent({ localVue, store, stubs, mocks });
-    expect(wrapper.find("p").text()).toBe("Заказы загружаются...");
-    await flushPromises();
-    expect(wrapper.findAll("orderinfo-stub").length).toBe(2);
+    expect(wrapper.findAll("profileaddress-stub").length).toBe(2);
+    await wrapper.find("button").trigger("click");
+    expect(wrapper.findAll("profileaddress-stub").length).toBe(3);
   });
 });

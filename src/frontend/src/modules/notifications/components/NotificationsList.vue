@@ -27,6 +27,7 @@ export default {
   computed: {
     ...mapState("Notifications", ["notifications"])
   },
+
   methods: {
     ...mapMutations("Notifications", {
       deleteNotification: DELETE_NOTIFICATION,

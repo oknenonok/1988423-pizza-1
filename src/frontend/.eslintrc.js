@@ -11,6 +11,9 @@ module.exports = {
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
     "quotes": ["warn", "double"],
+    "vue/new-line-between-multi-line-property": ["error", {
+      "minLineOfMultilineProperty": 2
+    }],
   },
   overrides: [
     {
