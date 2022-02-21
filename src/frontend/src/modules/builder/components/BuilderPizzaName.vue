@@ -10,22 +10,18 @@
   />
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
 import { SET_PIZZA_NAME } from "@/store/mutations-types";
 
-export default {
-  name: "BuilderPizzaName",
+@Component
+export default class BuilderPizzaName extends Vue {
+  get pizzaName() {
+    return this.$store.state.Builder.pizzaName;
+  }
 
-  computed: {
-    pizzaName: {
-      get() {
-        return this.$store.state.Builder.pizzaName;
-      },
-
-      set(value) {
-        return this.$store.commit(`Builder/${SET_PIZZA_NAME}`, value);
-      },
-    },
-  },
-};
+  set pizzaName(value) {
+    this.$store.commit(`Builder/${SET_PIZZA_NAME}`, value);
+  }
+}
 </script>

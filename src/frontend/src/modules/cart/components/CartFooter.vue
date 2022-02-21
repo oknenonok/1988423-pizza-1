@@ -1,15 +1,12 @@
 <template>
   <section class="footer">
     <div class="footer__more">
-      <router-link
-        to="/"
-        class="button button--border button--arrow"
-      >
+      <router-link to="/" class="button button--border button--arrow">
         Хочу еще одну
       </router-link>
     </div>
     <p class="footer__text">
-      Перейти к конструктору<br>чтоб собрать ещё одну пиццу
+      Перейти к конструктору<br />чтоб собрать ещё одну пиццу
     </p>
     <div class="footer__price">
       <b>Итого: {{ $priceFormat(price) }}</b>
@@ -25,25 +22,28 @@
   </section>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
 import orderCreateStatuses from "@/common/enums/orderCreateStatuses";
-import {
-  mapState,
-  mapGetters,
-} from "vuex";
+import { mapState, mapGetters } from "vuex";
 
-export default {
-  name: "CartFooter",
-
+@Component({
   computed: {
     ...mapState("Cart", ["orderCreateStatus"]),
     ...mapGetters("Cart", ["price", "isCartEmpty"]),
-
-    canMakeOrder() {
-      return !this.isCartEmpty && this.orderCreateStatus === orderCreateStatuses.EDITING;
-    }
   },
-};
+})
+export default class CartFooter extends Vue {
+  isCartEmpty!: boolean;
+  orderCreateStatus!: number;
+
+  get canMakeOrder() {
+    return (
+      !this.isCartEmpty &&
+      this.orderCreateStatus === orderCreateStatuses.EDITING
+    );
+  }
+}
 </script>
 
 <style lang="scss">

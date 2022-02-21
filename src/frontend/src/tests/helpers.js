@@ -1,26 +1,15 @@
 import { cloneDeep } from "lodash";
 import Vuex from "vuex";
 import jest from "jest-mock";
-import {
-  state,
-  mutations,
-  getters,
-  actions,
-} from "@/store";
+import { state, mutations, getters, actions } from "@/store";
 import modules from "@/store/modules";
 import user from "@/tests/fixtures/user.json";
 import misc from "@/tests/fixtures/misc.json";
 import addresses from "@/tests/fixtures/addresses.json";
 import orders from "@/tests/fixtures/orders.json";
-import {
-  dough,
-  ingredients,
-  sauces,
-  sizes,
-} from "@/tests/fixtures/pizza.json";
+import { dough, ingredients, sauces, sizes } from "@/tests/fixtures/pizza.json";
 import {
   SET_ENTITY,
-  SET_LOGGED_USER,
   SET_MISC_QUANTITY,
   SET_INGREDIENT_QUANTITY,
   SET_PIZZA_NAME,
@@ -40,7 +29,7 @@ export const generateMockStore = () => {
     getters,
     actions,
     modules: cloneDeep(modules),
-    plugins: [VuexPlugins]
+    plugins: [VuexPlugins],
   });
 };
 
@@ -88,8 +77,8 @@ export const createMockApi = (store) => {
  * Авторизовать пользователя
  * @param {object} store
  */
-export const authenticateUser = ({ commit }) => {
-  commit(`Auth/${SET_LOGGED_USER}`, user);
+export const authenticateUser = ({ commit, dispatch }) => {
+  dispatch("Auth/loginUser", user);
   commit(SET_ENTITY, {
     module: "Auth",
     entity: "token",
@@ -130,42 +119,50 @@ export const fillData = ({ commit }) => {
  */
 export const fillCart = (store) => {
   fillData(store);
-  store.dispatch("Cart/addToCart", {
-    name: "Pizza 1",
-    sauce: sauces[0],
-    dough: dough[0],
-    size: sizes[0],
-    ingredients: [
-      {
-        ...ingredients[0],
-        quantity: 1,
-      },
-      {
-        ...ingredients[1],
-        quantity: 2,
-      },
-    ],
-    quantity: 1,
-    // price: (300 + 50 + 33*1 + 42*2) * 1 * 1 = 467
-  }, { root: true });
-  store.dispatch("Cart/addToCart", {
-    name: "Pizza 2",
-    sauce: sauces[1],
-    dough: dough[1],
-    size: sizes[1],
-    ingredients: [
-      {
-        ...ingredients[2],
-        quantity: 1,
-      },
-      {
-        ...ingredients[3],
-        quantity: 2,
-      },
-    ],
-    quantity: 2,
-    // price: (300 + 50 + 42*1 + 42*2) * 2 * 2 = 952 * 2 = 1904
-  }, { root: true });
+  store.dispatch(
+    "Cart/addToCart",
+    {
+      name: "Pizza 1",
+      sauce: sauces[0],
+      dough: dough[0],
+      size: sizes[0],
+      ingredients: [
+        {
+          ...ingredients[0],
+          quantity: 1,
+        },
+        {
+          ...ingredients[1],
+          quantity: 2,
+        },
+      ],
+      quantity: 1,
+      // price: (300 + 50 + 33*1 + 42*2) * 1 * 1 = 467
+    },
+    { root: true }
+  );
+  store.dispatch(
+    "Cart/addToCart",
+    {
+      name: "Pizza 2",
+      sauce: sauces[1],
+      dough: dough[1],
+      size: sizes[1],
+      ingredients: [
+        {
+          ...ingredients[2],
+          quantity: 1,
+        },
+        {
+          ...ingredients[3],
+          quantity: 2,
+        },
+      ],
+      quantity: 2,
+      // price: (300 + 50 + 42*1 + 42*2) * 2 * 2 = 952 * 2 = 1904
+    },
+    { root: true }
+  );
   store.commit(`Cart/${SET_MISC_QUANTITY}`, { id: 1, quantity: 1 });
   store.commit(`Cart/${SET_MISC_QUANTITY}`, { id: 2, quantity: 2 });
   // price = 1904 + 467 + 56 + 10*2 = 2447
@@ -177,8 +174,14 @@ export const fillCart = (store) => {
  */
 export const fillBuilder = (store) => {
   fillData(store);
-  store.commit(`Builder/${SET_INGREDIENT_QUANTITY}`, { ingredientId: 1, quantity: 1 });
-  store.commit(`Builder/${SET_INGREDIENT_QUANTITY}`, { ingredientId: 2, quantity: 2 });
+  store.commit(`Builder/${SET_INGREDIENT_QUANTITY}`, {
+    ingredientId: 1,
+    quantity: 1,
+  });
+  store.commit(`Builder/${SET_INGREDIENT_QUANTITY}`, {
+    ingredientId: 2,
+    quantity: 2,
+  });
   store.commit(`Builder/${SET_PIZZA_NAME}`, "new");
   // price: (300 + 50 + 33*1 + 42*2) * 2 = 934
 };

@@ -4,8 +4,8 @@ node_modules/
 
 /src/tests/e2e/videos/
 /src/tests/e2e/screenshots/
-/src/router/routes.js
-
+/src/router/routes.ts
+/src/store/modules.ts
 
 # local env files
 .env.local

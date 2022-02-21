@@ -9,35 +9,18 @@
       </router-link>
     </div>
 
-    <div
-      v-if="user"
-      key="user-auth"
-      class="header__user"
-    >
+    <div v-if="user" key="user-auth" class="header__user">
       <router-link to="/profile">
         <picture>
-          <img
-            :src="user.avatar"
-            :alt="user.name"
-            width="32"
-            height="32"
-          >
+          <img :src="user.avatar" :alt="user.name" width="32" height="32" />
         </picture>
         <span>{{ user.name }}</span>
       </router-link>
-      <a
-        href="#"
-        class="header__logout"
-        @click.prevent="logout"
-      >
+      <a href="#" class="header__logout" @click.prevent="logout">
         <span>Выйти</span>
       </a>
     </div>
-    <div
-      v-else
-      key="user-anonym"
-      class="header__user"
-    >
+    <div v-else key="user-anonym" class="header__user">
       <a
         :href="`/login?back=${$route.path}`"
         class="header__login"
@@ -48,39 +31,24 @@
     </div>
 
     <AppPopup :is-open="isLoginFormOpened">
-      <Login
-        is-popup
-        @close="hideLoginForm"
-      />
+      <Login :is-popup="true" @close="hideLoginForm" />
     </AppPopup>
   </header>
 </template>
 
-<script>
-import {
-  mapState,
-  mapGetters,
-  mapActions,
-} from "vuex";
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import { mapState, mapGetters, mapActions } from "vuex";
 import getView from "@/common/helpers/getView";
-import AppLogo from "@/common/components/AppLogo";
-import AppPopup from "@/common/components/AppPopup";
+import AppLogo from "@/common/components/AppLogo.vue";
+import AppPopup from "@/common/components/AppPopup.vue";
 
-export default {
-  name: "AppLayoutHeader",
-
+@Component({
   components: {
     AppLogo,
     AppPopup,
     Login: getView("Login"),
   },
-
-  data() {
-    return {
-      isLoginFormOpened: false,
-    };
-  },
-
   computed: {
     ...mapState("Auth", ["user"]),
     ...mapGetters("Cart", ["price"]),
@@ -88,16 +56,19 @@ export default {
 
   methods: {
     ...mapActions("Auth", ["logout"]),
-
-    showLoginForm() {
-      this.isLoginFormOpened = true;
-    },
-
-    hideLoginForm() {
-      this.isLoginFormOpened = false;
-    },
   },
-};
+})
+export default class AppLayoutHeader extends Vue {
+  isLoginFormOpened = false;
+
+  showLoginForm() {
+    this.isLoginFormOpened = true;
+  }
+
+  hideLoginForm() {
+    this.isLoginFormOpened = false;
+  }
+}
 </script>
 
 <style lang="scss">
@@ -215,14 +186,13 @@ export default {
     height: 32px;
     margin-right: 8px;
 
-    content: '';
+    content: "";
     vertical-align: middle;
 
     background: url("~@/assets/img/login.svg") no-repeat center;
     background-size: auto 50%;
   }
 }
-
 
 .header__login {
   &::after {
@@ -232,7 +202,7 @@ export default {
     height: 32px;
     margin-left: 8px;
 
-    content: '';
+    content: "";
     vertical-align: middle;
 
     background: url("~@/assets/img/login.svg") no-repeat center;

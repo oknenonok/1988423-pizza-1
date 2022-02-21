@@ -7,16 +7,16 @@
   </div>
 </template>
 
-<script>
-import AppLayoutHeader from "@/layouts/components/AppLayoutHeader";
-import AppTransitionSlide from "@/common/transitions/AppTransitionSlide";
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import AppLayoutHeader from "@/layouts/components/AppLayoutHeader.vue";
+import AppTransitionSlide from "@/common/transitions/AppTransitionSlide.vue";
 
-export default {
-  name: "AppLayoutDefault",
-
+@Component({
   components: {
     AppLayoutHeader,
     AppTransitionSlide,
- },
-};
+  },
+})
+export default class AppLayoutDefault extends Vue {}
 </script>

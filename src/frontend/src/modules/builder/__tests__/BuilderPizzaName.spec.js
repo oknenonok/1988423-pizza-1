@@ -1,11 +1,5 @@
-import {
-  mount,
-  createLocalVue,
-} from "@vue/test-utils";
-import {
-  generateMockStore,
-  fillBuilder,
-} from "@/tests/helpers";
+import { mount, createLocalVue } from "@vue/test-utils";
+import { generateMockStore, fillBuilder } from "@/tests/helpers";
 import BuilderPizzaName from "@/modules/builder/components/BuilderPizzaName";
 import Vuex from "vuex";
 import AppInput from "@/common/components/AppInput";

@@ -1,8 +1,6 @@
 <template>
   <div class="sheet">
-    <h2 class="title title--small sheet__title">
-      Выберите ингредиенты
-    </h2>
+    <h2 class="title title--small sheet__title">Выберите ингредиенты</h2>
 
     <div class="sheet__content ingredients">
       <div class="ingredients__sauce">
@@ -43,7 +41,12 @@
               class="counter--orange ingredients__counter"
               :value="getIngredientQuantity(ingredient.id)"
               :max-value="maxQuantity"
-              @input="setIngredientQuantity({ingredientId: ingredient.id, quantity: $event})"
+              @input="
+                setIngredientQuantity({
+                  ingredientId: ingredient.id,
+                  quantity: $event,
+                })
+              "
             />
           </li>
         </ul>
@@ -52,36 +55,22 @@
   </div>
 </template>
 
-<script>
-import {
-  mapState,
-  mapGetters,
-  mapMutations,
-} from "vuex";
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import { mapState, mapGetters, mapMutations } from "vuex";
 import { MAX_INGREDIENT_QUANTITY } from "@/common/constants";
-import {
-  SET_INGREDIENT_QUANTITY,
-  SET_SAUCE,
-} from "@/store/mutations-types";
-import AppDrag from "@/common/components/AppDrag";
+import { SET_INGREDIENT_QUANTITY, SET_SAUCE } from "@/store/mutations-types";
+import AppDrag from "@/common/components/AppDrag.vue";
+import { IIngredient, ISauce } from "@/common/types";
 
-export default {
-  name: "BuilderIngredientsSelector",
-
+@Component({
   components: {
     AppDrag,
   },
-
-  data() {
-    return {
-      maxQuantity: MAX_INGREDIENT_QUANTITY,
-    };
-  },
-
   computed: {
     ...mapState("Builder", ["chosenSauceId"]),
     ...mapGetters(["ingredients", "sauces"]),
-    ...mapGetters("Builder", ["getIngredientQuantity"])
+    ...mapGetters("Builder", ["getIngredientQuantity"]),
   },
 
   methods: {
@@ -90,7 +79,22 @@ export default {
       setIngredientQuantity: SET_INGREDIENT_QUANTITY,
     }),
   },
-};
+})
+export default class BuilderIngredientsSelector extends Vue {
+  maxQuantity = MAX_INGREDIENT_QUANTITY;
+  chosenSauceId!: number;
+  ingredients!: IIngredient[];
+  sauces!: ISauce[];
+  getIngredientQuantity!: (ingredientId: number) => number;
+  setSauce!: (sauceId: number) => void;
+  setIngredientQuantity!: ({
+    ingredientId,
+    quantity,
+  }: {
+    ingredientId: number;
+    quantity: number;
+  }) => void;
+}
 </script>
 
 <style lang="scss">
@@ -118,7 +122,6 @@ export default {
     background-repeat: no-repeat;
     background-position: center;
     background-size: 80% 80%;
-
   }
 
   &--tomatoes::before {

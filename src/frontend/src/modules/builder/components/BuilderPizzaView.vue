@@ -4,83 +4,92 @@
     :class="`pizza--foundation--${chosenDough.value}-${chosenSauce.value}`"
     @drop="addIngredient"
   >
-    <transition-group
-      name="pizza"
-      class="pizza__wrapper"
-      tag="div"
-    >
+    <transition-group name="pizza" class="pizza__wrapper" tag="div">
       <div
-        v-for="({value, id}) in ingredientClasses"
+        v-for="{ value, id } in ingredientClasses"
         :key="id"
         class="pizza__filling-wrapper"
       >
-        <div
-          class="pizza__filling"
-          :class="value"
-        />
+        <div class="pizza__filling" :class="value" />
       </div>
     </transition-group>
   </AppDrop>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
 import { MAX_INGREDIENT_QUANTITY } from "@/common/constants";
-import {
-  mapGetters,
-  mapMutations,
-} from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 import { SET_INGREDIENT_QUANTITY } from "@/store/mutations-types";
-import AppDrop from "@/common/components/AppDrop";
+import AppDrop from "@/common/components/AppDrop.vue";
+import { IDough, IIngredient, ISauce } from "@/common/types";
 
-export default {
-  name: "BuilderPizzaView",
+type IIngredientClass = { id: string; value: string };
 
+@Component({
   components: { AppDrop },
 
   computed: {
-    ...mapGetters("Builder", ["chosenDough", "chosenSauce", "getIngredientQuantity", "chosenIngredients"]),
-
-    ingredientClasses() {
-      let result = [];
-      this.chosenIngredients.forEach(({ id, value }) => {
-        result.push({
-          id: `${id}-1`,
-          value: `pizza__filling--${value}`,
-        });
-        if (this.getIngredientQuantity(id) >= 2) {
-          result.push({
-            id: `${id}-2`,
-            value: `pizza__filling--${value} pizza__filling--second`,
-          });
-        }
-        if (this.getIngredientQuantity(id) >= 3) {
-          result.push({
-            id: `${id}-3`,
-            value: `pizza__filling--${value} pizza__filling--third`,
-          });
-        }
-      });
-      return result;
-    },
+    ...mapGetters("Builder", [
+      "chosenDough",
+      "chosenSauce",
+      "getIngredientQuantity",
+      "chosenIngredients",
+    ]),
   },
-
   methods: {
     ...mapMutations("Builder", {
       setIngredientQuantity: SET_INGREDIENT_QUANTITY,
     }),
-
-    /**
-     * Добавить 1 единицу ингредиента
-     * @param {number} id ингредиента
-     */
-    addIngredient(ingredientId) {
-      let quantity = this.getIngredientQuantity(ingredientId)
-      if (ingredientId && quantity < MAX_INGREDIENT_QUANTITY) {
-        this.setIngredientQuantity({ingredientId, quantity: quantity + 1});
-      }
-    },
   },
-};
+})
+export default class BuilderPizzaView extends Vue {
+  chosenDough!: IDough;
+  chosenSauce!: ISauce;
+  getIngredientQuantity!: (ingredientId: number) => number;
+  chosenIngredients!: IIngredient[];
+  setIngredientQuantity!: ({
+    ingredientId,
+    quantity,
+  }: {
+    ingredientId: number;
+    quantity: number;
+  }) => void;
+
+  get ingredientClasses(): IIngredientClass[] {
+    let result: IIngredientClass[] = [];
+    this.chosenIngredients.forEach(({ id, value }) => {
+      result.push({
+        id: `${id}-1`,
+        value: `pizza__filling--${value}`,
+      });
+      if (this.getIngredientQuantity(id) >= 2) {
+        result.push({
+          id: `${id}-2`,
+          value: `pizza__filling--${value} pizza__filling--second`,
+        });
+      }
+      if (this.getIngredientQuantity(id) >= 3) {
+        result.push({
+          id: `${id}-3`,
+          value: `pizza__filling--${value} pizza__filling--third`,
+        });
+      }
+    });
+    return result;
+  }
+
+  /**
+   * Добавить 1 единицу ингредиента
+   * @param {number} id ингредиента
+   */
+  addIngredient(ingredientId: number) {
+    let quantity = this.getIngredientQuantity(ingredientId);
+    if (ingredientId && quantity < MAX_INGREDIENT_QUANTITY) {
+      this.setIngredientQuantity({ ingredientId, quantity: quantity + 1 });
+    }
+  }
+}
 </script>
 
 <style lang="scss">
@@ -112,12 +121,12 @@ export default {
     background-image: url("~@/assets/img/foundation/small-tomato.svg");
   }
 
-  &-enter-active{
+  &-enter-active {
     animation: ingredient-appear ease-out $animation-time;
     z-index: 100;
   }
 
-  &-leave-active{
+  &-leave-active {
     animation: ingredient-disappear ease-out $animation-time;
     z-index: 100;
   }

@@ -1,11 +1,5 @@
-import {
-  mount,
-  createLocalVue,
-} from "@vue/test-utils";
-import {
-  generateMockStore,
-  fillBuilder,
-} from "@/tests/helpers";
+import { mount, createLocalVue } from "@vue/test-utils";
+import { generateMockStore, fillBuilder } from "@/tests/helpers";
 import BuilderPriceCounter from "@/modules/builder/components/BuilderPriceCounter";
 import Vuex from "vuex";
 import priceFormat from "@/plugins/priceFormat";

@@ -1,9 +1,5 @@
 <template>
-  <transition
-    name="slide"
-    mode="out-in"
-    appear
-  >
+  <transition name="slide" mode="out-in" appear>
     <slot />
   </transition>
 </template>

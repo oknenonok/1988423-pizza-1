@@ -1,8 +1,6 @@
 <template>
   <div class="sheet">
-    <h2 class="title title--small sheet__title">
-      Выберите размер
-    </h2>
+    <h2 class="title title--small sheet__title">Выберите размер</h2>
 
     <div class="sheet__content diameter">
       <AppRadioButton
@@ -22,17 +20,12 @@
   </div>
 </template>
 
-<script>
-import {
-  mapState,
-  mapGetters,
-  mapMutations,
-} from "vuex";
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import { mapState, mapGetters, mapMutations } from "vuex";
 import { SET_SIZE } from "@/store/mutations-types";
 
-export default {
-  name: "BuilderSizeSelector",
-
+@Component({
   computed: {
     ...mapState("Builder", ["chosenSizeId"]),
     ...mapGetters(["sizes"]),
@@ -43,7 +36,8 @@ export default {
       setSize: SET_SIZE,
     }),
   },
-};
+})
+export default class BuilderSizeSelector extends Vue {}
 </script>
 
 <style lang="scss">

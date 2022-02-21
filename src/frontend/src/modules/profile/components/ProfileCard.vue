@@ -1,12 +1,7 @@
 <template>
   <div class="user">
     <picture>
-      <img
-        :src="user.avatar"
-        :alt="user.name"
-        width="72"
-        height="72"
-      >
+      <img :src="user.avatar" :alt="user.name" width="72" height="72" />
     </picture>
     <div class="user__name">
       <span>{{ user.name }}</span>
@@ -17,17 +12,16 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
 import { mapState } from "vuex";
 
-export default {
-  name: "ProfileCard",
-
+@Component({
   computed: {
     ...mapState("Auth", ["user"]),
   },
-
-};
+})
+export default class ProfileCard extends Vue {}
 </script>
 
 <style lang="scss">

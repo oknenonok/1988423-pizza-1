@@ -9,26 +9,15 @@
   </button>
 </template>
 
-<script>
-export default {
-  name: "AppButton",
+<script lang="ts">
+import "reflect-metadata";
+import { Component, Vue, Prop } from "vue-property-decorator";
 
-  props: {
-    caption: {
-      type: String,
-      required: true,
-    },
-
-    type: {
-      type: String,
-      default: "button",
-    },
-
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-  },
+@Component
+export default class AppButton extends Vue {
+  @Prop({ required: true }) readonly caption!: string;
+  @Prop({ default: "button" }) readonly type!: string;
+  @Prop({ default: false }) readonly disabled!: boolean;
 }
 </script>
 

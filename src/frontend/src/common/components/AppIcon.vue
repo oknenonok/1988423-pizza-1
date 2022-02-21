@@ -11,26 +11,14 @@
   </button>
 </template>
 
-<script>
-export default {
-  name: "AppIcon",
-
-  props: {
-    caption: {
-      type: String,
-      required: true,
-    },
-
-    type: {
-      type: String,
-      default: "button",
-    },
-
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-  },
+<script lang="ts">
+import "reflect-metadata";
+import { Component, Vue, Prop } from "vue-property-decorator";
+@Component
+export default class AppIcon extends Vue {
+  @Prop({ required: true }) readonly caption!: string;
+  @Prop({ default: "button" }) readonly type!: string;
+  @Prop({ default: false }) readonly disabled!: boolean;
 }
 </script>
 

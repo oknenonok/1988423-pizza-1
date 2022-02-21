@@ -1,20 +1,13 @@
 <template>
   <ul class="cart-list sheet">
-    <li
-      v-for="item in cartItems"
-      :key="item.id"
-      class="cart-list__item"
-    >
-      <AppPizzaDescription
-        class="cart-list__product"
-        :item="item"
-      />
+    <li v-for="item in cartItems" :key="item.id" class="cart-list__item">
+      <AppPizzaDescription class="cart-list__product" :item="item" />
 
       <AppItemCounter
         class="cart-list__counter"
         :value="item.quantity"
         counter-button-class="counter__button--orange"
-        @input="updateQuantity({item, quantity: $event})"
+        @input="updateQuantity({ item, quantity: $event })"
       />
 
       <div class="cart-list__price">
@@ -24,10 +17,7 @@
       </div>
 
       <div class="cart-list__button">
-        <router-link
-          :to="`/?edit=${item.id}`"
-          class="cart-list__edit"
-        >
+        <router-link :to="`/?edit=${item.id}`" class="cart-list__edit">
           Изменить
         </router-link>
       </div>
@@ -35,16 +25,12 @@
   </ul>
 </template>
 
-<script>
-import {
-  mapState,
-  mapActions,
-} from "vuex";
-import AppPizzaDescription from "@/common/components/AppPizzaDescription";
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import { mapState, mapActions } from "vuex";
+import AppPizzaDescription from "@/common/components/AppPizzaDescription.vue";
 
-export default {
-  name: "CartPizzaList",
-
+@Component({
   components: {
     AppPizzaDescription,
   },
@@ -56,7 +42,8 @@ export default {
   methods: {
     ...mapActions("Cart", ["updateQuantity"]),
   },
-};
+})
+export default class CartPizzaList extends Vue {}
 </script>
 
 <style lang="scss">

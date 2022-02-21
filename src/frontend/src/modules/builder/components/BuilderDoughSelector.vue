@@ -1,8 +1,6 @@
 <template>
   <div class="sheet">
-    <h2 class="title title--small sheet__title">
-      Выберите тесто
-    </h2>
+    <h2 class="title title--small sheet__title">Выберите тесто</h2>
 
     <div class="sheet__content dough">
       <AppRadioButton
@@ -23,17 +21,13 @@
   </div>
 </template>
 
-<script>
-import {
-  mapState,
-  mapGetters,
-  mapMutations
-} from "vuex";
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import { mapState, mapGetters, mapMutations } from "vuex";
 import { SET_DOUGH } from "@/store/mutations-types";
+import { IDough } from "@/common/types";
 
-export default {
-  name: "BuilderDoughSelector",
-
+@Component({
   computed: {
     ...mapState("Builder", ["chosenDoughId"]),
     ...mapGetters(["dough"]),
@@ -44,7 +38,12 @@ export default {
       setDough: SET_DOUGH,
     }),
   },
-};
+})
+export default class BuilderDoughSelector extends Vue {
+  chosenDoughId!: number;
+  dough!: IDough;
+  setDough!: (doughId: number) => void;
+}
 </script>
 
 <style lang="scss">

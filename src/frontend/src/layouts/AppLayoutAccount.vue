@@ -10,18 +10,18 @@
   </div>
 </template>
 
-<script>
-import AppLayoutAccountSidebar from "@/layouts/components/AppLayoutAccountSidebar";
-import AppLayoutHeader from "@/layouts/components/AppLayoutHeader";
-import AppTransitionSlide from "@/common/transitions/AppTransitionSlide";
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import AppLayoutAccountSidebar from "@/layouts/components/AppLayoutAccountSidebar.vue";
+import AppLayoutHeader from "@/layouts/components/AppLayoutHeader.vue";
+import AppTransitionSlide from "@/common/transitions/AppTransitionSlide.vue";
 
-export default {
-  name: "AppLayoutAccount",
-
+@Component({
   components: {
     AppLayoutAccountSidebar,
     AppLayoutHeader,
     AppTransitionSlide,
   },
-};
+})
+export default class AppLayoutAccount extends Vue {}
 </script>

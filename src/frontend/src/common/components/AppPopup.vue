@@ -1,41 +1,25 @@
 <template>
   <div>
-    <transition
-      name="dialog"
-      appear
-    >
-      <div
-        v-if="isOpen"
-        class="dialog"
-      >
+    <transition name="dialog" appear>
+      <div v-if="isOpen" class="dialog">
         <slot />
       </div>
     </transition>
-    <transition
-      name="dialog-overlay"
-      appear
-    >
-      <div
-        v-if="isOpen"
-        class="dialog-overlay"
-      />
+    <transition name="dialog-overlay" appear>
+      <div v-if="isOpen" class="dialog-overlay" />
     </transition>
   </div>
 </template>
 
-<script>
-export default {
-  name: "AppPopup",
+<script lang="ts">
+import "reflect-metadata";
+import { Component, Vue, Prop } from "vue-property-decorator";
 
-  props: {
-    isOpen: {
-      type: Boolean,
-      required: true,
-    },
-  },
-};
+@Component
+export default class AppPopup extends Vue {
+  @Prop({ required: true }) readonly isOpen!: boolean;
+}
 </script>
-
 
 <style lang="scss">
 .dialog-overlay {
@@ -52,7 +36,8 @@ export default {
     opacity: 0;
   }
 
-  &-enter-active, &-leave-active {
+  &-enter-active,
+  &-leave-active {
     transition: all $animation-time;
   }
 
@@ -74,7 +59,8 @@ export default {
     top: 0;
   }
 
-  &-enter-active, &-leave-active {
+  &-enter-active,
+  &-leave-active {
     transition: all $animation-time;
   }
 

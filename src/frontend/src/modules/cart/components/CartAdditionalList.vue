@@ -1,17 +1,12 @@
 <template>
   <ul class="additional-list">
     <li
-      v-for="{id, image, name, price} in misc"
+      v-for="{ id, image, name, price } in misc"
       :key="id"
       class="additional-list__item sheet"
     >
       <p class="additional-list__description">
-        <img
-          :src="image"
-          width="39"
-          height="60"
-          :alt="name"
-        >
+        <img :src="image" width="39" height="60" :alt="name" />
         <span>
           {{ name }}
         </span>
@@ -33,16 +28,12 @@
   </ul>
 </template>
 
-<script>
-import {
-  mapGetters,
-  mapMutations,
-} from "vuex";
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import { mapGetters, mapMutations } from "vuex";
 import { SET_MISC_QUANTITY } from "@/store/mutations-types";
 
-export default {
-  name: "CartAdditionalList",
-
+@Component({
   computed: {
     ...mapGetters(["misc"]),
     ...mapGetters("Cart", ["getMiscQuantity"]),
@@ -53,7 +44,8 @@ export default {
       setMiscQuantity: SET_MISC_QUANTITY,
     }),
   },
-};
+})
+export default class CartAdditionalList extends Vue {}
 </script>
 
 <style lang="scss">

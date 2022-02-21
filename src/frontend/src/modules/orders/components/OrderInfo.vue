@@ -18,11 +18,7 @@
         />
       </div>
       <div class="order__button">
-        <AppButton
-          data-test="repeat"
-          caption="Повторить"
-          @click="repeat"
-        />
+        <AppButton data-test="repeat" caption="Повторить" @click="repeat" />
       </div>
     </div>
 
@@ -32,9 +28,7 @@
         :key="pizza.id"
         class="order__item"
       >
-        <AppPizzaDescription
-          :item="pizza"
-        />
+        <AppPizzaDescription :item="pizza" />
 
         <p class="order__price">
           <span v-if="pizza.quantity > 1">{{ pizza.quantity }} x</span>
@@ -43,20 +37,12 @@
       </li>
     </ul>
 
-    <ul
-      v-if="order.orderMisc.length"
-      class="order__additional"
-    >
+    <ul v-if="order.orderMisc.length" class="order__additional">
       <li
-        v-for="{id, image, name, price, quantity} in order.orderMisc"
+        v-for="{ id, image, name, price, quantity } in order.orderMisc"
         :key="id"
       >
-        <img
-          :src="image"
-          width="20"
-          height="30"
-          :alt="name"
-        >
+        <img :src="image" width="20" height="30" :alt="name" />
         <p>
           <span>{{ name }}</span>
           <b data-test="additionalPrice">
@@ -73,50 +59,47 @@
   </section>
 </template>
 
-<script>
-import {
-  mapActions,
-  mapMutations,
-} from "vuex";
-import AppPizzaDescription from "@/common/components/AppPizzaDescription";
+<script lang="ts">
+import { Component, Vue, Prop } from "vue-property-decorator";
+import { mapActions, mapMutations } from "vuex";
+import AppPizzaDescription from "@/common/components/AppPizzaDescription.vue";
 import { RESET_STATE_TO_ORDER } from "@/store/mutations-types";
+import { ILocalOrder, IOrder } from "@/common/types";
 
-export default {
-  name: "OrderInfo",
-
+@Component({
   components: {
     AppPizzaDescription,
   },
-
-  props: {
-    order: {
-      type: Object,
-      required: true,
-    },
-  },
-
-  computed: {
-    addressString() {
-      return this.order.orderAddress
-        ? "Адрес доставки: " + this.order.orderAddress.street
-          + (this.order.orderAddress.building ? `, д. ${this.order.orderAddress.building}` : "")
-          + (this.order.orderAddress.flat ? `, кв. ${this.order.orderAddress.flat}` : "")
-        : "Самовывоз";
-    },
-  },
-
   methods: {
     ...mapActions("Orders", ["remove"]),
     ...mapMutations("Cart", {
       repeatOrder: RESET_STATE_TO_ORDER,
     }),
+  },
+})
+export default class OrderInfo extends Vue {
+  repeatOrder!: (order: IOrder) => void;
 
-    repeat() {
-      this.repeatOrder(this.order);
-      this.$router.push("/cart");
-    }
+  @Prop({ type: Object, required: true }) readonly order!: ILocalOrder;
+
+  get addressString() {
+    return this.order.orderAddress
+      ? "Адрес доставки: " +
+          this.order.orderAddress.street +
+          (this.order.orderAddress.building
+            ? `, д. ${this.order.orderAddress.building}`
+            : "") +
+          (this.order.orderAddress.flat
+            ? `, кв. ${this.order.orderAddress.flat}`
+            : "")
+      : "Самовывоз";
   }
-};
+
+  repeat() {
+    this.repeatOrder(this.order);
+    this.$router.push("/cart");
+  }
+}
 </script>
 
 <style lang="scss">

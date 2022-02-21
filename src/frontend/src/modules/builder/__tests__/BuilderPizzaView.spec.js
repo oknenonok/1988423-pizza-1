@@ -1,11 +1,5 @@
-import {
-  shallowMount,
-  createLocalVue,
-} from "@vue/test-utils";
-import {
-  generateMockStore,
-  fillBuilder,
-} from "@/tests/helpers";
+import { shallowMount, createLocalVue } from "@vue/test-utils";
+import { generateMockStore, fillBuilder } from "@/tests/helpers";
 import BuilderPizzaView from "@/modules/builder/components/BuilderPizzaView";
 import Vuex from "vuex";
 
@@ -44,6 +38,8 @@ describe("BuilderPizzaView", () => {
     expect(subclasses.length).toBe(3);
     expect(subclasses).toContain("pizza__filling pizza__filling--mushrooms");
     expect(subclasses).toContain("pizza__filling pizza__filling--cheddar");
-    expect(subclasses).toContain("pizza__filling pizza__filling--cheddar pizza__filling--second");
+    expect(subclasses).toContain(
+      "pizza__filling pizza__filling--cheddar pizza__filling--second"
+    );
   });
 });

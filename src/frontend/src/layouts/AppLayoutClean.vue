@@ -4,8 +4,8 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "AppLayoutClean",
-};
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+@Component
+export default class AppLayoutClean extends Vue {}
 </script>

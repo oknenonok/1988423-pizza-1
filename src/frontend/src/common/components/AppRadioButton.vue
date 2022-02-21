@@ -7,36 +7,22 @@
       :checked="checked"
       :class="inputClass"
       @change="$emit('select', $event.target.value)"
-    >
+    />
     <slot />
   </label>
 </template>
 
-<script>
-export default {
-  name: "AppRadioButton",
-  props: {
-    name: {
-      type: String,
-      required: true,
-    },
+<script lang="ts">
+import "reflect-metadata";
+import { Component, Vue, Prop } from "vue-property-decorator";
 
-    value: {
-      type: [Number, String],
-      required: true,
-    },
-
-    checked: {
-      type: Boolean,
-      default: false,
-    },
-
-    inputClass: {
-      type: String,
-      default: "",
-    },
-  },
-};
+@Component
+export default class AppRadioButton extends Vue {
+  @Prop({ required: true }) readonly value!: string | number;
+  @Prop({ required: true }) readonly name!: string;
+  @Prop({ default: false }) readonly checked!: boolean;
+  @Prop({ default: "" }) readonly inputClass!: string;
+}
 </script>
 
 <style lang="scss">

@@ -1,10 +1,13 @@
 const GenerateRoutesPlugin = require("./src/router/_generateRoutes.js");
+const GenerateModulesPlugin = require("./src/store/_generateModules.js");
+const { defineConfig } = require("@vue/cli-service");
 
-module.exports = {
+module.exports = defineConfig({
   css: {
     loaderOptions: {
       sass: {
-        prependData: "@import \"@/assets/scss/ds-system/ds.scss\";\n@import \"@/assets/scss/mixins/mixins.scss\";",
+        additionalData:
+          '@import "@/assets/scss/ds-system/ds.scss";\n@import "@/assets/scss/mixins/mixins.scss";',
       },
     },
   },
@@ -28,22 +31,9 @@ module.exports = {
         pathRewrite: { "/docs/explorer": "/explorer" },
       },
     },
-
-    overlay: {
-      warnings: true,
-      errors: true,
-    },
   },
 
   configureWebpack: {
-    plugins: [
-      new GenerateRoutesPlugin(),
-    ],
-
-    devServer: {
-      watchOptions: {
-        ignored: "**/routes.js",
-      },
-    },
+    plugins: [new GenerateRoutesPlugin(), new GenerateModulesPlugin()],
   },
-};
+});

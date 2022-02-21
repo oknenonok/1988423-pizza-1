@@ -22,10 +22,7 @@
       @input.native="setEntity($event)"
     />
 
-    <div
-      v-if="!isSelftake"
-      class="cart-form__address"
-    >
+    <div v-if="!isSelftake" class="cart-form__address">
       <span class="cart-form__label">Новый адрес:</span>
 
       <div class="cart-form__input">
@@ -63,76 +60,70 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
 import { mapState } from "vuex";
-import {
-  SET_DELIVERY_TYPE,
-  SET_ENTITY,
-} from "@/store/mutations-types";
-import {
-  DELIVERY_TYPE_NEW,
-  DELIVERY_TYPE_SELFTAKE,
-} from "@/common/constants";
+import { DELIVERY_TYPE_NEW, DELIVERY_TYPE_SELFTAKE } from "@/common/constants";
+import { IAddress } from "@/common/types";
 
-export default {
-  name: "CartAddress",
-
+@Component({
   computed: {
     ...mapState("Cart", ["phone", "street", "building", "flat"]),
     ...mapState("Addresses", ["addresses"]),
+  },
+})
+export default class CartAddress extends Vue {
+  addresses!: IAddress[];
 
-    deliveryOptions() {
-      return [
-        {
-          key: DELIVERY_TYPE_SELFTAKE,
-          title: "Заберу сам",
-        },
-
-        {
-          key: DELIVERY_TYPE_NEW,
-          title: "Новый адрес",
-        },
-
-        ...this.addresses.map((address) => ({
-          key: address.id,
-          title: address.name,
-        })),
-      ];
-    },
-
-    isSelftake() {
-      return this.deliveryType === DELIVERY_TYPE_SELFTAKE;
-    },
-
-    canEditAddress() {
-      return [DELIVERY_TYPE_SELFTAKE, DELIVERY_TYPE_NEW].includes(this.deliveryType);
-    },
-
-    deliveryType: {
-      get() {
-        return this.$store.state.Cart.deliveryType;
+  get deliveryOptions() {
+    return [
+      {
+        key: DELIVERY_TYPE_SELFTAKE,
+        title: "Заберу сам",
       },
 
-      set(value) {
-        return this.$store.commit(`Cart/${SET_DELIVERY_TYPE}`, value);
+      {
+        key: DELIVERY_TYPE_NEW,
+        title: "Новый адрес",
       },
-    },
-  },
 
-  methods: {
-    /**
-     * Сохранить поле контактной информации
-     * @param {object} event
-     */
-    setEntity({target: {name, value}}) {
-      this.$store.commit(SET_ENTITY, {
-        module: "Cart",
-        entity: name,
-        value,
-      });
-    },
-  },
-};
+      ...this.addresses.map((address) => ({
+        key: address.id,
+        title: address.name,
+      })),
+    ];
+  }
+
+  get isSelftake() {
+    return this.deliveryType === DELIVERY_TYPE_SELFTAKE;
+  }
+
+  get canEditAddress() {
+    return [DELIVERY_TYPE_SELFTAKE, DELIVERY_TYPE_NEW].includes(
+      this.deliveryType
+    );
+  }
+
+  get deliveryType() {
+    return this.$store.state.Cart.deliveryType;
+  }
+
+  set deliveryType(value) {
+    this.$store.dispatch("Cart/setDeliveryInfo", value);
+  }
+
+  /**
+   * Сохранить поле контактной информации
+   * @param {object} event
+   */
+  setEntity({
+    target: { name, value },
+  }: {
+    target: { name: "phone" | "street" | "building" | "flat"; value: string };
+  }) {
+    this.$store.commit("Cart/setEntity", { name, value });
+  }
+}
 </script>
 
 <style lang="scss">

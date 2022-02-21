@@ -18,7 +18,7 @@
       :max="maxValue"
       :value="value"
       @input="valueChanged"
-    >
+    />
     <button
       type="button"
       data-test="plus"
@@ -32,35 +32,22 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "AppItemCounter",
-  props: {
-    minValue: {
-      type: Number,
-      default: 0,
-    },
+<script lang="ts">
+import "reflect-metadata";
+import { Component, Vue, Prop } from "vue-property-decorator";
 
-    maxValue: {
-      type: Number,
-      default: Number.MAX_SAFE_INTEGER,
-    },
+@Component
+export default class AppItemCounter extends Vue {
+  @Prop({ default: 0 }) readonly minValue!: number;
+  @Prop({ default: Number.MAX_SAFE_INTEGER }) readonly maxValue!: number;
+  @Prop({ required: true, validator: (v) => Number.isInteger(v) })
+  readonly value!: number;
+  @Prop({ default: "" }) readonly counterButtonClass!: string;
 
-    value: {
-      type: Number,
-      required: true,
-      validator: (v) => Number.isInteger(v),
-    },
-
-    counterButtonClass: {
-      type: String,
-      default: "",
-    },
-  },
-
-  methods: {
-    valueChanged(event) {
-      let newValue = +event.target.value,
+  valueChanged(event: InputEvent) {
+    const target = event.target as HTMLInputElement;
+    if (target) {
+      let newValue = +target.value,
         setValue;
       if (newValue >= this.minValue && newValue <= this.maxValue) {
         setValue = newValue;
@@ -72,18 +59,18 @@ export default {
         }
       }
       this.$emit("input", setValue);
-    },
+    }
+  }
 
-    addValue(value) {
-      if (
-        (this.value < this.maxValue && value > 0) ||
-        (this.value > this.minValue && value < 0)
-      ) {
-        this.$emit("input", this.value + value);
-      }
-    },
-  },
-};
+  addValue(value: number) {
+    if (
+      (this.value < this.maxValue && value > 0) ||
+      (this.value > this.minValue && value < 0)
+    ) {
+      this.$emit("input", this.value + value);
+    }
+  }
+}
 </script>
 
 <style lang="scss">

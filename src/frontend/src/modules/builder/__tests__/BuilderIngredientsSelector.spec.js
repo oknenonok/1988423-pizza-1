@@ -1,11 +1,5 @@
-import {
-  mount,
-  createLocalVue,
-} from "@vue/test-utils";
-import {
-  generateMockStore,
-  fillBuilder,
-} from "@/tests/helpers";
+import { mount, createLocalVue } from "@vue/test-utils";
+import { generateMockStore, fillBuilder } from "@/tests/helpers";
 import BuilderIngredientsSelector from "@/modules/builder/components/BuilderIngredientsSelector";
 import Vuex from "vuex";
 import AppRadioButton from "@/common/components/AppRadioButton";

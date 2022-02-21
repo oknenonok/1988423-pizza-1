@@ -17,74 +17,37 @@
       v-else
       v-bind="bindValues"
       @input="$emit('input', $event.target.value)"
-    >
+    />
   </label>
 </template>
 
-<script>
-export default {
-  name: "AppInput",
+<script lang="ts">
+import "reflect-metadata";
+import { Component, Vue, Prop } from "vue-property-decorator";
 
-  props: {
-    value: {
-      type: [String, Number],
-      default: "",
-    },
+@Component
+export default class AppInput extends Vue {
+  @Prop({ default: "" }) readonly value!: string | number;
+  @Prop({ required: true }) readonly name!: string;
+  @Prop({ default: "text" }) readonly type!: string;
+  @Prop({ default: "" }) readonly placeholder!: string;
+  @Prop({ default: false }) readonly required!: boolean;
+  @Prop({ default: false }) readonly disabled!: boolean;
+  @Prop({ default: "" }) readonly caption!: string;
+  @Prop({ default: false }) readonly hideCaption!: boolean;
+  @Prop({ default: null }) readonly inputMask!: string | null;
 
-    name: {
-      type: String,
-      required: true,
-    },
-
-    type: {
-      type: String,
-      default: "text",
-    },
-
-    placeholder: {
-      type: String,
-      default: "",
-    },
-
-    required: {
-      type: Boolean,
-      default: false,
-    },
-
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-
-    caption: {
-      type: String,
-      default: "",
-    },
-
-    hideCaption: {
-      type: Boolean,
-      default: false,
-    },
-
-    inputMask: {
-      type: String,
-      default: null,
-    },
-  },
-
-  computed: {
-    bindValues() {
-      return {
-        value: this.value,
-        type: this.type,
-        name: this.name,
-        placeholder: this.placeholder,
-        required: this.required,
-        disabled: this.disabled,
-      };
-    }
+  get bindValues() {
+    return {
+      value: this.value,
+      type: this.type,
+      name: this.name,
+      placeholder: this.placeholder,
+      required: this.required,
+      disabled: this.disabled,
+    };
   }
-};
+}
 </script>
 
 <style lang="scss">

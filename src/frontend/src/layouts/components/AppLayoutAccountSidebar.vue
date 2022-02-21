@@ -3,7 +3,7 @@
     <AppLogo class="layout__logo" />
 
     <router-link
-      v-for="{ link, title } in $options.menu"
+      v-for="{ link, title } in menu"
       :key="link"
       :to="link"
       class="layout__link"
@@ -14,15 +14,15 @@
   </div>
 </template>
 
-<script>
-import AppLogo from "@/common/components/AppLogo";
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import AppLogo from "@/common/components/AppLogo.vue";
 
-export default {
-  name: "AppLayoutAccountSidebar",
-
+@Component({
   components: { AppLogo },
-
-  menu: [
+})
+export default class AppLayoutAccountSidebar extends Vue {
+  menu = [
     {
       link: "/orders",
       title: "История заказов",
@@ -31,8 +31,8 @@ export default {
       link: "/profile",
       title: "Мои данные",
     },
-  ],
-};
+  ];
+}
 </script>
 
 <style lang="scss">

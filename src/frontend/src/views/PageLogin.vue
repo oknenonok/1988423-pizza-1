@@ -5,23 +5,13 @@
     tabindex="0"
     @keydown.esc="sendClose"
   >
-    <a
-      v-if="isPopup"
-      class="close close--white"
-      @click="sendClose"
-    >
+    <a v-if="isPopup" class="close close--white" @click="sendClose">
       <span class="visually-hidden">Закрыть форму авторизации</span>
     </a>
     <div class="sign-form__title">
-      <h1 class="title title--small">
-        Авторизуйтесь на сайте
-      </h1>
+      <h1 class="title title--small">Авторизуйтесь на сайте</h1>
     </div>
-    <form
-      action="#"
-      method="post"
-      @submit.prevent="tryLogin"
-    >
+    <form action="#" method="post" @submit.prevent="tryLogin">
       <div class="sign-form__input">
         <AppInput
           v-model="email"
@@ -44,62 +34,59 @@
           required
         />
       </div>
-      <AppButton
-        type="submit"
-        caption="Авторизоваться"
-      />
+      <AppButton type="submit" caption="Авторизоваться" />
     </form>
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import "reflect-metadata";
+import { Component, Vue, Prop } from "vue-property-decorator";
 import { mapActions } from "vuex";
 import { isLoggedIn } from "@/middlewares";
+import { IAuthCredentials } from "@/common/types";
+import ClickOutside from "vue-click-outside";
 
-export default {
-  name: "PageLogin",
-  title: "Вход",
-  layout: "AppLayoutClean",
-  middlewares: [isLoggedIn],
-
-  props: {
-    isPopup: {
-      type: Boolean,
-      default: false,
-    },
-  },
-
-  data() {
-    return {
-      email: "",
-      password: "",
-    };
-  },
-
+@Component({
   methods: {
     ...mapActions("Auth", ["login"]),
+  },
+  directives: { ClickOutside },
+})
+export default class PageLogin extends Vue {
+  @Prop({ default: false }) readonly isPopup!: boolean;
 
-    async tryLogin() {
-      let token = await this.login({
-        email: this.email,
-        password: this.password,
-      });
-      if (token) {
-        if (this.isPopup) {
-          this.sendClose();
-        } else {
-          this.$router.push(this.$route.query.back ?? "/");
+  title = "Вход";
+  layout = "AppLayoutClean";
+  middlewares = [isLoggedIn];
+
+  email = "";
+  password = "";
+  login!: (payload: IAuthCredentials) => string;
+
+  async tryLogin() {
+    let token = await this.login({
+      email: this.email,
+      password: this.password,
+    });
+    if (token) {
+      if (this.isPopup) {
+        this.sendClose();
+      } else {
+        let path = this.$route.query.back ? `${this.$route.query.back}` : "/";
+        if (path) {
+          this.$router.push(path);
         }
       }
-    },
+    }
+  }
 
-    sendClose() {
-      if (this.isPopup) {
-        this.$emit("close");
-      }
-    },
-  },
-};
+  sendClose() {
+    if (this.isPopup) {
+      this.$emit("close");
+    }
+  }
+}
 </script>
 
 <style lang="scss">

@@ -6,7 +6,7 @@
       width="56"
       height="56"
       :alt="item.name"
-    >
+    />
     <div class="product__text">
       <h2 data-test="pizzaName">
         {{ item.name }}
@@ -27,26 +27,26 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import "reflect-metadata";
+import { Component, Vue, Prop } from "vue-property-decorator";
 import { LOCALE } from "@/common/constants";
+import { ICartItem } from "../types";
 
-export default {
-  name: "AppPizzaDescription",
-  props: {
-    item: {
-      type: Object,
-      required: true,
-    },
-  },
+@Component
+export default class AppPizzaDescription extends Vue {
+  @Prop({ type: Object, required: true }) readonly item!: ICartItem;
 
-  computed: {
-    ingredientsString() {
-      return new Intl.ListFormat(LOCALE).format(this.item.ingredients.map((ingredient) =>
-        ingredient.name.toLowerCase() + (ingredient.quantity > 1 ? ` (x${ingredient.quantity})` : "")
-      ));
-    }
+  get ingredientsString() {
+    return new Intl.ListFormat(LOCALE).format(
+      this.item.ingredients.map(
+        (ingredient) =>
+          ingredient.name.toLowerCase() +
+          (ingredient.quantity > 1 ? ` (x${ingredient.quantity})` : "")
+      )
+    );
   }
-};
+}
 </script>
 
 <style lang="scss">

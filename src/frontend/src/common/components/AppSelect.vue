@@ -17,36 +17,17 @@
   </select>
 </template>
 
-<script>
-export default {
-  name: "AppSelect",
+<script lang="ts">
+import "reflect-metadata";
+import { Component, Vue, Prop } from "vue-property-decorator";
 
-  props: {
-    value: {
-      type: [String, Number],
-      default: "",
-    },
-
-    options: {
-      type: Array,
-      required: true,
-    },
-
-    name: {
-      type: String,
-      required: true,
-    },
-
-    required: {
-      type: Boolean,
-      default: false,
-    },
-
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-  },
+@Component
+export default class AppSelect extends Vue {
+  @Prop({ default: "" }) readonly value!: string | number;
+  @Prop({ required: true }) readonly name!: string;
+  @Prop({ default: false }) readonly required!: boolean;
+  @Prop({ default: false }) readonly disabled!: boolean;
+  @Prop({ required: true }) readonly options!: { key: string; title: string }[];
 }
 </script>
 

@@ -1,9 +1,5 @@
 <template>
-  <transition-group
-    name="notifications"
-    class="notification__wrapper"
-    tag="ul"
-  >
+  <transition-group name="notifications" class="notification__wrapper" tag="ul">
     <li
       v-for="{ text, type, id } in notifications"
       :key="id"
@@ -15,17 +11,14 @@
   </transition-group>
 </template>
 
-<script>
-import {
-  mapState,
-  mapMutations,
-} from "vuex";
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import { mapState, mapMutations } from "vuex";
 import { DELETE_NOTIFICATION } from "@/store/mutations-types";
 
-export default {
-  name: "NotificationsList",
+@Component({
   computed: {
-    ...mapState("Notifications", ["notifications"])
+    ...mapState("Notifications", ["notifications"]),
   },
 
   methods: {
@@ -33,7 +26,8 @@ export default {
       deleteNotification: DELETE_NOTIFICATION,
     }),
   },
-};
+})
+export default class NotificationsList extends Vue {}
 </script>
 
 <style lang="scss">
@@ -82,7 +76,8 @@ export default {
     opacity: 0;
   }
 
-  &-enter-active, &-leave-active {
+  &-enter-active,
+  &-leave-active {
     transition: all $animation-time;
   }
 

@@ -6,15 +6,9 @@
     @submit.prevent="placeOrder"
   >
     <main class="content cart">
-      <div
-        v-if="!isCartEmpty"
-        key="cart-notempty"
-        class="container"
-      >
+      <div v-if="!isCartEmpty" key="cart-notempty" class="container">
         <div class="cart__title">
-          <h1 class="title title--big">
-            Корзина
-          </h1>
+          <h1 class="title title--big">Корзина</h1>
         </div>
 
         <CartPizzaList />
@@ -28,11 +22,7 @@
         </div>
       </div>
 
-      <div
-        v-else
-        key="cart-empty"
-        class="sheet cart__empty"
-      >
+      <div v-else key="cart-empty" class="sheet cart__empty">
         <p>В корзине нет ни одного товара</p>
       </div>
     </main>
@@ -45,25 +35,20 @@
   </form>
 </template>
 
-<script>
-import {
-  mapGetters,
-  mapState,
-  mapActions,
-} from "vuex";
+<script lang="ts">
+import { Component, Vue, Watch } from "vue-property-decorator";
+import { mapGetters, mapState, mapActions } from "vuex";
 import { RESET_STATE } from "@/store/mutations-types";
-import CartPizzaList from "@/modules/cart/components/CartPizzaList";
-import CartAdditionalList from "@/modules/cart/components/CartAdditionalList";
-import CartAddress from "@/modules/cart/components/CartAddress";
-import CartFooter from "@/modules/cart/components/CartFooter";
-import CartOrderPopup from "@/modules/cart/components/CartOrderPopup";
+import CartPizzaList from "@/modules/cart/components/CartPizzaList.vue";
+import CartAdditionalList from "@/modules/cart/components/CartAdditionalList.vue";
+import CartAddress from "@/modules/cart/components/CartAddress.vue";
+import CartFooter from "@/modules/cart/components/CartFooter.vue";
+import CartOrderPopup from "@/modules/cart/components/CartOrderPopup.vue";
 import orderCreateStatuses from "@/common/enums/orderCreateStatuses";
-import AppPopup from "@/common/components/AppPopup";
+import AppPopup from "@/common/components/AppPopup.vue";
+import { IUser } from "@/common/types";
 
-export default {
-  name: "PageCart",
-  title: "Корзина",
-
+@Component({
   components: {
     CartPizzaList,
     CartAdditionalList,
@@ -73,49 +58,49 @@ export default {
     AppPopup,
   },
 
-  data() {
-    return {
-      isOrderPopupOpened: false,
-    };
-  },
-
   computed: {
     ...mapState("Auth", ["user"]),
     ...mapState("Cart", ["orderCreateStatus"]),
     ...mapGetters("Cart", ["dataReady", "price", "isCartEmpty"]),
   },
 
-  watch: {
-    user(newUser, oldUser) {
-      if (newUser && !oldUser) {
-        this.$store.dispatch("Addresses/load");
-      }
-    }
+  methods: {
+    ...mapActions("Orders", ["createOrder"]),
   },
+})
+export default class PageCart extends Vue {
+  title = "Корзина";
+  isOrderPopupOpened = false;
+  orderCreateStatus!: number;
+  user!: IUser;
+  createOrder!: () => void;
+
+  @Watch("user")
+  onUserChanged(newUser: string, oldUser: string) {
+    if (newUser && !oldUser) {
+      this.$store.dispatch("Addresses/load");
+    }
+  }
 
   created() {
     this.$store.dispatch("Cart/init");
-  },
+  }
 
-  methods: {
-    ...mapActions("Orders", ["createOrder"]),
+  async placeOrder() {
+    this.isOrderPopupOpened = true;
+    await this.createOrder();
+  }
 
-    async placeOrder() {
-      this.isOrderPopupOpened = true;
-      await this.createOrder();
-    },
-
-    hidePopup() {
-      if (this.orderCreateStatus === orderCreateStatuses.SUCCESS) {
-        setTimeout(() => {
-          this.$store.commit(`Cart/${RESET_STATE}`);
-          this.$router.push(this.user ? "/orders" : "/");
-        }, 400);
-      }
-      this.isOrderPopupOpened = false;
-    },
-  },
-};
+  hidePopup() {
+    if (this.orderCreateStatus === orderCreateStatuses.SUCCESS) {
+      setTimeout(() => {
+        this.$store.commit(`Cart/${RESET_STATE}`);
+        this.$router.push(this.user ? "/orders" : "/");
+      }, 400);
+    }
+    this.isOrderPopupOpened = false;
+  }
+}
 </script>
 
 <style lang="scss">

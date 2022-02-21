@@ -1,22 +1,19 @@
 <template>
-  <router-link
-    to="/"
-    class="logo"
-    data-test="logo"
-  >
+  <router-link to="/" class="logo" data-test="logo">
     <img
       src="@/assets/img/logo.svg"
       alt="V!U!E! Pizza logo"
       width="90"
       height="40"
-    >
+    />
   </router-link>
 </template>
 
-<script>
-export default {
-  name: "AppLogo",
-};
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+
+@Component
+export default class AppLogo extends Vue {}
 </script>
 
 <style lang="scss">

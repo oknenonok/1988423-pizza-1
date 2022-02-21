@@ -68,25 +68,15 @@
           caption="Удалить"
           @click="removeAddress"
         />
-        <AppButton
-          type="submit"
-          :disabled="isSaving"
-          caption="Сохранить"
-        />
+        <AppButton type="submit" :disabled="isSaving" caption="Сохранить" />
       </div>
     </form>
 
-    <div
-      v-else
-      class="sheet address-form"
-    >
+    <div v-else class="sheet address-form">
       <div class="address-form__header">
         <b>Адрес №{{ index }}. {{ address.name }}</b>
         <div class="address-form__edit">
-          <AppIcon
-            caption="Изменить адрес"
-            @click="editAddress"
-          />
+          <AppIcon caption="Изменить адрес" @click="editAddress" />
         </div>
       </div>
       <p>{{ addressString }}</p>
@@ -95,24 +85,27 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue, Prop } from "vue-property-decorator";
 import { mapState } from "vuex";
 import isNew from "@/common/helpers/isNew";
+import { IAddress } from "@/common/types";
 
-export default {
-  name: "ProfileAddress",
-
-  props: {
-    address: {
-      type: Object,
-      required: true,
-    },
-
-    index: {
-      type: Number,
-      required: true,
-    },
+@Component({
+  computed: {
+    ...mapState("Addresses", ["addresses"]),
   },
+})
+export default class ProfileAddress extends Vue {
+  @Prop({ type: Object, required: true }) readonly address!: IAddress;
+  @Prop({ type: Number, required: true }) readonly index!: number;
+  name!: string;
+  street!: string;
+  building!: string;
+  flat!: string;
+  comment!: string;
+  isSaving!: boolean;
+  isEditing!: boolean;
 
   data() {
     return {
@@ -124,53 +117,49 @@ export default {
       isSaving: false,
       isEditing: false,
     };
-  },
+  }
 
-  computed: {
-    ...mapState("Addresses", ["addresses"]),
+  get addressString() {
+    return (
+      this.street +
+      (this.building ? `, д. ${this.building}` : "") +
+      (this.flat ? `, кв. ${this.flat}` : "")
+    );
+  }
 
-    addressString() {
-      return this.street
-        + (this.building ? `, д. ${this.building}` : "")
-        + (this.flat ? `, кв. ${this.flat}` : "");
-    },
-
-    isNew() {
-      return isNew(this.address.id);
-    },
-  },
+  get isNew() {
+    return isNew(this.address.id);
+  }
 
   created() {
     this.isEditing = this.isNew;
-  },
+  }
 
-  methods: {
-    editAddress() {
-      this.isEditing = true;
-    },
+  editAddress() {
+    this.isEditing = true;
+  }
 
-    async removeAddress() {
-      await this.$store.dispatch("Addresses/remove", this.address);
-    },
+  async removeAddress() {
+    await this.$store.dispatch("Addresses/remove", this.address);
+  }
 
-    async saveAddress() {
-      this.isSaving = true;
-      try {
-        await this.$store.dispatch("Addresses/save", {
-          ...this.address,
-          name: this.name,
-          street: this.street,
-          building: this.building,
-          flat: this.flat,
-          comment: this.comment,
-        });
-        this.isEditing = false;
-      } finally {
-        this.isSaving = false;
-      }
-    },
-  },
-};
+  async saveAddress() {
+    this.isSaving = true;
+    try {
+      await this.$store.dispatch("Addresses/save", {
+        ...this.address,
+        name: this.name,
+        street: this.street,
+        building: this.building,
+        flat: this.flat,
+        comment: this.comment,
+      });
+      this.isEditing = false;
+    } finally {
+      this.isSaving = false;
+    }
+  }
+}
 </script>
 
 <style lang="scss">
